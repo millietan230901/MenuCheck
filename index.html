@@ -137,7 +137,7 @@
         </div>
       </div>
 
-      <!-- 操作按鈕區 (縮小手機版 padding 與字體，防止凸出版面) -->
+      <!-- 操作按鈕區 -->
       <div class="flex items-center gap-1 sm:gap-2 shrink-0">
         <a href="https://www.laes.tp.edu.tw/nss/p/k1" target="_blank" rel="noopener noreferrer" class="bg-amber-50 hover:bg-amber-100 text-amber-800 text-[11px] sm:text-sm font-bold px-2 sm:px-3 py-1.5 sm:py-2 rounded-lg sm:rounded-xl border border-amber-300 transition flex items-center gap-1 shadow-xs shrink-0" title="前往龍安國小附設幼兒園公佈欄">
           <i class="fa-solid fa-bullhorn text-amber-600"></i>
@@ -246,16 +246,17 @@
       </div>
     </div>
 
-    <!-- 新增：營養與食材分析頁籤內容 (預設收合) -->
+    <!-- 營養與食材分析頁籤內容 (預設收合，高度美化) -->
     <div id="nutritionAccordion" class="cute-card overflow-hidden hidden">
-      <button id="btnToggleNutrition" class="w-full flex items-center justify-between p-3.5 bg-mint/10 hover:bg-mint/20 transition focus:outline-none">
+      <button id="btnToggleNutrition" class="w-full flex items-center justify-between p-3.5 bg-mint/10 hover:bg-mint/20 transition focus:outline-none border-b border-mint/10">
         <div class="text-xs sm:text-sm font-black text-emerald-800 flex items-center gap-1.5">
           <span class="w-2 h-2 rounded-full bg-mint inline-block"></span>營養與食材分析大數據
         </div>
         <i class="fa-solid fa-chevron-down text-mint toggle-icon"></i>
       </button>
       <div id="nutritionContent" class="collapsible-content collapsed bg-white">
-        <div id="nutritionBody" class="p-4 grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs text-slate-700">
+        <!-- 內容格將透過 JS 產生，美化字體與排版 -->
+        <div id="nutritionBody" class="p-4 sm:p-5 grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5">
           <!-- 動態生成分析內容 -->
         </div>
       </div>
@@ -353,7 +354,7 @@
   </footer>
 
   <script>
-    // --- 初始預設資料庫 ---
+    // --- 初始預設資料庫 (防呆備援) ---
     let KINDERGARTEN_MENU = {
       "2026-08-31": {"rawDate": "8/31", "day": "一", "morning": "蜂蜜麥片 + 鮮奶", "fruit": "香蕉", "lunch": {"staple": "糙米飯", "main": "沙嗲燒肉", "side": "雞肉筑前煮", "veg": "有機空心菜", "soup": "鮮筍雞湯", "kcal": 784, "cert": "產銷履歷/有機時蔬 80g"}, "afternoon": "香菇瘦肉粥", "note": "", "isHoliday": false},
       "2026-09-01": {"rawDate": "9/1", "day": "二", "morning": "白菜蛋花湯餃", "fruit": "西瓜", "lunch": {"staple": "胚芽飯", "main": "茄汁雞丁", "side": "香菇肉燥", "veg": "有機白莧菜", "soup": "羅宋湯", "kcal": 722, "cert": "產銷履歷/有機時蔬 80g"}, "afternoon": "豆沙包", "note": "", "isHoliday": false},
@@ -393,6 +394,21 @@
       return "https://cdn.jsdelivr.net/gh/hfg-gmuend/openmoji@latest/color/svg/1F34E.svg";
     }
 
+    // --- 數值四捨五入小幫手 ---
+    function roundToOneDec(val) {
+      if (!val) return '';
+      let strVal = String(val).trim();
+      let isPercent = strVal.endsWith('%');
+      let numStr = isPercent ? strVal.slice(0, -1) : strVal;
+      
+      if (!isNaN(parseFloat(numStr)) && numStr.includes('.')) {
+          let num = parseFloat(numStr);
+          let rounded = Math.round(num * 10) / 10;
+          return isPercent ? `${rounded}%` : `${rounded}`;
+      }
+      return strVal;
+    }
+
     // --- Accordion 展開收合邏輯 ---
     document.getElementById('btnToggleStats').addEventListener('click', function() {
       document.getElementById('statsContent').classList.toggle('collapsed');
@@ -411,10 +427,9 @@
         const d = new Date();
         return { y: d.getFullYear(), m: d.getMonth() };
       }
-      // 統計出現最多的年月
       const monthCounts = {};
       keys.forEach(k => {
-        const ym = k.substring(0, 7); // yyyy-mm
+        const ym = k.substring(0, 7);
         monthCounts[ym] = (monthCounts[ym] || 0) + 1;
       });
       let maxYm = Object.keys(monthCounts).reduce((a, b) => monthCounts[a] > monthCounts[b] ? a : b);
@@ -422,26 +437,19 @@
       return { y: parseInt(parts[0], 10), m: parseInt(parts[1], 10) - 1 };
     }
 
-    // 系統日取值 (預設為真實今日，若無該日資料，系統邏輯不變，月曆由主資料庫推導)
     const now = new Date();
-    const SYSTEM_TODAY = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
-
+    const systemY = now.getFullYear();
+    const systemM = String(now.getMonth() + 1).padStart(2, '0');
+    const SYSTEM_TODAY = `${systemY}-${systemM}-${String(now.getDate()).padStart(2, '0')}`;
+    
     let currentDate = SYSTEM_TODAY;
-    // 如果系統日沒有在字典中，預設選取有資料的最後一天
-    if (!KINDERGARTEN_MENU[currentDate] && Object.keys(KINDERGARTEN_MENU).length > 0) {
-       currentDate = Object.keys(KINDERGARTEN_MENU).sort().pop();
-    }
-
     const datePicker = document.getElementById('datePicker');
     datePicker.value = currentDate;
 
     // 自動加載本機 /data/ 中的 Excel
     window.addEventListener('DOMContentLoaded', async () => {
-      const rocY = now.getFullYear() - 1911;
-      const monthStr = String(now.getMonth() + 1).padStart(2, '0');
-      // 依照要求格式抓取檔案，例如: ./data/115學年度餐點整合明細-202609.xlsx
-      const autoPath = `./data/${rocY}學年度餐點整合明細-${now.getFullYear()}${monthStr}.xlsx`;
-      
+      const rocY = systemY - 1911;
+      const autoPath = `./data/${rocY}學年度餐點整合明細-${systemY}${systemM}.xlsx`;
       try {
         const res = await fetch(autoPath);
         if (res.ok) {
@@ -451,6 +459,10 @@
           initUI();
         }
       } catch (e) {
+        console.warn("自動載入失敗:", e);
+        if (window.location.protocol === 'file:') {
+          showToast("💡 提示：本機點開網頁無法自動讀取資料夾 (瀏覽器安全限制)，請使用「手動匯入」按鈕！");
+        }
         initUI(); // 本機跨源限制等例外，直接啟動
       }
     });
@@ -468,15 +480,13 @@
       const { y, m } = getActiveMonthInfo();
       const rocYear = y - 1911;
 
-      // 自動更新網頁標題月分
       document.getElementById('headerSubtitle').textContent = `${rocYear}學年度 幼兒園餐飲表`;
       document.getElementById('calendarTitle').textContent = `${rocYear}年 ${m + 1}月 餐點行事曆`;
 
       const grid = document.getElementById('miniCalendarGrid');
       grid.innerHTML = '';
 
-      // JS Date: getDay() 回傳 0(日), 1(一), 2(二)...
-      const firstDay = new Date(y, m, 1).getDay();
+      const firstDay = new Date(y, m, 1).getDay(); // 本月 1 號星期幾
       const totalDays = new Date(y, m + 1, 0).getDate();
       const prevTotalDays = new Date(y, m, 0).getDate();
 
@@ -491,7 +501,7 @@
         appendCalendarBtn(grid, y, m, d, false);
       }
 
-      // 繪製【下個月跨月】開頭，填滿最後一排 (7 的倍數)
+      // 繪製【下個月跨月】開頭，填滿最後一排
       const currentCells = firstDay + totalDays;
       const remainCells = (7 - (currentCells % 7)) % 7;
       for (let d = 1; d <= remainCells; d++) {
@@ -501,9 +511,7 @@
       updateStatsCounters();
     }
 
-    // 建立獨立日曆格
     function appendCalendarBtn(grid, yy, mm, dd, isOtherMonth) {
-      // 處理跨年月份調整
       const dt = new Date(yy, mm, dd);
       const y = dt.getFullYear();
       const m = dt.getMonth();
@@ -520,13 +528,10 @@
       btn.textContent = d;
       btn.className = "cal-btn ";
 
-      // CSS 樣式判定
       if (isOtherMonth) {
         if (isWeekend || !data) {
-          // 跨月+假日/無資料：完全隱藏以保持版面乾淨
           btn.className += "opacity-0 cursor-default pointer-events-none ";
         } else {
-          // 跨月+平日且有資料：淡色小字
           btn.className += "text-slate-400 bg-slate-50 border border-slate-200/40 text-[11px] hover:bg-apricot-50 ";
           if(isSelected) btn.className += "calendar-active ";
         }
@@ -542,14 +547,12 @@
         }
       }
 
-      // 標記藍色特餐點
       if (data && !isWeekend && data.note && data.note.includes("特餐")) {
         const dot = document.createElement('span');
         dot.className = `w-1.5 h-1.5 rounded-full absolute bottom-0.5 ${isSelected ? 'bg-white' : 'bg-blue-500'}`;
         btn.appendChild(dot);
       }
 
-      // 綁定點擊事件
       if (!isWeekend && (data || !isOtherMonth)) {
         btn.addEventListener('click', () => {
           currentDate = dateStr;
@@ -557,7 +560,6 @@
           updateView();
         });
       }
-
       grid.appendChild(btn);
     }
 
@@ -568,7 +570,6 @@
         const mObj = KINDERGARTEN_MENU[k];
         const { y, m } = getActiveMonthInfo();
         const targetPrefix = `${y}-${String(m + 1).padStart(2, '0')}`;
-        // 僅統計與當前主月份相同的非假日
         if (k.startsWith(targetPrefix) && !mObj.isHoliday) {
           if (mObj.morning && mObj.morning.includes('鮮奶')) milkCount++;
           if (mObj.fruit) fruitCount++;
@@ -663,7 +664,7 @@
     function parseExcelData(uint8Array) {
       const workbook = XLSX.read(uint8Array, { type: 'array' });
 
-      // 解析營養頁籤
+      // 解析營養頁籤 (全面美化並加入四捨五入邏輯)
       const nutSheetName = workbook.SheetNames.find(n => n.includes("營養"));
       if (nutSheetName) {
         const nutRows = XLSX.utils.sheet_to_json(workbook.Sheets[nutSheetName], { header: 1 });
@@ -672,20 +673,24 @@
         nutRows.forEach(row => {
           if(!row || row.length===0) return;
           const c0 = String(row[0]||'').trim();
-          const c1 = String(row[1]||'').trim();
-          const c2 = String(row[2]||'').trim();
+          let c1 = roundToOneDec(row[1]);
+          let c2 = roundToOneDec(row[2]);
           
           if(c0 && !c1 && !c2 && c0.length > 2 && !c0.includes('本分析整合')) {
             if(currentCard) nutHtml += currentCard + '</div></div>';
-            currentCard = `<div class="bg-apricot-50/50 rounded-xl p-3 border border-apricot-100 shadow-xs"><h4 class="font-bold text-apricot-800 border-b border-apricot-200/80 pb-1 mb-2">${c0}</h4><div class="space-y-1.5">`;
+            // 美化分析大項目標題
+            currentCard = `<div class="bg-gradient-to-br from-mint/10 to-mint/5 rounded-2xl p-4 border border-mint/20 shadow-sm"><h4 class="font-black text-emerald-800 text-sm sm:text-base border-b-2 border-mint/30 pb-2 mb-3 flex items-center gap-2"><i class="fa-solid fa-leaf text-mint"></i>${c0}</h4><div class="space-y-2.5">`;
           } else if(c0 && (c1 || c2) && currentCard) {
-            currentCard += `<div class="flex justify-between items-center text-[11px] sm:text-xs border-b border-white/60 pb-1"><span class="text-slate-600 font-medium">${c0}</span><span class="text-cream-dark font-black text-right">${c1} ${c2}</span></div>`;
+            // 美化子項目列與數值
+            currentCard += `<div class="flex justify-between items-center text-xs sm:text-sm border-b border-mint/10 pb-1.5"><span class="text-slate-600 font-bold">${c0}</span><span class="text-emerald-950 font-black text-right bg-white px-2 py-0.5 rounded-lg border border-mint/10 shadow-xs">${c1} ${c2}</span></div>`;
           }
         });
         if(currentCard) nutHtml += currentCard + '</div></div>';
         
         if (nutHtml) {
-          document.getElementById('nutritionBody').innerHTML = nutHtml;
+          const nutBody = document.getElementById('nutritionBody');
+          nutBody.className = "p-4 sm:p-5 grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5";
+          nutBody.innerHTML = nutHtml;
           document.getElementById('nutritionAccordion').classList.remove('hidden');
         }
       }
@@ -769,8 +774,9 @@
       setTimeout(() => t.classList.add('opacity-0', 'pointer-events-none'), 3500);
     }
 
-    // --- 日期控制元件事件 ---
+    // --- 日期控制事件 ---
     datePicker.addEventListener('change', e => { if(e.target.value) { currentDate = e.target.value; updateView(); } });
+    document.getElementById('btnToday').addEventListener('click', () => { currentDate = SYSTEM_TODAY; datePicker.value = SYSTEM_TODAY; updateView(); });
     document.getElementById('btnPrevDay').addEventListener('click', () => { const d = new Date(currentDate); d.setDate(d.getDate() - 1); currentDate = d.toISOString().split('T')[0]; datePicker.value = currentDate; updateView(); });
     document.getElementById('btnNextDay').addEventListener('click', () => { const d = new Date(currentDate); d.setDate(d.getDate() + 1); currentDate = d.toISOString().split('T')[0]; datePicker.value = currentDate; updateView(); });
 
