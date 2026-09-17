@@ -102,22 +102,23 @@
     }
     .handdrawn-sticker-sm img { width: 100% !important; height: 100% !important; object-fit: contain !important; display: block; flex-shrink: 0; }
     
-    /* 收合動畫 CSS */
+    /* Grid-based 收合動畫 CSS (解決高度截斷問題) */
     .collapsible-content {
-      max-height: 1500px;
-      overflow: hidden;
-      transition: max-height 0.4s ease-in-out, opacity 0.4s ease-in-out;
+      display: grid;
+      grid-template-rows: 1fr;
+      transition: grid-template-rows 0.35s ease-out, opacity 0.35s ease-out;
       opacity: 1;
     }
     .collapsible-content.collapsed {
-      max-height: 0;
+      grid-template-rows: 0fr;
       opacity: 0;
-      margin-top: 0 !important;
-      padding-top: 0 !important;
-      padding-bottom: 0 !important;
     }
+    .collapsible-inner {
+      overflow: hidden;
+    }
+    
     .toggle-icon { transition: transform 0.3s ease; }
-    .collapsed .toggle-icon { transform: rotate(-180deg); }
+    .collapsed .toggle-icon { transform: rotate(180deg); }
   </style>
 </head>
 <body class="min-h-screen flex flex-col antialiased">
@@ -217,47 +218,50 @@
         <i class="fa-solid fa-chevron-up text-apricot-500 toggle-icon"></i>
       </button>
       <div id="statsContent" class="collapsible-content bg-white">
-        <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5 p-3.5 pt-0">
-          <div class="border border-apricot-100 rounded-xl p-3 text-center flex flex-col items-center bg-amber-50/30">
-            <div class="handdrawn-sticker-sm bg-amber-50/80 mb-1.5 shrink-0"><img src="https://cdn.jsdelivr.net/gh/hfg-gmuend/openmoji@latest/color/svg/1F95B.svg" alt="鮮奶"></div>
-            <div class="text-xs text-slate-500 font-bold">每週鮮奶日</div>
-            <div class="text-base sm:text-lg font-black text-cream-dark" id="statMilk">-- 天</div>
-            <div class="text-[10px] text-apricot-600 font-medium">鈣質補充</div>
-          </div>
-          <div class="border border-apricot-100 rounded-xl p-3 text-center flex flex-col items-center bg-rose-50/30">
-            <div class="handdrawn-sticker-sm bg-rose-50/80 mb-1.5 shrink-0"><img src="https://cdn.jsdelivr.net/gh/hfg-gmuend/openmoji@latest/color/svg/1F349.svg" alt="水果"></div>
-            <div class="text-xs text-slate-500 font-bold">午餐附鮮果</div>
-            <div class="text-base sm:text-lg font-black text-cream-dark" id="statFruit">-- 天</div>
-            <div class="text-[10px] text-rose-500 font-medium">餐後水果</div>
-          </div>
-          <div class="border border-apricot-100 rounded-xl p-3 text-center flex flex-col items-center bg-orange-50/30">
-            <div class="handdrawn-sticker-sm bg-orange-50/80 mb-1.5 shrink-0"><img src="https://cdn.jsdelivr.net/gh/hfg-gmuend/openmoji@latest/color/svg/1F372.svg" alt="鹹粥"></div>
-            <div class="text-xs text-slate-500 font-bold">暖胃鹹粥麵</div>
-            <div class="text-base sm:text-lg font-black text-cream-dark" id="statSoup">-- 次</div>
-            <div class="text-[10px] text-amber-600 font-medium">易咀嚼好消化</div>
-          </div>
-          <div class="border border-apricot-100 rounded-xl p-3 text-center flex flex-col items-center bg-emerald-50/30">
-            <div class="handdrawn-sticker-sm bg-emerald-50/80 mb-1.5 shrink-0"><img src="https://cdn.jsdelivr.net/gh/hfg-gmuend/openmoji@latest/color/svg/1F96C.svg" alt="蔬菜"></div>
-            <div class="text-xs text-slate-500 font-bold">履歷時蔬</div>
-            <div class="text-base sm:text-lg font-black text-cream-dark">100%</div>
-            <div class="text-[10px] text-mint font-medium">安全無毒</div>
+        <div class="collapsible-inner">
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5 p-3.5 pt-0">
+            <div class="border border-apricot-100 rounded-xl p-3 text-center flex flex-col items-center bg-amber-50/30">
+              <div class="handdrawn-sticker-sm bg-amber-50/80 mb-1.5 shrink-0"><img src="https://cdn.jsdelivr.net/gh/hfg-gmuend/openmoji@latest/color/svg/1F95B.svg" alt="鮮奶"></div>
+              <div class="text-xs text-slate-500 font-bold">每週鮮奶日</div>
+              <div class="text-base sm:text-lg font-black text-cream-dark" id="statMilk">-- 天</div>
+              <div class="text-[10px] text-apricot-600 font-medium">鈣質補充</div>
+            </div>
+            <div class="border border-apricot-100 rounded-xl p-3 text-center flex flex-col items-center bg-rose-50/30">
+              <div class="handdrawn-sticker-sm bg-rose-50/80 mb-1.5 shrink-0"><img src="https://cdn.jsdelivr.net/gh/hfg-gmuend/openmoji@latest/color/svg/1F349.svg" alt="水果"></div>
+              <div class="text-xs text-slate-500 font-bold">午餐附鮮果</div>
+              <div class="text-base sm:text-lg font-black text-cream-dark" id="statFruit">-- 天</div>
+              <div class="text-[10px] text-rose-500 font-medium">餐後水果</div>
+            </div>
+            <div class="border border-apricot-100 rounded-xl p-3 text-center flex flex-col items-center bg-orange-50/30">
+              <div class="handdrawn-sticker-sm bg-orange-50/80 mb-1.5 shrink-0"><img src="https://cdn.jsdelivr.net/gh/hfg-gmuend/openmoji@latest/color/svg/1F372.svg" alt="鹹粥"></div>
+              <div class="text-xs text-slate-500 font-bold">暖胃鹹粥麵</div>
+              <div class="text-base sm:text-lg font-black text-cream-dark" id="statSoup">-- 次</div>
+              <div class="text-[10px] text-amber-600 font-medium">易咀嚼好消化</div>
+            </div>
+            <div class="border border-apricot-100 rounded-xl p-3 text-center flex flex-col items-center bg-emerald-50/30">
+              <div class="handdrawn-sticker-sm bg-emerald-50/80 mb-1.5 shrink-0"><img src="https://cdn.jsdelivr.net/gh/hfg-gmuend/openmoji@latest/color/svg/1F96C.svg" alt="蔬菜"></div>
+              <div class="text-xs text-slate-500 font-bold">履歷時蔬</div>
+              <div class="text-base sm:text-lg font-black text-cream-dark">100%</div>
+              <div class="text-[10px] text-mint font-medium">安全無毒</div>
+            </div>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- 營養與食材分析頁籤內容 (預設收合，高度美化) -->
+    <!-- 營養與食材分析頁籤內容 (手風琴可收合，解決高度截斷) -->
     <div id="nutritionAccordion" class="cute-card overflow-hidden hidden">
       <button id="btnToggleNutrition" class="w-full flex items-center justify-between p-3.5 bg-mint/10 hover:bg-mint/20 transition focus:outline-none border-b border-mint/10">
         <div class="text-xs sm:text-sm font-black text-emerald-800 flex items-center gap-1.5">
           <span class="w-2 h-2 rounded-full bg-mint inline-block"></span>營養與食材分析大數據
         </div>
-        <i class="fa-solid fa-chevron-down text-mint toggle-icon"></i>
+        <i class="fa-solid fa-chevron-up text-mint toggle-icon"></i>
       </button>
       <div id="nutritionContent" class="collapsible-content collapsed bg-white">
-        <!-- 內容格將透過 JS 產生，美化字體與排版 -->
-        <div id="nutritionBody" class="p-4 sm:p-5 grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5">
-          <!-- 動態生成分析內容 -->
+        <div class="collapsible-inner">
+          <div id="nutritionBody" class="p-4 sm:p-5 grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5">
+            <!-- 動態生成分析內容 -->
+          </div>
         </div>
       </div>
     </div>
@@ -396,7 +400,7 @@
 
     // --- 數值四捨五入小幫手 ---
     function roundToOneDec(val) {
-      if (!val) return '';
+      if (!val && val !== 0) return '';
       let strVal = String(val).trim();
       let isPercent = strVal.endsWith('%');
       let numStr = isPercent ? strVal.slice(0, -1) : strVal;
@@ -670,26 +674,40 @@
         const nutRows = XLSX.utils.sheet_to_json(workbook.Sheets[nutSheetName], { header: 1 });
         let nutHtml = '';
         let currentCard = '';
+        let currentSectionTitle = '';
         nutRows.forEach(row => {
           if(!row || row.length===0) return;
           const c0 = String(row[0]||'').trim();
           let c1 = roundToOneDec(row[1]);
           let c2 = roundToOneDec(row[2]);
           
-          if(c0 && !c1 && !c2 && c0.length > 2 && !c0.includes('本分析整合')) {
+          if (c0.includes('大數據與營養分析') || c0.includes('本分析整合')) return;
+          
+          if(c0 && !c1 && !c2 && c0.length > 2) {
             if(currentCard) nutHtml += currentCard + '</div></div>';
-            // 美化分析大項目標題
+            currentSectionTitle = c0;
             currentCard = `<div class="bg-gradient-to-br from-mint/10 to-mint/5 rounded-2xl p-4 border border-mint/20 shadow-sm"><h4 class="font-black text-emerald-800 text-sm sm:text-base border-b-2 border-mint/30 pb-2 mb-3 flex items-center gap-2"><i class="fa-solid fa-leaf text-mint"></i>${c0}</h4><div class="space-y-2.5">`;
           } else if(c0 && (c1 || c2) && currentCard) {
-            // 美化子項目列與數值
-            currentCard += `<div class="flex justify-between items-center text-xs sm:text-sm border-b border-mint/10 pb-1.5"><span class="text-slate-600 font-bold">${c0}</span><span class="text-emerald-950 font-black text-right bg-white px-2 py-0.5 rounded-lg border border-mint/10 shadow-xs">${c1} ${c2}</span></div>`;
+            if (c0 === '水果名稱') return;
+            
+            let displayC2 = c2;
+            if (currentSectionTitle.includes('水果')) {
+              displayC2 = ''; // 水果區單純顯示次數
+            }
+            
+            let valHtml = `<span class="text-emerald-950 font-black text-right bg-white px-2.5 py-1 rounded-lg border border-mint/20 shadow-xs">${c1}`;
+            if (displayC2) {
+              valHtml += ` <span class="text-[10px] sm:text-xs text-slate-500 font-medium ml-1.5 opacity-90 border-l border-slate-200 pl-1.5">${displayC2}</span>`;
+            }
+            valHtml += `</span>`;
+            
+            currentCard += `<div class="flex justify-between items-center text-xs sm:text-sm border-b border-mint/10 pb-2"><span class="text-slate-700 font-bold">${c0}</span>${valHtml}</div>`;
           }
         });
         if(currentCard) nutHtml += currentCard + '</div></div>';
         
         if (nutHtml) {
           const nutBody = document.getElementById('nutritionBody');
-          nutBody.className = "p-4 sm:p-5 grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5";
           nutBody.innerHTML = nutHtml;
           document.getElementById('nutritionAccordion').classList.remove('hidden');
         }
