@@ -33,330 +33,392 @@
       }
     }
   </script>
-  <style>
-    body {
-      background-color: #FAF6F0;
-      color: #4A3B32;
-      font-family: 'Zen Maru Gothic', 'Noto Sans TC', sans-serif;
-      -webkit-tap-highlight-color: transparent;
-      background-image: radial-gradient(#EED6BF 0.85px, transparent 0.85px);
-      background-size: 22px 22px;
-    }
-    .cute-card {
-      background: #FFFFFF;
-      border: 2px solid #F0E2D3;
-      border-radius: 1.25rem;
-      box-shadow: 0 4px 14px rgba(217, 155, 106, 0.08);
-      transition: all 0.2s ease;
-    }
-    .cute-card:hover { box-shadow: 0 8px 20px rgba(217, 155, 106, 0.14); }
-    
-    .cal-btn {
-      width: 2.1rem;
-      height: 2.1rem;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 9999px;
-      font-size: 0.8rem;
-      font-weight: 700;
-      transition: all 0.15s ease;
-      position: relative;
-    }
-    .calendar-active {
-      background: linear-gradient(135deg, #E4BD9A 0%, #D99B6A 100%) !important;
-      color: #FFFFFF !important;
-      font-weight: 900;
-      transform: scale(1.1);
-      box-shadow: 0 2px 8px rgba(217, 155, 106, 0.4);
-    }
-    .calendar-today {
-      border: 2px solid #C77F47 !important;
-      background-color: #FBF5EE !important;
-      color: #A36030 !important;
-    }
-    
-    img { max-width: 100%; height: auto; }
+  
+<style>
+  :root{
+    --cream:#FFF9F0;
+    --ink:#4A4038;
+    --muted:#8B8178;
+    --orange:#F6A65B;
+    --orange2:#FFD58A;
+    --yellow:#FFE98A;
+    --mint:#8FD3B5;
+    --mint2:#E8F8EF;
+    --pink:#F7B6B2;
+    --pink2:#FFF0EF;
+    --blue:#8CC8E8;
+    --blue2:#EAF7FD;
+    --line:#F0E1D0;
+    --white:#FFFFFF;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0;
+    background:
+      radial-gradient(circle at 10% 10%, rgba(255,233,138,.28) 0 34px, transparent 35px),
+      radial-gradient(circle at 92% 18%, rgba(143,211,181,.20) 0 42px, transparent 43px),
+      var(--cream);
+    color:var(--ink);
+    font-family:"Zen Maru Gothic","Noto Sans TC",sans-serif;
+    -webkit-tap-highlight-color:transparent;
+  }
+  button,input{font:inherit}
+  .app{width:100%;max-width:760px;margin:auto;padding-bottom:28px}
+  .topbar{
+    position:sticky;top:0;z-index:40;
+    background:rgba(255,249,240,.94);
+    backdrop-filter:blur(14px);
+    border-bottom:1px solid rgba(240,225,208,.8);
+  }
+  .topbar-inner{
+    min-height:58px;padding:8px 14px;
+    display:flex;align-items:center;justify-content:space-between;gap:8px
+  }
+  .brand{display:flex;align-items:center;gap:9px;min-width:0}
+  .brand-icon{
+    width:40px;height:40px;border-radius:15px;background:#FFE7B9;
+    display:grid;place-items:center;font-size:24px;box-shadow:inset 0 -2px 0 rgba(0,0,0,.04)
+  }
+  .brand-title{font-size:15px;font-weight:900;line-height:1.15;white-space:nowrap}
+  .brand-sub{font-size:10px;color:#A8896C;font-weight:700;margin-top:2px}
+  .top-actions{display:flex;gap:6px}
+  .top-actions a,.top-actions label,.top-actions button{
+    border:1px solid var(--line);background:white;color:#806C5B;
+    border-radius:13px;padding:7px 9px;font-size:11px;font-weight:900;
+    box-shadow:0 2px 7px rgba(90,65,40,.05)
+  }
+  .top-actions span{display:none}
 
-    .handdrawn-sticker {
-      width: 3.5rem !important; height: 3.5rem !important;
-      min-width: 3.5rem !important; min-height: 3.5rem !important;
-      max-width: 3.5rem !important; max-height: 3.5rem !important;
-      flex-shrink: 0 !important; background: #FFFFFF;
-      border: 2px dashed #EED6BF; border-radius: 1.15rem;
-      box-shadow: 0 3px 8px rgba(217, 155, 106, 0.1);
-      display: flex; align-items: center; justify-content: center;
-      position: relative; overflow: hidden; box-sizing: border-box; padding: 0.45rem;
-    }
-    .handdrawn-sticker img { width: 100% !important; height: 100% !important; object-fit: contain !important; display: block; flex-shrink: 0; }
+  .hero{
+    margin:14px 14px 10px;
+    border-radius:27px;
+    padding:18px 18px 16px;
+    background:linear-gradient(145deg,#FFC86F 0%,#F5A06B 55%,#F49A82 100%);
+    color:white;position:relative;overflow:hidden;
+    box-shadow:0 9px 24px rgba(221,135,78,.20);
+  }
+  .hero:after{
+    content:"🍓";position:absolute;right:-3px;bottom:-15px;
+    font-size:82px;opacity:.20;transform:rotate(-12deg)
+  }
+  .hero-kicker{font-size:12px;font-weight:900;letter-spacing:.08em;opacity:.95}
+  .hero-date{display:flex;align-items:baseline;gap:7px;margin-top:3px;position:relative;z-index:1}
+  .hero-date h1{margin:0;font-size:28px;line-height:1.15;font-weight:900}
+  .hero-date span{font-size:15px;font-weight:900}
+  .hero-note{font-size:12px;font-weight:800;margin-top:6px;opacity:.95;position:relative;z-index:1}
+  .hero-tools{display:flex;align-items:center;gap:6px;margin-top:12px;position:relative;z-index:2}
+  .hero-tools button,.hero-tools input{
+    border:0;border-radius:12px;background:rgba(255,255,255,.23);
+    color:white;font-weight:900;font-size:11px;padding:7px 9px
+  }
+  .hero-tools input{background:rgba(255,255,255,.95);color:var(--ink);max-width:132px}
 
-    .handdrawn-sticker-sm {
-      width: 2.75rem !important; height: 2.75rem !important;
-      min-width: 2.75rem !important; min-height: 2.75rem !important;
-      max-width: 2.75rem !important; max-height: 2.75rem !important;
-      flex-shrink: 0 !important; background: #FFFFFF;
-      border: 2px dashed #EED6BF; border-radius: 0.9rem;
-      box-shadow: 0 2px 6px rgba(217, 155, 106, 0.08);
-      display: flex; align-items: center; justify-content: center;
-      position: relative; overflow: hidden; box-sizing: border-box; padding: 0.4rem;
-    }
-    .handdrawn-sticker-sm img { width: 100% !important; height: 100% !important; object-fit: contain !important; display: block; flex-shrink: 0; }
-    
-    /* Grid-based 收合動畫 CSS (解決高度截斷問題) */
-    .collapsible-content {
-      display: grid;
-      grid-template-rows: 1fr;
-      transition: grid-template-rows 0.35s ease-out, opacity 0.35s ease-out;
-      opacity: 1;
-    }
-    .collapsible-content.collapsed {
-      grid-template-rows: 0fr;
-      opacity: 0;
-    }
-    .collapsible-inner {
-      overflow: hidden;
-    }
-    
-    .toggle-icon { transition: transform 0.3s ease; }
-    .collapsed .toggle-icon { transform: rotate(180deg); }
-  </style>
+  .section{padding:0 14px;margin-top:14px}
+  .section-head{display:flex;align-items:end;justify-content:space-between;padding:0 3px 8px}
+  .section-title{font-size:18px;font-weight:900}
+  .section-sub{font-size:10px;color:var(--muted);font-weight:700}
+  .meal-stack{display:grid;gap:11px}
+
+  .meal-card{
+    background:white;border:2px solid var(--line);border-radius:23px;
+    padding:14px;box-shadow:0 5px 15px rgba(89,64,42,.06);
+  }
+  .meal-card.featured{
+    border-color:#FFD18E;
+    background:linear-gradient(150deg,#FFFDF9 0%,#FFF6E7 100%);
+    box-shadow:0 7px 20px rgba(230,157,78,.11)
+  }
+  .meal-top{display:flex;align-items:center;gap:11px}
+  .meal-icon{
+    width:53px;height:53px;min-width:53px;border-radius:18px;
+    display:grid;place-items:center;font-size:30px;
+  }
+  .morning .meal-icon{background:#FFF0C8}
+  .lunch .meal-icon{background:#E4F5EA}
+  .snack .meal-icon{background:#FFE9E7}
+  .meal-label{font-size:11px;color:#9B8877;font-weight:900;letter-spacing:.04em}
+  .meal-name{font-size:17px;font-weight:900;margin-top:1px}
+  .meal-time{margin-left:auto;font-size:10px;font-weight:900;color:#A58D76;background:#fff;border:1px solid var(--line);border-radius:99px;padding:5px 8px}
+  .food-name{
+    font-size:24px;font-weight:900;line-height:1.25;margin:12px 0 3px;
+    color:#40372F;letter-spacing:.01em
+  }
+  .food-hint{font-size:11px;color:#A18D7D;font-weight:700}
+  .tag-row{display:flex;gap:6px;flex-wrap:wrap;margin-top:9px}
+  .tag{
+    display:inline-flex;align-items:center;gap:4px;border-radius:99px;
+    padding:5px 8px;font-size:10px;font-weight:900
+  }
+  .tag.milk{background:#EAF7FD;color:#3D83A5}
+  .tag.special{background:#FFF0B8;color:#8D681D}
+
+  .lunch-main{
+    display:grid;grid-template-columns:1fr auto;gap:10px;align-items:end;
+    margin-top:12px;padding:13px;border-radius:18px;background:white;border:1px solid #F0DFC5
+  }
+  .main-caption{font-size:10px;color:#B0967A;font-weight:900}
+  .main-dish{font-size:24px;line-height:1.2;font-weight:900;margin-top:2px}
+  .fruit-box{
+    min-width:84px;text-align:center;background:#FFF0EF;border-radius:16px;padding:8px 6px
+  }
+  .fruit-box img{width:36px;height:36px;object-fit:contain}
+  .fruit-box .fruit-label{font-size:9px;color:#AF7771;font-weight:900}
+  .fruit-box .fruit-name{font-size:12px;font-weight:900;color:#704B48;margin-top:1px}
+  .details-toggle{
+    margin-top:9px;width:100%;border:0;background:transparent;color:#A18265;
+    font-size:11px;font-weight:900;text-align:left;padding:5px 1px
+  }
+  .details{
+    max-height:0;overflow:hidden;opacity:0;transition:max-height .3s ease,opacity .2s ease
+  }
+  .details.open{max-height:400px;opacity:1}
+  #lunchPills{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px;margin-top:5px}
+  #lunchPills>div{
+    background:#FFFCF7!important;border:1px solid #F0E4D7!important;
+    border-radius:14px!important;padding:8px!important;box-shadow:none!important
+  }
+  #lunchPills>div>div:first-child{font-size:18px!important}
+  #lunchPills>div>div:nth-child(2){font-size:9px!important;color:#A99686!important}
+  #lunchPills>div>div:last-child{font-size:12px!important;white-space:normal!important}
+  .lunch-foot{display:flex;justify-content:space-between;gap:8px;margin-top:8px;padding-top:8px;border-top:1px dashed #EBDDCF;font-size:9px;color:#9B8A7B;font-weight:800}
+  .lunch-foot span:first-child{color:#5E9C7A}
+
+  .calendar-card,.stats-card{
+    background:white;border:2px solid var(--line);border-radius:23px;
+    box-shadow:0 5px 15px rgba(89,64,42,.05);overflow:hidden
+  }
+  .calendar-head{display:flex;justify-content:space-between;align-items:center;padding:14px 15px 9px}
+  .calendar-title{font-size:15px;font-weight:900}
+  .calendar-hint{font-size:9px;color:#A99584;font-weight:800}
+  #miniCalendarGrid{padding:3px 9px 13px;gap:4px 1px!important}
+  .calendar-week{display:grid;grid-template-columns:repeat(7,1fr);text-align:center;padding:0 9px 5px;color:#B1A296;font-size:10px;font-weight:900}
+  .cal-btn{
+    width:100%;max-width:38px;height:34px;border-radius:12px;
+    border:1px solid #F1E6DA;background:#FFFEFC;color:#5D5148;
+    font-size:11px;font-weight:900;position:relative
+  }
+  .calendar-active{
+    background:#F5A866!important;color:white!important;border-color:#F5A866!important;
+    transform:scale(1.05);box-shadow:0 4px 9px rgba(235,147,77,.25)
+  }
+  .calendar-today{background:#FFF4C9!important;border:2px solid #F2C65D!important;color:#8C691C!important}
+  .month-dot{width:5px;height:5px;border-radius:50%;background:#78B893;position:absolute;bottom:3px;left:50%;transform:translateX(-50%)}
+
+  .accordion-btn{
+    width:100%;border:0;background:#FFFDF9;padding:13px 15px;
+    display:flex;justify-content:space-between;align-items:center;color:var(--ink)
+  }
+  .accordion-btn strong{font-size:13px;font-weight:900}
+  .accordion-btn small{display:block;font-size:9px;color:#A99686;font-weight:700;margin-top:2px;text-align:left}
+  .accordion-content{display:none;padding:0 12px 13px}
+  .accordion-content.open{display:block}
+  .stats-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
+  .stat{border:1px solid var(--line);border-radius:16px;padding:10px;text-align:center;background:#FFFCF8}
+  .stat .emoji{font-size:23px}.stat .label{font-size:9px;color:#A28F7F;font-weight:800}.stat .value{font-size:17px;font-weight:900}
+  .holiday{background:white;border:2px solid var(--line);border-radius:23px;padding:28px 18px;text-align:center}
+  .holiday .emoji{font-size:52px}.holiday h2{font-size:22px;margin:7px 0 4px}.holiday p{font-size:11px;color:#9C8C80;font-weight:700}
+  footer{padding:22px 14px 0;text-align:center;color:#B1A398;font-size:9px;line-height:1.8}
+  footer a{color:#B78457!important}
+
+  @media(min-width:700px){
+    .app{max-width:900px}
+    .topbar-inner{padding-left:22px;padding-right:22px}
+    .top-actions span{display:inline}
+    .hero{margin-left:22px;margin-right:22px}
+    .section{padding-left:22px;padding-right:22px}
+    .meal-stack{grid-template-columns:1fr 1.25fr 1fr;align-items:stretch}
+    .meal-card{min-width:0}
+    .food-name,.main-dish{font-size:21px}
+    .calendar-card{max-width:520px;margin:auto}
+    .stats-grid{grid-template-columns:repeat(4,1fr)}
+  }
+</style>
+
 </head>
-<body class="min-h-screen flex flex-col antialiased">
 
-  <!-- 頂部 Header -->
-  <header class="bg-white/95 backdrop-blur-md sticky top-0 z-40 border-b border-apricot-200 shadow-xs">
-    <div class="max-w-5xl mx-auto px-2 sm:px-6 py-2 sm:py-3.5 flex items-center justify-between gap-1.5 sm:gap-2">
-      <!-- 標題與圖示 -->
-      <div class="flex items-center space-x-1.5 sm:space-x-2.5 min-w-0">
-        <div class="w-8 h-8 sm:w-10 sm:h-10 min-w-[2rem] min-h-[2rem] sm:min-w-[2.5rem] sm:min-h-[2.5rem] bg-apricot-100 rounded-xl sm:rounded-2xl flex items-center justify-center p-1 sm:p-1.5 shadow-inner border border-apricot-300 shrink-0 overflow-hidden">
-          <img src="https://cdn.jsdelivr.net/gh/hfg-gmuend/openmoji@latest/color/svg/1F955.svg" alt="carrot" class="w-full h-full object-contain pointer-events-none" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
-          <span class="hidden text-xl sm:text-2xl">🥕</span>
-        </div>
-        <div class="min-w-0 flex-1">
-          <h1 class="text-[13px] sm:text-xl font-black text-cream-dark tracking-tight sm:tracking-wide leading-tight truncate">龍安附幼・寶貝美味餐點</h1>
-          <p class="text-[9px] sm:text-xs text-apricot-600 font-bold truncate" id="headerSubtitle">幼兒園餐飲表</p>
+<body>
+<div class="app">
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="brand">
+        <div class="brand-icon">🍱</div>
+        <div>
+          <div class="brand-title">龍安附幼・寶貝美味餐點</div>
+          <div class="brand-sub" id="headerSubtitle">幼兒園餐飲表</div>
         </div>
       </div>
-
-      <!-- 操作按鈕區 -->
-      <div class="flex items-center gap-1 sm:gap-2 shrink-0">
-        <a href="https://www.laes.tp.edu.tw/nss/p/k1" target="_blank" rel="noopener noreferrer" class="bg-amber-50 hover:bg-amber-100 text-amber-800 text-[11px] sm:text-sm font-bold px-2 sm:px-3 py-1.5 sm:py-2 rounded-lg sm:rounded-xl border border-amber-300 transition flex items-center gap-1 shadow-xs shrink-0" title="前往龍安國小附設幼兒園公佈欄">
-          <i class="fa-solid fa-bullhorn text-amber-600"></i>
-          <span class="hidden sm:inline">幼兒園公佈欄</span>
-          <span class="inline sm:hidden">公佈欄</span>
+      <div class="top-actions">
+        <a href="https://www.laes.tp.edu.tw/nss/p/k1" target="_blank" rel="noopener noreferrer" title="幼兒園公佈欄">
+          <i class="fa-solid fa-bullhorn"></i><span>公佈欄</span>
         </a>
-
-        <label class="cursor-pointer bg-emerald-50 hover:bg-emerald-100 text-emerald-700 text-[11px] sm:text-sm font-bold px-2 sm:px-3 py-1.5 sm:py-2 rounded-lg sm:rounded-xl border border-emerald-300 transition flex items-center gap-1 shadow-xs shrink-0">
-          <i class="fa-solid fa-file-excel text-emerald-600"></i>
-          <span class="hidden sm:inline">手動匯入</span>
-          <span class="inline sm:hidden">匯入</span>
-          <input type="file" id="excelFileInput" accept=".xlsx, .xls" class="hidden">
+        <label title="手動匯入 Excel">
+          <i class="fa-solid fa-file-excel"></i><span>匯入</span>
+          <input type="file" id="excelFileInput" accept=".xlsx,.xls" hidden>
         </label>
-
-        <button id="btnToday" class="bg-apricot-100 hover:bg-apricot-200 text-apricot-700 text-[11px] sm:text-sm font-bold px-2 sm:px-3 py-1.5 sm:py-2 rounded-lg sm:rounded-xl border border-apricot-300 transition shrink-0 flex items-center gap-1">
-          <i class="fa-solid fa-rotate-left"></i><span>今天</span>
-        </button>
+        <button id="btnToday" title="回到今天"><i class="fa-solid fa-house"></i><span>今天</span></button>
       </div>
     </div>
   </header>
 
-  <!-- 提示 Toast -->
-  <div id="toast" class="fixed top-16 left-1/2 -translate-x-1/2 z-50 bg-emerald-700 text-white px-5 py-2.5 rounded-full shadow-lg text-xs sm:text-sm font-bold flex items-center gap-2 transition-all duration-300 opacity-0 pointer-events-none">
-    <i class="fa-solid fa-circle-check text-base"></i>
-    <span id="toastMsg">資料已更新！</span>
+  <div id="toast" class="fixed top-16 left-1/2 -translate-x-1/2 z-50 bg-emerald-700 text-white px-5 py-2.5 rounded-full shadow-lg text-xs font-bold flex items-center gap-2 transition-all duration-300 opacity-0 pointer-events-none">
+    <i class="fa-solid fa-circle-check"></i><span id="toastMsg">資料已更新！</span>
   </div>
 
-  <main class="max-w-5xl mx-auto px-3.5 sm:px-6 py-4 space-y-4 flex-1 w-full">
+  <main>
+    <section class="hero">
+      <div class="hero-kicker">🌟 今天吃什麼？</div>
+      <div class="hero-date">
+        <h1 id="bannerDate">載入中...</h1>
+        <span id="bannerWeekday"></span>
+        <span id="todayBadge" class="hidden">今天</span>
+      </div>
+      <div id="tagSpecial" class="hero-note" style="display:none"></div>
+      <div class="hero-note">小肚肚準備好了嗎？一起期待今天的美味吧！😋</div>
+      <div class="hero-tools">
+        <button id="btnPrevDay">‹ 前一天</button>
+        <button id="btnNextDay">後一天 ›</button>
+        <input type="date" id="datePicker" aria-label="選擇日期">
+      </div>
+    </section>
 
-    <!-- 頂部：檢視日期 + 縮小版行事曆 -->
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-3.5 items-stretch">
-      <!-- 檢視日期主卡 -->
-      <div class="lg:col-span-7 bg-gradient-to-r from-apricot-400 via-apricot-500 to-peach rounded-2xl p-4 sm:p-5 text-white shadow-sm flex flex-col justify-between relative overflow-hidden">
-        <div class="absolute -right-4 -bottom-6 text-white/10 text-8xl select-none font-black pointer-events-none">🍱</div>
-        <div class="relative z-10">
-          <div class="flex flex-wrap items-center gap-1.5 mb-1">
-            <span class="bg-white/25 backdrop-blur-md px-2.5 py-0.5 rounded-full text-xs font-black tracking-wider text-white"><i class="fa-solid fa-calendar-day mr-1"></i>檢視日期</span>
-            <span id="todayBadge" class="hidden bg-sun text-cream-dark px-2.5 py-0.5 rounded-full text-xs font-black shadow-xs">✨ 今日</span>
-            <span id="tagSpecial" class="hidden bg-white text-peach px-2.5 py-0.5 rounded-full text-xs font-black shadow-xs"></span>
-          </div>
-          <div class="flex items-baseline gap-2 mt-1">
-            <h2 id="bannerDate" class="text-2xl sm:text-3xl font-black tracking-wide">載入中...</h2>
-            <span id="bannerWeekday" class="text-base sm:text-xl font-bold text-apricot-100"></span>
-          </div>
-        </div>
-        <div class="relative z-10 flex items-center justify-between pt-3 mt-3 border-t border-white/20">
-          <div class="flex items-center gap-2">
-            <button id="btnPrevDay" class="px-2.5 py-1 rounded-xl bg-white/20 hover:bg-white/30 text-white text-xs sm:text-sm font-bold transition flex items-center gap-1"><i class="fa-solid fa-chevron-left"></i> 前一天</button>
-            <button id="btnNextDay" class="px-2.5 py-1 rounded-xl bg-white/20 hover:bg-white/30 text-white text-xs sm:text-sm font-bold transition flex items-center gap-1">後一天 <i class="fa-solid fa-chevron-right"></i></button>
-          </div>
-          <div><input type="date" id="datePicker" class="bg-white/90 text-cream-dark text-xs sm:text-sm font-bold px-2.5 py-1 rounded-xl focus:outline-none cursor-pointer border border-white"></div>
+    <section class="section" id="todaySection">
+      <div class="section-head">
+        <div>
+          <div class="section-title">🍴 今日美味三餐</div>
+          <div class="section-sub">先看這裡，一眼就知道今天要吃什麼！</div>
         </div>
       </div>
 
-      <!-- 縮小版迷你月曆 -->
-      <div class="lg:col-span-5 cute-card p-3 sm:p-3.5 flex flex-col justify-between">
-        <div class="flex items-center justify-between mb-1.5 px-1">
-          <div class="text-xs sm:text-sm font-black text-cream-dark flex items-center gap-1.5">
-            <i class="fa-solid fa-calendar-check text-apricot-500"></i><span id="calendarTitle">餐點行事曆</span>
-          </div>
-        </div>
-        <!-- 星期表頭 -->
-        <div class="grid grid-cols-7 text-center text-[10px] sm:text-xs font-black text-slate-400 mb-1 w-full justify-items-center">
-          <span class="w-[2.1rem]">日</span><span class="w-[2.1rem]">一</span><span class="w-[2.1rem]">二</span><span class="w-[2.1rem]">三</span><span class="w-[2.1rem]">四</span><span class="w-[2.1rem]">五</span><span class="w-[2.1rem]">六</span>
-        </div>
-        <!-- 月曆格 -->
-        <div id="miniCalendarGrid" class="grid grid-cols-7 gap-y-1 gap-x-0.5 justify-items-center"></div>
-      </div>
-    </div>
-
-    <!-- 幼兒園本月飲食統計小亮點 (手風琴可收合) -->
-    <div id="statsAccordion" class="cute-card overflow-hidden">
-      <button id="btnToggleStats" class="w-full flex items-center justify-between p-3.5 bg-apricot-50 hover:bg-apricot-100 transition focus:outline-none">
-        <div class="text-xs sm:text-sm font-black text-cream-dark flex items-center gap-1.5">
-          <span class="w-2 h-2 rounded-full bg-apricot-500 inline-block"></span>幼兒園本月飲食統計小亮點
-        </div>
-        <i class="fa-solid fa-chevron-up text-apricot-500 toggle-icon"></i>
-      </button>
-      <div id="statsContent" class="collapsible-content bg-white">
-        <div class="collapsible-inner">
-          <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5 p-3.5 pt-0">
-            <div class="border border-apricot-100 rounded-xl p-3 text-center flex flex-col items-center bg-amber-50/30">
-              <div class="handdrawn-sticker-sm bg-amber-50/80 mb-1.5 shrink-0"><img src="https://cdn.jsdelivr.net/gh/hfg-gmuend/openmoji@latest/color/svg/1F95B.svg" alt="鮮奶"></div>
-              <div class="text-xs text-slate-500 font-bold">每週鮮奶日</div>
-              <div class="text-base sm:text-lg font-black text-cream-dark" id="statMilk">-- 天</div>
-              <div class="text-[10px] text-apricot-600 font-medium">鈣質補充</div>
-            </div>
-            <div class="border border-apricot-100 rounded-xl p-3 text-center flex flex-col items-center bg-rose-50/30">
-              <div class="handdrawn-sticker-sm bg-rose-50/80 mb-1.5 shrink-0"><img src="https://cdn.jsdelivr.net/gh/hfg-gmuend/openmoji@latest/color/svg/1F349.svg" alt="水果"></div>
-              <div class="text-xs text-slate-500 font-bold">午餐附鮮果</div>
-              <div class="text-base sm:text-lg font-black text-cream-dark" id="statFruit">-- 天</div>
-              <div class="text-[10px] text-rose-500 font-medium">餐後水果</div>
-            </div>
-            <div class="border border-apricot-100 rounded-xl p-3 text-center flex flex-col items-center bg-orange-50/30">
-              <div class="handdrawn-sticker-sm bg-orange-50/80 mb-1.5 shrink-0"><img src="https://cdn.jsdelivr.net/gh/hfg-gmuend/openmoji@latest/color/svg/1F372.svg" alt="鹹粥"></div>
-              <div class="text-xs text-slate-500 font-bold">暖胃鹹粥麵</div>
-              <div class="text-base sm:text-lg font-black text-cream-dark" id="statSoup">-- 次</div>
-              <div class="text-[10px] text-amber-600 font-medium">易咀嚼好消化</div>
-            </div>
-            <div class="border border-apricot-100 rounded-xl p-3 text-center flex flex-col items-center bg-emerald-50/30">
-              <div class="handdrawn-sticker-sm bg-emerald-50/80 mb-1.5 shrink-0"><img src="https://cdn.jsdelivr.net/gh/hfg-gmuend/openmoji@latest/color/svg/1F96C.svg" alt="蔬菜"></div>
-              <div class="text-xs text-slate-500 font-bold">履歷時蔬</div>
-              <div class="text-base sm:text-lg font-black text-cream-dark">100%</div>
-              <div class="text-[10px] text-mint font-medium">安全無毒</div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- 營養與食材分析頁籤內容 (手風琴可收合，解決高度截斷) -->
-    <div id="nutritionAccordion" class="cute-card overflow-hidden hidden">
-      <button id="btnToggleNutrition" class="w-full flex items-center justify-between p-3.5 bg-mint/10 hover:bg-mint/20 transition focus:outline-none border-b border-mint/10">
-        <div class="text-xs sm:text-sm font-black text-emerald-800 flex items-center gap-1.5">
-          <span class="w-2 h-2 rounded-full bg-mint inline-block"></span>營養與食材分析大數據
-        </div>
-        <i class="fa-solid fa-chevron-up text-mint toggle-icon"></i>
-      </button>
-      <div id="nutritionContent" class="collapsible-content collapsed bg-white">
-        <div class="collapsible-inner">
-          <div id="nutritionBody" class="p-4 sm:p-5 grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5">
-            <!-- 動態生成分析內容 -->
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- 餐點明細卡片清單 -->
-    <div id="mealsContainer" class="space-y-3.5">
-      <!-- 1. 晨光活力早點 -->
-      <div class="cute-card p-4 sm:p-5 flex items-start gap-3.5">
-        <div class="handdrawn-sticker bg-amber-50/80 shrink-0">
-          <img src="https://cdn.jsdelivr.net/gh/hfg-gmuend/openmoji@latest/color/svg/1F963.svg" alt="早點" class="pointer-events-none">
-        </div>
-        <div class="flex-1 min-w-0">
-          <div class="flex items-center justify-between">
-            <h3 class="font-black text-base sm:text-lg text-cream-dark">活力晨間早點</h3>
-            <span class="text-xs font-bold px-2 py-0.5 rounded-full bg-amber-100 text-amber-800">上午 08:30</span>
-          </div>
-          <p id="mealMorning" class="mt-1.5 text-lg sm:text-xl font-black text-slate-800 leading-snug"></p>
-          <div id="milkBadge" class="mt-2 hidden">
-            <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-50 text-blue-700 text-xs font-bold border border-blue-200">
-              <i class="fa-solid fa-cow"></i> 鮮奶補鈣日 (每週一、四)
-            </span>
-          </div>
-        </div>
-      </div>
-
-      <!-- 2. 幼兒美味午餐 ＆ 午餐當季水果 -->
-      <div class="cute-card p-4 sm:p-5 bg-gradient-to-br from-white to-apricot-50/40">
-        <div class="flex items-center justify-between pb-3 border-b border-apricot-200/60">
-          <div class="flex items-center gap-2.5">
-            <div class="handdrawn-sticker bg-mint/20 shrink-0">
-              <img src="https://cdn.jsdelivr.net/gh/hfg-gmuend/openmoji@latest/color/svg/1F371.svg" alt="午餐" class="pointer-events-none">
-            </div>
+      <div id="mealsContainer" class="meal-stack">
+        <article class="meal-card morning">
+          <div class="meal-top">
+            <div class="meal-icon">🥣</div>
             <div>
-              <h3 class="font-black text-base sm:text-lg text-cream-dark">幼兒美味午餐</h3>
-              <p class="text-xs text-slate-400 font-medium">非基改大豆與玉米・在銷在地國產肉品</p>
+              <div class="meal-label">早餐・08:30</div>
+              <div class="meal-name">活力晨間早點</div>
             </div>
+            <span class="meal-time">早上</span>
           </div>
-          <span class="text-xs font-bold px-2.5 py-1 rounded-full bg-mint/20 text-emerald-800">中午 11:40</span>
-        </div>
-        
-        <div class="grid grid-cols-2 sm:grid-cols-5 gap-2 mt-3.5" id="lunchPills"></div>
+          <div id="mealMorning" class="food-name">—</div>
+          <div class="food-hint">吃飽飽，元氣出發！🌞</div>
+          <div class="tag-row">
+            <span id="milkBadge" class="tag milk" style="display:none">🥛 今天有鮮奶</span>
+          </div>
+        </article>
 
-        <div class="mt-3.5 p-3.5 rounded-xl border border-rose-200/80 bg-rose-50/40 flex items-center justify-between gap-3">
-          <div class="flex items-center gap-3">
-            <div class="handdrawn-sticker bg-rose-100 shrink-0">
-              <img id="mealFruitImg" src="https://cdn.jsdelivr.net/gh/hfg-gmuend/openmoji@latest/color/svg/1F34E.svg" alt="水果" class="pointer-events-none">
-            </div>
+        <article class="meal-card featured lunch">
+          <div class="meal-top">
+            <div class="meal-icon">🍚</div>
             <div>
-              <div class="flex items-center gap-1.5"><span class="text-xs text-slate-400">午餐隨餐供應</span></div>
-              <p id="mealFruit" class="text-xl sm:text-2xl font-black text-rose-950 mt-0.5"></p>
+              <div class="meal-label">午餐・11:40</div>
+              <div class="meal-name">今天的主角是…</div>
+            </div>
+            <span class="meal-time">中午</span>
+          </div>
+
+          <div class="lunch-main">
+            <div>
+              <div class="main-caption">🍗 今日主菜</div>
+              <div id="mealMainDish" class="main-dish">—</div>
+              <div id="mealStaple" class="food-hint">搭配香香主食</div>
+            </div>
+            <div class="fruit-box">
+              <img id="mealFruitImg" src="https://cdn.jsdelivr.net/gh/hfg-gmuend/openmoji@latest/color/svg/1F34E.svg" alt="水果">
+              <div class="fruit-label">餐後水果</div>
+              <div id="mealFruit" class="fruit-name">—</div>
             </div>
           </div>
-          <div class="text-right hidden sm:block">
-            <span class="text-xs text-rose-700 font-bold bg-white/90 px-3 py-1 rounded-full border border-rose-200">每日新鮮定量 1 份</span>
+
+          <div class="tag-row">
+            <span id="lunchSpecialTag" class="tag special" style="display:none"></span>
+          </div>
+
+          <button class="details-toggle" type="button" id="lunchDetailsToggle">＋ 偷偷看看午餐全部內容</button>
+          <div id="lunchDetails" class="details">
+            <div id="lunchPills"></div>
+            <div class="lunch-foot">
+              <span id="vegCertText">🌿 今日蔬菜</span>
+              <span id="lunchKcalText">-- kcal</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="meal-card snack">
+          <div class="meal-top">
+            <div class="meal-icon">🍪</div>
+            <div>
+              <div class="meal-label">下午點心・14:30</div>
+              <div class="meal-name">甜蜜午後點心</div>
+            </div>
+            <span class="meal-time">下午</span>
+          </div>
+          <div id="mealAfternoon" class="food-name">—</div>
+          <div id="afternoonNote" class="food-hint">下午也有小驚喜！✨</div>
+        </article>
+      </div>
+
+      <div id="holidayBanner" class="holiday hidden">
+        <div class="emoji">🎈</div>
+        <h2 id="holidayTitle">放假一日</h2>
+        <p>今天幼兒園不用到校，好好休息、玩耍，明天再一起吃美味餐點喔！</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="calendar-card">
+        <div class="calendar-head">
+          <div>
+            <div class="calendar-title">🗓️ 看看整個月</div>
+            <div class="calendar-hint">想知道明天、下週吃什麼，再來這裡找</div>
+          </div>
+          <div id="calendarTitle" class="section-sub"></div>
+        </div>
+        <div class="calendar-week">
+          <span>日</span><span>一</span><span>二</span><span>三</span><span>四</span><span>五</span><span>六</span>
+        </div>
+        <div id="miniCalendarGrid" class="grid grid-cols-7"></div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="stats-card">
+        <button id="btnToggleStats" class="accordion-btn" type="button">
+          <div>
+            <strong>✨ 本月餐點小發現</strong>
+            <small>想多看一點，再點開就好</small>
+          </div>
+          <i class="fa-solid fa-chevron-down"></i>
+        </button>
+        <div id="statsContent" class="accordion-content">
+          <div class="stats-grid">
+            <div class="stat"><div class="emoji">🥛</div><div class="label">每週鮮奶日</div><div id="statMilk" class="value">-- 天</div></div>
+            <div class="stat"><div class="emoji">🍉</div><div class="label">午餐附鮮果</div><div id="statFruit" class="value">-- 天</div></div>
+            <div class="stat"><div class="emoji">🍲</div><div class="label">暖胃粥麵湯</div><div id="statSoup" class="value">-- 次</div></div>
+            <div class="stat"><div class="emoji">🥬</div><div class="label">履歷時蔬</div><div class="value">100%</div></div>
           </div>
         </div>
+      </div>
+    </section>
 
-        <div class="mt-3 flex items-center justify-between text-xs sm:text-sm text-slate-500 pt-2 border-t border-apricot-100">
-          <span id="vegCertText" class="font-bold flex items-center gap-1 text-mint"><i class="fa-solid fa-leaf"></i> 產銷履歷/有機時蔬 80g</span>
-          <span id="lunchKcalText" class="font-black text-apricot-600">-- kcal</span>
+    <section id="nutritionAccordion" class="section hidden">
+      <div class="stats-card">
+        <button id="btnToggleNutrition" class="accordion-btn" type="button">
+          <div><strong>🌿 營養與食材分析</strong><small>給大人看的詳細資料</small></div>
+          <i class="fa-solid fa-chevron-down"></i>
+        </button>
+        <div id="nutritionContent" class="accordion-content">
+          <div id="nutritionBody" class="grid grid-cols-1 sm:grid-cols-2 gap-3"></div>
         </div>
       </div>
-
-      <!-- 3. 甜蜜溫馨午點 -->
-      <div class="cute-card p-4 sm:p-5 flex items-start gap-3.5">
-        <div class="handdrawn-sticker bg-orange-50/80 shrink-0">
-          <img src="https://cdn.jsdelivr.net/gh/hfg-gmuend/openmoji@latest/color/svg/1F95E.svg" alt="午點" class="pointer-events-none">
-        </div>
-        <div class="flex-1 min-w-0">
-          <div class="flex items-center justify-between">
-            <h3 class="font-black text-base sm:text-lg text-cream-dark">溫馨午後點心</h3>
-            <span class="text-xs font-bold px-2 py-0.5 rounded-full bg-orange-100 text-orange-800">下午 14:30</span>
-          </div>
-          <p id="mealAfternoon" class="mt-1.5 text-lg sm:text-xl font-black text-slate-800 leading-snug"></p>
-          <p id="afternoonNote" class="mt-1 text-xs text-slate-400 font-medium"></p>
-        </div>
-      </div>
-    </div>
-
-    <!-- 假日狀態提示 -->
-    <div id="holidayBanner" class="hidden cute-card p-8 sm:p-10 text-center space-y-2 bg-white">
-      <div class="w-16 h-16 min-w-[4rem] min-h-[4rem] max-w-[4rem] max-h-[4rem] mx-auto mb-1 flex items-center justify-center shrink-0 overflow-hidden">
-        <img src="https://cdn.jsdelivr.net/gh/hfg-gmuend/openmoji@latest/color/svg/1F388.svg" alt="放假" class="pointer-events-none">
-      </div>
-      <h3 id="holidayTitle" class="text-xl sm:text-2xl font-black text-cream-dark">放假一日</h3>
-      <p class="text-sm sm:text-base text-slate-500 font-medium">今天幼兒園不用到校，好好陪伴寶貝休息放鬆喔！</p>
-    </div>
+    </section>
   </main>
 
-  <footer class="text-center py-4 text-xs text-slate-400 font-medium border-t border-apricot-200/40 bg-white/30 mt-4">
+  <footer>
     臺北市大安區龍安國小附設幼兒園 餐飲彙整表<br>
-    <a href="https://www.laes.tp.edu.tw/nss/p/k1" target="_blank" class="text-apricot-600 hover:text-apricot-700 underline font-bold mt-1 inline-block">幼兒園公佈欄網址：https://www.laes.tp.edu.tw/nss/p/k1</a><br>
-    created by Millie Tan - 2026
+    <a href="https://www.laes.tp.edu.tw/nss/p/k1" target="_blank">幼兒園公佈欄</a> ・ created by Millie Tan - 2026
   </footer>
-
+</div>
   <script>
     // --- 初始預設資料庫 (防呆備援) ---
     let KINDERGARTEN_MENU = {
@@ -415,13 +477,21 @@
 
     // --- Accordion 展開收合邏輯 ---
     document.getElementById('btnToggleStats').addEventListener('click', function() {
-      document.getElementById('statsContent').classList.toggle('collapsed');
-      this.classList.toggle('collapsed');
+      document.getElementById('statsContent').classList.toggle('open');
+      this.querySelector('i').classList.toggle('fa-chevron-up');
+      this.querySelector('i').classList.toggle('fa-chevron-down');
     });
 
     document.getElementById('btnToggleNutrition').addEventListener('click', function() {
-      document.getElementById('nutritionContent').classList.toggle('collapsed');
-      this.classList.toggle('collapsed');
+      document.getElementById('nutritionContent').classList.toggle('open');
+      this.querySelector('i').classList.toggle('fa-chevron-up');
+      this.querySelector('i').classList.toggle('fa-chevron-down');
+    });
+
+    document.getElementById('lunchDetailsToggle').addEventListener('click', function() {
+      const box = document.getElementById('lunchDetails');
+      const open = box.classList.toggle('open');
+      this.textContent = open ? '－ 收起午餐全部內容' : '＋ 偷偷看看午餐全部內容';
     });
 
     // 取得資料庫中主要的年月 (作為預設月曆)
@@ -553,7 +623,7 @@
 
       if (data && !isWeekend && data.note && data.note.includes("特餐")) {
         const dot = document.createElement('span');
-        dot.className = `w-1.5 h-1.5 rounded-full absolute bottom-0.5 ${isSelected ? 'bg-white' : 'bg-blue-500'}`;
+        dot.className = 'month-dot';
         btn.appendChild(dot);
       }
 
@@ -617,6 +687,18 @@
         }
 
         document.getElementById('mealMorning').textContent = data.morning || "美味晨間點心";
+        document.getElementById('mealMainDish').textContent = (data.lunch && data.lunch.main) ? data.lunch.main : "今日美味主菜";
+        document.getElementById('mealStaple').textContent = (data.lunch && data.lunch.staple) ? `搭配 ${data.lunch.staple}` : "今天也要吃飽飽";
+        const lunchSpecial = document.getElementById('lunchSpecialTag');
+        if (lunchSpecial) {
+          if (data.note) {
+            lunchSpecial.textContent = `✨ ${data.note}`;
+            lunchSpecial.style.display = 'inline-flex';
+          } else {
+            lunchSpecial.style.display = 'none';
+          }
+        }
+
         document.getElementById('milkBadge').style.display = (data.morning && data.morning.includes('鮮奶')) ? 'block' : 'none';
 
         const pills = document.getElementById('lunchPills');
