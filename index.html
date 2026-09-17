@@ -3,15 +3,16 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>龍安附幼・寶貝美味餐點彙整表</title>
+  <title>龍安附幼・美味餐點彙整表</title>
+
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- SheetJS CDN (Excel 解析引擎) -->
   <script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
-  <!-- Google Fonts: Zen Maru Gothic & Noto Sans TC -->
+  <!-- Google Fonts: Zen Maru Gothic, Noto Sans TC & Caveat -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=Zen+Maru+Gothic:wght@500;700;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=Zen+Maru+Gothic:wght@500;700;900&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
   <!-- FontAwesome Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   
@@ -34,852 +35,1484 @@
     }
   </script>
   
-<style>
-  :root{
-    --cream:#FFF9F0;
-    --ink:#4A4038;
-    --muted:#8B8178;
-    --orange:#F6A65B;
-    --orange2:#FFD58A;
-    --yellow:#FFE98A;
-    --mint:#8FD3B5;
-    --mint2:#E8F8EF;
-    --pink:#F7B6B2;
-    --pink2:#FFF0EF;
-    --blue:#8CC8E8;
-    --blue2:#EAF7FD;
-    --line:#F0E1D0;
-    --white:#FFFFFF;
-  }
-  *{box-sizing:border-box}
-  html{scroll-behavior:smooth}
-  body{
-    margin:0;
-    background:
-      radial-gradient(circle at 10% 10%, rgba(255,233,138,.28) 0 34px, transparent 35px),
-      radial-gradient(circle at 92% 18%, rgba(143,211,181,.20) 0 42px, transparent 43px),
-      var(--cream);
-    color:var(--ink);
-    font-family:"Zen Maru Gothic","Noto Sans TC",sans-serif;
-    -webkit-tap-highlight-color:transparent;
-  }
-  button,input{font:inherit}
-  .app{width:100%;max-width:760px;margin:auto;padding-bottom:28px}
-  .topbar{
-    position:sticky;top:0;z-index:40;
-    background:rgba(255,249,240,.94);
-    backdrop-filter:blur(14px);
-    border-bottom:1px solid rgba(240,225,208,.8);
-  }
-  .topbar-inner{
-    min-height:58px;padding:8px 14px;
-    display:flex;align-items:center;justify-content:space-between;gap:8px
-  }
-  .brand{display:flex;align-items:center;gap:9px;min-width:0}
-  .brand-icon{
-    width:40px;height:40px;border-radius:15px;background:#FFE7B9;
-    display:grid;place-items:center;font-size:24px;box-shadow:inset 0 -2px 0 rgba(0,0,0,.04)
-  }
-  .brand-title{font-size:15px;font-weight:900;line-height:1.15;white-space:nowrap}
-  .brand-sub{font-size:10px;color:#A8896C;font-weight:700;margin-top:2px}
-  .top-actions{display:flex;gap:6px}
-  .top-actions a,.top-actions label,.top-actions button{
-    border:1px solid var(--line);background:white;color:#806C5B;
-    border-radius:13px;padding:7px 9px;font-size:11px;font-weight:900;
-    box-shadow:0 2px 7px rgba(90,65,40,.05)
-  }
-  .top-actions span{display:none}
+  <style>
+    :root {
+      --cream: #FFFDF9;
+      --paper: #FFF8EE;
+      --ink: #443931;
+      --ink-soft: #6E5C4E;
+      --muted: #958374;
+      --line: #EADBC8;
+      --orange: #F5A06B;
+      --yellow: #F7D26D;
+      --mint: #78B896;
+      --pink: #F28C7D;
+      --blue: #70B8DC;
+    }
 
-  .hero{
-    margin:14px 14px 10px;
-    border-radius:27px;
-    padding:18px 18px 16px;
-    background:linear-gradient(145deg,#FFC86F 0%,#F5A06B 55%,#F49A82 100%);
-    color:white;position:relative;overflow:hidden;
-    box-shadow:0 9px 24px rgba(221,135,78,.20);
-  }
-  .hero:after{
-    content:"🍓";position:absolute;right:-3px;bottom:-15px;
-    font-size:82px;opacity:.20;transform:rotate(-12deg)
-  }
-  .hero-kicker{font-size:12px;font-weight:900;letter-spacing:.08em;opacity:.95}
-  .hero-date{display:flex;align-items:baseline;gap:7px;margin-top:3px;position:relative;z-index:1}
-  .hero-date h1{margin:0;font-size:28px;line-height:1.15;font-weight:900}
-  .hero-date span{font-size:15px;font-weight:900}
-  .hero-note{font-size:12px;font-weight:800;margin-top:6px;opacity:.95;position:relative;z-index:1}
-  .hero-tools{display:flex;align-items:center;gap:6px;margin-top:12px;position:relative;z-index:2}
-  .hero-tools button,.hero-tools input{
-    border:0;border-radius:12px;background:rgba(255,255,255,.23);
-    color:white;font-weight:900;font-size:11px;padding:7px 9px
-  }
-  .hero-tools input{background:rgba(255,255,255,.95);color:var(--ink);max-width:132px}
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background:
+        radial-gradient(circle at 4% 8%, rgba(247,210,109,.22) 0 36px, transparent 37px),
+        radial-gradient(circle at 96% 16%, rgba(112,184,220,.18) 0 48px, transparent 49px),
+        radial-gradient(circle at 10% 90%, rgba(242,140,125,.16) 0 40px, transparent 41px),
+        radial-gradient(circle at 92% 85%, rgba(120,184,150,.18) 0 44px, transparent 45px),
+        linear-gradient(180deg, #FFFDF9 0%, #FFF8EE 100%);
+      color: var(--ink);
+      font-family: "Zen Maru Gothic", "Noto Sans TC", sans-serif;
+      -webkit-tap-highlight-color: transparent;
+      min-height: 100vh;
+    }
 
-  .section{padding:0 14px;margin-top:14px}
-  .section-head{display:flex;align-items:end;justify-content:space-between;padding:0 3px 8px}
-  .section-title{font-size:18px;font-weight:900}
-  .section-sub{font-size:10px;color:var(--muted);font-weight:700}
-  .meal-stack{display:grid;gap:11px}
+    /* 主外框容器：寬敞大氣 */
+    .app {
+      width: 100%;
+      max-width: 1260px;
+      margin: 0 auto;
+      padding-bottom: 48px;
+    }
 
-  .meal-card{
-    background:white;border:2px solid var(--line);border-radius:23px;
-    padding:14px;box-shadow:0 5px 15px rgba(89,64,42,.06);
-  }
-  .meal-card.featured{
-    border-color:#FFD18E;
-    background:linear-gradient(150deg,#FFFDF9 0%,#FFF6E7 100%);
-    box-shadow:0 7px 20px rgba(230,157,78,.11)
-  }
-  .meal-top{display:flex;align-items:center;gap:11px}
-  .meal-icon{
-    width:53px;height:53px;min-width:53px;border-radius:18px;
-    display:grid;place-items:center;font-size:30px;
-  }
-  .morning .meal-icon{background:#FFF0C8}
-  .lunch .meal-icon{background:#E4F5EA}
-  .snack .meal-icon{background:#FFE9E7}
-  .meal-label{font-size:11px;color:#9B8877;font-weight:900;letter-spacing:.04em}
-  .meal-name{font-size:17px;font-weight:900;margin-top:1px}
-  .meal-time{margin-left:auto;font-size:10px;font-weight:900;color:#A58D76;background:#fff;border:1px solid var(--line);border-radius:99px;padding:5px 8px}
-  .food-name{
-    font-size:24px;font-weight:900;line-height:1.25;margin:12px 0 3px;
-    color:#40372F;letter-spacing:.01em
-  }
-  .food-hint{font-size:11px;color:#A18D7D;font-weight:700}
-  .tag-row{display:flex;gap:6px;flex-wrap:wrap;margin-top:9px}
-  .tag{
-    display:inline-flex;align-items:center;gap:4px;border-radius:99px;
-    padding:5px 8px;font-size:10px;font-weight:900
-  }
-  .tag.milk{background:#EAF7FD;color:#3D83A5}
-  .tag.special{background:#FFF0B8;color:#8D681D}
+    /* ---------- 頂部導航列 ---------- */
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 40;
+      background: rgba(255, 253, 249, 0.94);
+      backdrop-filter: blur(14px);
+      border-bottom: 2px dashed #EADBC8;
+      box-shadow: 0 4px 18px rgba(85, 65, 45, 0.04);
+    }
+    .topbar-inner {
+      max-width: 1260px;
+      margin: 0 auto;
+      min-height: 64px;
+      padding: 10px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-width: 0;
+    }
+    .brand-icon {
+      width: 44px;
+      height: 44px;
+      min-width: 44px;
+      border-radius: 50%;
+      background: #FFEAA8;
+      border: 2px solid #F0CA62;
+      display: grid;
+      place-items: center;
+      overflow: hidden;
+      box-shadow: 2px 2px 0 rgba(100, 75, 45, 0.08);
+    }
+    .brand-icon img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+    .brand-title {
+      font-size: 17px;
+      font-weight: 900;
+      color: #3C322B;
+      line-height: 1.2;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .brand-sub {
+      font-size: 11px;
+      color: #9C7E66;
+      font-weight: 700;
+      margin-top: 2px;
+    }
+    .top-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-shrink: 0;
+    }
+    .top-actions a, .top-actions label, .top-actions button {
+      border: 2px solid #EADBC8;
+      background: #FFFDF9;
+      color: #725D4C;
+      border-radius: 14px;
+      padding: 8px 13px;
+      font-size: 12px;
+      font-weight: 900;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      box-shadow: 2px 2px 0 rgba(90, 65, 40, 0.06);
+      transition: all 0.18s ease;
+    }
+    .top-actions a:hover, .top-actions label:hover, .top-actions button:hover {
+      background: #FFF4D6;
+      transform: translateY(-1px);
+    }
 
-  .lunch-main{
-    display:grid;grid-template-columns:1fr auto;gap:10px;align-items:end;
-    margin-top:12px;padding:13px;border-radius:18px;background:white;border:1px solid #F0DFC5
-  }
-  .main-caption{font-size:10px;color:#B0967A;font-weight:900}
-  .main-dish{font-size:24px;line-height:1.2;font-weight:900;margin-top:2px}
-  .fruit-box{
-    min-width:84px;text-align:center;background:#FFF0EF;border-radius:16px;padding:8px 6px
-  }
-  .fruit-box img{width:36px;height:36px;object-fit:contain}
-  .fruit-box .fruit-label{font-size:9px;color:#AF7771;font-weight:900}
-  .fruit-box .fruit-name{font-size:12px;font-weight:900;color:#704B48;margin-top:1px}
-  .details-toggle{
-    margin-top:9px;width:100%;border:0;background:transparent;color:#A18265;
-    font-size:11px;font-weight:900;text-align:left;padding:5px 1px
-  }
-  .details{
-    max-height:0;overflow:hidden;opacity:0;transition:max-height .3s ease,opacity .2s ease
-  }
-  .details.open{max-height:400px;opacity:1}
-  #lunchPills{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px;margin-top:5px}
-  #lunchPills>div{
-    background:#FFFCF7!important;border:1px solid #F0E4D7!important;
-    border-radius:14px!important;padding:8px!important;box-shadow:none!important
-  }
-  #lunchPills>div>div:first-child{font-size:18px!important}
-  #lunchPills>div>div:nth-child(2){font-size:9px!important;color:#A99686!important}
-  #lunchPills>div>div:last-child{font-size:12px!important;white-space:normal!important}
-  .lunch-foot{display:flex;justify-content:space-between;gap:8px;margin-top:8px;padding-top:8px;border-top:1px dashed #EBDDCF;font-size:9px;color:#9B8A7B;font-weight:800}
-  .lunch-foot span:first-child{color:#5E9C7A}
+    /* ---------- 今日橫幅（Hero Banner） ---------- */
+    .hero {
+      margin: 18px 20px 24px;
+      padding: 26px 30px;
+      border-radius: 28px;
+      border: 2.5px solid #504237;
+      background: #F8D36A url('maisy_web_assets/bg_yellow_morning.png') right center/auto 100% no-repeat;
+      box-shadow: 5px 6px 0 rgba(70, 55, 40, 0.1), 0 16px 32px rgba(80, 60, 40, 0.06);
+      position: relative;
+      overflow: hidden;
+    }
+    .hero:before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(90deg, rgba(255, 251, 242, 0.97) 0%, rgba(255, 251, 242, 0.88) 55%, rgba(255, 251, 242, 0.25) 85%);
+      z-index: 0;
+    }
+    .hero-body {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    @media(min-width: 768px) {
+      .hero-body {
+        flex-direction: row;
+        align-items: center;
+      }
+    }
+    .hero-content {
+      flex: 1;
+      min-width: 0;
+    }
+    .hero-mascot-box {
+      flex-shrink: 0;
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+    }
+    .hero-mascot {
+      width: 140px;
+      height: 180px;
+      object-fit: contain;
+      filter: drop-shadow(4px 6px 0 rgba(50, 40, 30, 0.12));
+      transition: transform 0.25s ease;
+    }
+    @media(min-width: 1024px) {
+      .hero-mascot {
+        width: 165px;
+        height: 200px;
+      }
+    }
+    .hero-kicker {
+      font-size: 13px;
+      font-weight: 900;
+      letter-spacing: .06em;
+      color: #7A604D;
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      flex-wrap: wrap;
+    }
+    .story-label {
+      padding: 3px 9px;
+      border-radius: 99px;
+      background: #E85C45;
+      color: white;
+      font-size: 9px;
+      letter-spacing: .08em;
+      font-weight: 900;
+    }
+    .hero-date {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+      gap: 10px;
+      margin-top: 6px;
+    }
+    .hero-date h1 {
+      margin: 0;
+      font-size: 32px;
+      line-height: 1.15;
+      font-weight: 900;
+      color: #3A3028;
+    }
+    .hero-date span {
+      font-size: 18px;
+      font-weight: 800;
+      color: #6C5543;
+    }
+    .badge-today {
+      background: #F7C94A;
+      color: #553E17;
+      padding: 3px 10px;
+      border-radius: 99px;
+      font-size: 12px;
+      font-weight: 900;
+      border: 1.5px solid #DCA72B;
+    }
+    .hero-note {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      font-size: 13px;
+      font-weight: 800;
+      color: #6C5340;
+      background: #FFF8E2;
+      border: 2px dashed #E8BD56;
+      border-radius: 16px;
+      padding: 8px 14px;
+      margin-top: 10px;
+    }
+    .hero-note img {
+      width: 20px;
+      height: 20px;
+      object-fit: contain;
+    }
+    .hero-tools {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 14px;
+      flex-wrap: wrap;
+    }
+    .hero-tools button, .hero-tools input {
+      border: 2px solid rgba(70, 60, 50, 0.18);
+      background: #FFFDF9;
+      color: #554436;
+      font-weight: 900;
+      font-size: 12px;
+      padding: 8px 14px;
+      border-radius: 14px;
+      box-shadow: 2px 2px 0 rgba(70, 50, 30, 0.06);
+      cursor: pointer;
+      transition: background .18s;
+    }
+    .hero-tools button:hover {
+      background: #FFF2C6;
+    }
+    .hero-tools input {
+      font-size: 12px;
+      max-width: 145px;
+    }
 
-  .calendar-card,.stats-card{
-    background:white;border:2px solid var(--line);border-radius:23px;
-    box-shadow:0 5px 15px rgba(89,64,42,.05);overflow:hidden
-  }
-  .calendar-head{display:flex;justify-content:space-between;align-items:center;padding:14px 15px 9px}
-  .calendar-title{font-size:15px;font-weight:900}
-  .calendar-hint{font-size:9px;color:#A99584;font-weight:800}
-  #miniCalendarGrid{padding:3px 9px 13px;gap:4px 1px!important}
-  .calendar-week{display:grid;grid-template-columns:repeat(7,1fr);text-align:center;padding:0 9px 5px;color:#B1A296;font-size:10px;font-weight:900}
-  .cal-btn{
-    width:100%;max-width:38px;height:34px;border-radius:12px;
-    border:1px solid #F1E6DA;background:#FFFEFC;color:#5D5148;
-    font-size:11px;font-weight:900;position:relative
-  }
-  .calendar-active{
-    background:#F5A866!important;color:white!important;border-color:#F5A866!important;
-    transform:scale(1.05);box-shadow:0 4px 9px rgba(235,147,77,.25)
-  }
-  .calendar-today{background:#FFF4C9!important;border:2px solid #F2C65D!important;color:#8C691C!important}
-  .month-dot{width:5px;height:5px;border-radius:50%;background:#78B893;position:absolute;bottom:3px;left:50%;transform:translateX(-50%)}
+    /* ---------- 主版面佈局（桌機雙欄寬鬆排版） ---------- */
+    .layout {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 24px;
+      padding: 0 20px;
+    }
+    @media(min-width: 1024px) {
+      .layout {
+        grid-template-columns: minmax(0, 1fr) 350px;
+        gap: 30px;
+        align-items: start;
+      }
+    }
+    .col-side {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    @media(min-width: 1024px) {
+      .col-side {
+        position: sticky;
+        top: 84px;
+      }
+    }
 
-  .accordion-btn{
-    width:100%;border:0;background:#FFFDF9;padding:13px 15px;
-    display:flex;justify-content:space-between;align-items:center;color:var(--ink)
-  }
-  .accordion-btn strong{font-size:13px;font-weight:900}
-  .accordion-btn small{display:block;font-size:9px;color:#A99686;font-weight:700;margin-top:2px;text-align:left}
-  .accordion-content{display:none;padding:0 12px 13px}
-  .accordion-content.open{display:block}
-  .stats-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
-  .stat{border:1px solid var(--line);border-radius:16px;padding:10px;text-align:center;background:#FFFCF8}
-  .stat .emoji{font-size:23px}.stat .label{font-size:9px;color:#A28F7F;font-weight:800}.stat .value{font-size:17px;font-weight:900}
-  .holiday{background:white;border:2px solid var(--line);border-radius:23px;padding:28px 18px;text-align:center}
-  .holiday .emoji{font-size:52px}.holiday h2{font-size:22px;margin:7px 0 4px}.holiday p{font-size:11px;color:#9C8C80;font-weight:700}
-  footer{padding:22px 14px 0;text-align:center;color:#B1A398;font-size:9px;line-height:1.8}
-  footer a{color:#B78457!important}
+    /* ---------- 區塊標題 ---------- */
+    .section-head {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      padding-bottom: 12px;
+    }
+    .section-title {
+      font-size: 21px;
+      font-weight: 900;
+      color: #3C3127;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .section-spark {
+      display: inline-grid;
+      place-items: center;
+      width: 28px;
+      height: 28px;
+      border-radius: 10px;
+      background: #F7CA50;
+      color: white;
+      font-size: 16px;
+      box-shadow: 2px 2px 0 rgba(90, 65, 35, 0.1);
+    }
+    .section-sub {
+      font-size: 12px;
+      color: #9A8674;
+      font-weight: 700;
+      margin-top: 3px;
+    }
 
-  @media(min-width:700px){
-    .app{max-width:900px}
-    .topbar-inner{padding-left:22px;padding-right:22px}
-    .top-actions span{display:inline}
-    .hero{margin-left:22px;margin-right:22px}
-    .section{padding-left:22px;padding-right:22px}
-    .meal-stack{grid-template-columns:1fr 1.25fr 1fr;align-items:stretch}
-    .meal-card{min-width:0}
-    .food-name,.main-dish{font-size:21px}
-    .calendar-card{max-width:520px;margin:auto}
-    .stats-grid{grid-template-columns:repeat(4,1fr)}
-  }
-</style>
+    /* ---------- 餐點卡片：全面舒展不擠壓 ---------- */
+    .meal-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+    .meal-card {
+      background: #FFFFFF;
+      border: 2px solid #EADCC8;
+      border-radius: 24px;
+      padding: 22px 24px;
+      position: relative;
+      box-shadow: 4px 5px 0 rgba(95, 70, 45, 0.06), 0 10px 22px rgba(95, 70, 45, 0.04);
+      transition: transform .2s ease, box-shadow .2s ease;
+    }
+    .meal-card.featured {
+      background: linear-gradient(150deg, #FFFEFC 0%, #FFF8ED 100%);
+      border: 2.5px solid #F0C46B;
+      box-shadow: 5px 6px 0 rgba(220, 150, 50, 0.12), 0 12px 26px rgba(110, 75, 35, 0.07);
+    }
+    .meal-top {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .meal-icon {
+      width: 58px;
+      height: 58px;
+      min-width: 58px;
+      border-radius: 18px;
+      border: 2px solid #E6D7C3;
+      background: #FFF3D6;
+      display: grid;
+      place-items: center;
+      overflow: hidden;
+      padding: 4px;
+    }
+    .lunch .meal-icon { background: #E6F5DD !important; border-color: #CDE8C0; }
+    .snack .meal-icon { background: #FFE9E5 !important; border-color: #F8D0C9; }
+    .meal-icon img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+    .meal-info {
+      flex: 1;
+      min-width: 0;
+    }
+    .meal-label {
+      font-size: 12px;
+      color: #9C836E;
+      font-weight: 800;
+    }
+    .meal-name {
+      font-size: 17px;
+      font-weight: 900;
+      color: #403429;
+      margin-top: 2px;
+    }
+    .meal-time {
+      font-size: 11px;
+      font-weight: 900;
+      color: #8C715C;
+      background: #FFFDF9;
+      border: 1.5px solid #EADCC8;
+      border-radius: 99px;
+      padding: 5px 11px;
+    }
+    .food-name {
+      font-size: 24px;
+      font-weight: 900;
+      line-height: 1.3;
+      margin: 14px 0 4px;
+      color: #382D25;
+      letter-spacing: .01em;
+    }
+    .food-hint {
+      font-size: 13px;
+      color: #937F6F;
+      font-weight: 700;
+    }
+    .tag-row {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: 10px;
+    }
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      border-radius: 99px;
+      padding: 6px 12px;
+      font-size: 12px;
+      font-weight: 900;
+    }
+    .tag.milk {
+      background: #E8F5FD;
+      color: #357B9E;
+      border: 1.5px solid #CDE6F7;
+    }
+    .tag.special {
+      background: #FFF1BD;
+      color: #8B6312;
+      border: 1.5px solid #F3DF88;
+    }
 
+    /* ---------- 午餐專屬亮點區域（便當盒風格） ---------- */
+    .lunch-main-box {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      margin-top: 16px;
+      padding: 18px 20px;
+      border-radius: 20px;
+      background: #FFFFFF;
+      border: 2px dashed #E5D3BA;
+    }
+    @media(min-width: 640px) {
+      .lunch-main-box {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        gap: 20px;
+      }
+    }
+    .main-dish-wrap {
+      flex: 1;
+      min-width: 0;
+    }
+    .main-caption {
+      font-size: 12px;
+      color: #B27546;
+      font-weight: 900;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+    .main-dish {
+      font-size: 27px;
+      line-height: 1.25;
+      font-weight: 900;
+      color: #362B22;
+      margin-top: 4px;
+    }
+    .fruit-box {
+      min-width: 110px;
+      text-align: center;
+      background: #FFF2F0;
+      border: 2px solid #F4D3CE;
+      border-radius: 18px;
+      padding: 12px 16px;
+      flex-shrink: 0;
+    }
+    .fruit-box img {
+      width: 44px;
+      height: 44px;
+      object-fit: contain;
+      margin: 0 auto;
+    }
+    .fruit-box .fruit-label {
+      font-size: 11px;
+      color: #B46E67;
+      font-weight: 900;
+      margin-top: 2px;
+    }
+    .fruit-box .fruit-name {
+      font-size: 15px;
+      font-weight: 900;
+      color: #723E3A;
+      margin-top: 2px;
+    }
+
+    /* 午餐詳細內容展開按鈕與五行格 */
+    .details-toggle {
+      margin-top: 14px;
+      width: 100%;
+      border: 2px dashed #DEC8AE;
+      background: #FFFBF4;
+      color: #8A6445;
+      font-size: 13px;
+      font-weight: 900;
+      text-align: center;
+      padding: 9px 14px;
+      border-radius: 14px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .details-toggle:hover {
+      background: #FFF3DD;
+      border-color: #D3B28C;
+    }
+    .details {
+      max-height: 0;
+      overflow: hidden;
+      opacity: 0;
+      transition: max-height .35s ease, opacity .25s ease;
+    }
+    .details.open {
+      max-height: 500px;
+      opacity: 1;
+      margin-top: 12px;
+    }
+    #lunchPills {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 6px;
+    }
+    @media(min-width: 600px) {
+      #lunchPills {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+    }
+    @media(min-width: 1024px) {
+      #lunchPills {
+        grid-template-columns: repeat(5, minmax(0, 1fr));
+      }
+    }
+    #lunchPills > div {
+      background: #FFFDF9 !important;
+      border: 1.5px solid #EADBCA !important;
+      border-radius: 16px !important;
+      padding: 12px 10px !important;
+      text-align: center;
+      box-shadow: none !important;
+    }
+    #lunchPills > div > div:first-child { font-size: 24px !important; }
+    #lunchPills > div > div:nth-child(2) { font-size: 11px !important; color: #9E8876 !important; font-weight: 800 !important; margin-top: 2px; }
+    #lunchPills > div > div:last-child { font-size: 14px !important; font-weight: 900 !important; color: #3E3228 !important; margin-top: 4px; line-height: 1.25; }
+
+    .lunch-foot {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      margin-top: 14px;
+      padding-top: 12px;
+      border-top: 2px dashed #EBDDCF;
+      font-size: 12px;
+      color: #927D6C;
+      font-weight: 800;
+    }
+    .lunch-foot span:first-child {
+      color: #4C8F69;
+    }
+    .lunch-foot span:last-child {
+      font-size: 13px;
+      font-weight: 900;
+      color: #C36A42;
+      background: #FFF2E8;
+      padding: 3px 10px;
+      border-radius: 99px;
+      border: 1px solid #F5D3BE;
+    }
+
+    /* ---------- 右側欄：月曆卡片與統計小發現 ---------- */
+    .calendar-card, .stats-card {
+      background: #FFFFFF;
+      border: 2px solid #EADCC8;
+      border-radius: 24px;
+      box-shadow: 4px 5px 0 rgba(95, 70, 45, 0.06), 0 10px 22px rgba(95, 70, 45, 0.04);
+      overflow: hidden;
+    }
+    .calendar-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 18px 20px 12px;
+    }
+    .calendar-title {
+      font-size: 17px;
+      font-weight: 900;
+      color: #3C3026;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .book-mark {
+      display: inline-grid;
+      place-items: center;
+      width: 28px;
+      height: 28px;
+      background: #6EB9DB;
+      color: white;
+      border-radius: 9px;
+      font-size: 14px;
+    }
+    .calendar-hint {
+      font-size: 11px;
+      color: #9E8978;
+      font-weight: 700;
+      margin-top: 2px;
+    }
+    .calendar-week {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      text-align: center;
+      padding: 4px 14px 8px;
+      color: #A38E7D;
+      font-size: 12px;
+      font-weight: 900;
+    }
+    .calendar-week .weekend {
+      color: #C7ABA0;
+    }
+    #miniCalendarGrid {
+      padding: 4px 14px 18px;
+      gap: 6px 4px !important;
+    }
+    .cal-btn {
+      width: 100%;
+      height: 38px;
+      max-width: 42px;
+      margin: 0 auto;
+      border-radius: 50%;
+      border: 1.5px solid #EFE2D2;
+      background: #FFFDF9;
+      color: #55483D;
+      font-size: 14px;
+      font-weight: 900;
+      position: relative;
+      font-family: "Caveat", "Zen Maru Gothic", sans-serif;
+      cursor: pointer;
+      display: grid;
+      place-items: center;
+      transition: all 0.15s ease;
+    }
+    .cal-btn:hover {
+      background: #FFF4D8;
+      border-color: #E2C98A;
+      transform: scale(1.06);
+    }
+    .calendar-active {
+      background: #E95D45 !important;
+      color: white !important;
+      border-color: #3F362F !important;
+      transform: scale(1.1) !important;
+      box-shadow: 2px 3px 0 rgba(63, 54, 47, 0.2);
+    }
+    .calendar-today {
+      background: #FFF0A9 !important;
+      border: 2px dashed #E5AE32 !important;
+      color: #71551E !important;
+      font-weight: 900;
+    }
+    .month-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #70B87B;
+      position: absolute;
+      bottom: 2px;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    /* 手風琴摺疊 */
+    .accordion-btn {
+      width: 100%;
+      border: 0;
+      background: #FFFDF9;
+      padding: 16px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: var(--ink);
+      cursor: pointer;
+    }
+    .accordion-btn strong {
+      font-size: 15px;
+      font-weight: 900;
+      color: #3C3127;
+    }
+    .accordion-btn small {
+      display: block;
+      font-size: 11px;
+      color: #9C8572;
+      font-weight: 700;
+      margin-top: 2px;
+      text-align: left;
+    }
+    .accordion-content {
+      display: none;
+      padding: 0 16px 18px;
+    }
+    .accordion-content.open {
+      display: block;
+    }
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+    }
+    .stat {
+      border: 2px dashed #EADBC8;
+      border-radius: 16px;
+      padding: 12px 8px;
+      text-align: center;
+      background: #FFFAF1;
+    }
+    .stat .emoji { font-size: 24px; }
+    .stat .label { font-size: 11px; color: #9A8473; font-weight: 800; margin-top: 2px; }
+    .stat .value { font-size: 19px; font-weight: 900; color: #C36A42; font-family: "Caveat", "Zen Maru Gothic", sans-serif; }
+
+    /* 放假橫幅 */
+    .holiday {
+      background: #FFFFFF;
+      border: 2px solid #EADCC8;
+      border-radius: 24px;
+      padding: 36px 20px;
+      text-align: center;
+      box-shadow: 4px 5px 0 rgba(95, 70, 45, 0.06);
+    }
+    .holiday .emoji { font-size: 58px; }
+    .holiday h2 { font-size: 24px; font-weight: 900; margin: 10px 0 6px; color: #3F342B; }
+    .holiday p { font-size: 13px; color: #937F6F; font-weight: 700; max-width: 460px; margin: 0 auto; }
+
+    footer {
+      padding: 36px 20px 0;
+      text-align: center;
+      color: #A69282;
+      font-size: 11px;
+      line-height: 1.8;
+    }
+    footer:before {
+      content: "";
+      display: block;
+      width: 100%;
+      height: 20px;
+      margin-bottom: 12px;
+      background: url('maisy_web_assets/decor_wave.png') center/100% 18px no-repeat;
+      opacity: .75;
+    }
+    footer a {
+      color: #B78457 !important;
+      font-weight: 800;
+    }
+    .footer-mascot {
+      display: inline-block;
+      width: 26px;
+      height: 26px;
+      vertical-align: middle;
+      margin-right: 5px;
+    }
+    .footer-mascot img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    /* ---------- 手機版專屬微調 ---------- */
+    @media(max-width: 699px) {
+      .topbar-inner { padding: 8px 14px; }
+      .brand-icon { width: 38px; height: 38px; min-width: 38px; }
+      .brand-title { font-size: 14px; }
+      .brand-sub { font-size: 9px; }
+      .top-actions a, .top-actions label, .top-actions button {
+        padding: 7px 9px;
+        font-size: 11px;
+      }
+      .top-actions span { display: none; }
+      .hero {
+        margin: 12px 14px 18px;
+        padding: 20px 18px;
+      }
+      .hero-date h1 { font-size: 26px; }
+      .hero-date span { font-size: 14px; }
+      .hero-mascot { width: 110px; height: 145px; }
+      .layout { padding: 0 14px; gap: 18px; }
+      .meal-card { padding: 18px 16px; }
+      .food-name { font-size: 21px; }
+      .main-dish { font-size: 22px; }
+      .fruit-box { min-width: 86px; padding: 10px 8px; }
+      .fruit-box img { width: 36px; height: 36px; }
+    }
+  </style>
 </head>
 
 <body>
 <div class="app">
+  <!-- 頂部導航列 -->
   <header class="topbar">
     <div class="topbar-inner">
       <div class="brand">
-        <div class="brand-icon">🍱</div>
+        <div class="brand-icon"><img src="maisy_web_assets/badge_maisy.png" alt="Maisy"></div>
         <div>
-          <div class="brand-title">龍安附幼・寶貝美味餐點</div>
+          <div class="brand-title">龍安附幼・寶貝的美味餐點</div>
           <div class="brand-sub" id="headerSubtitle">幼兒園餐飲表</div>
         </div>
       </div>
       <div class="top-actions">
         <a href="https://www.laes.tp.edu.tw/nss/p/k1" target="_blank" rel="noopener noreferrer" title="幼兒園公佈欄">
-          <i class="fa-solid fa-bullhorn"></i><span>公佈欄</span>
+          <i class="fa-solid fa-bullhorn text-amber-600"></i><span>幼兒園公佈欄</span>
         </a>
-        <label title="手動匯入 Excel">
-          <i class="fa-solid fa-file-excel"></i><span>匯入</span>
+        <label title="手動匯入 Excel" class="cursor-pointer">
+          <i class="fa-solid fa-file-excel text-emerald-600"></i><span>匯入</span>
           <input type="file" id="excelFileInput" accept=".xlsx,.xls" hidden>
         </label>
-        <button id="btnToday" title="回到今天"><i class="fa-solid fa-house"></i><span>今天</span></button>
+        <button id="btnToday" title="回到今天"><i class="fa-solid fa-house text-orange-500"></i><span>今天</span></button>
       </div>
     </div>
   </header>
 
+  <!-- 提示浮動窗 -->
   <div id="toast" class="fixed top-16 left-1/2 -translate-x-1/2 z-50 bg-emerald-700 text-white px-5 py-2.5 rounded-full shadow-lg text-xs font-bold flex items-center gap-2 transition-all duration-300 opacity-0 pointer-events-none">
     <i class="fa-solid fa-circle-check"></i><span id="toastMsg">資料已更新！</span>
   </div>
 
   <main>
+    <!-- 今日焦點大橫幅 -->
     <section class="hero">
-      <div class="hero-kicker">🌟 今天吃什麼？</div>
-      <div class="hero-date">
-        <h1 id="bannerDate">載入中...</h1>
-        <span id="bannerWeekday"></span>
-        <span id="todayBadge" class="hidden">今天</span>
-      </div>
-      <div id="tagSpecial" class="hero-note" style="display:none"></div>
-      <div class="hero-note">小肚肚準備好了嗎？一起期待今天的美味吧！😋</div>
-      <div class="hero-tools">
-        <button id="btnPrevDay">‹ 前一天</button>
-        <button id="btnNextDay">後一天 ›</button>
-        <input type="date" id="datePicker" aria-label="選擇日期">
+      <div class="hero-body">
+        <div class="hero-content">
+          <div class="hero-kicker">
+            <span>✦ 今天吃什麼？</span>
+            <span class="story-label">MAISY & FRIENDS</span>
+          </div>
+          <div class="hero-date">
+            <h1 id="bannerDate">載入中...</h1>
+            <span id="bannerWeekday"></span>
+            <span id="todayBadge" class="badge-today hidden">今天</span>
+          </div>
+          <div id="tagSpecial" class="hero-note" style="display:none"></div>
+          <div class="hero-note">
+            <img src="maisy_web_assets/decor_heart.png" alt="heart" onerror="this.style.display='none'">
+            <span>小肚肚準備好了嗎？一起期待今天的美味吧！</span>
+          </div>
+          <div class="hero-tools">
+            <button id="btnPrevDay"><i class="fa-solid fa-chevron-left mr-1"></i>前一天</button>
+            <button id="btnNextDay">後一天<i class="fa-solid fa-chevron-right ml-1"></i></button>
+            <input type="date" id="datePicker" aria-label="選擇日期">
+          </div>
+        </div>
+        <div class="hero-mascot-box">
+          <img id="heroCharacter" class="hero-mascot" src="maisy_web_assets/mascot_maisy.png" alt="Maisy" onerror="this.src='https://cdn.jsdelivr.net/gh/hfg-gmuend/openmoji@latest/color/svg/1F42D.svg'">
+        </div>
       </div>
     </section>
 
-    <section class="section" id="todaySection">
-      <div class="section-head">
-        <div>
-          <div class="section-title">🍴 今日美味三餐</div>
-          <div class="section-sub">先看這裡，一眼就知道今天要吃什麼！</div>
-        </div>
-      </div>
-
-      <div id="mealsContainer" class="meal-stack">
-        <article class="meal-card morning">
-          <div class="meal-top">
-            <div class="meal-icon">🥣</div>
+    <!-- 主區塊：左側今日三餐 ＋ 右側月曆小發現 -->
+    <div class="layout">
+      <!-- 左側欄：今日美味三餐 -->
+      <div class="col-main">
+        <section id="todaySection">
+          <div class="section-head">
             <div>
-              <div class="meal-label">早餐・08:30</div>
-              <div class="meal-name">活力晨間早點</div>
+              <div class="section-title"><span class="section-spark">✦</span> 今日美味三餐</div>
+              <div class="section-sub">營養滿分、衛生安全的安心食育</div>
             </div>
-            <span class="meal-time">早上</span>
           </div>
-          <div id="mealMorning" class="food-name">—</div>
-          <div class="food-hint">吃飽飽，元氣出發！🌞</div>
-          <div class="tag-row">
-            <span id="milkBadge" class="tag milk" style="display:none">🥛 今天有鮮奶</span>
-          </div>
-        </article>
 
-        <article class="meal-card featured lunch">
-          <div class="meal-top">
-            <div class="meal-icon">🍚</div>
+          <div id="mealsContainer" class="meal-stack">
+            <!-- 1. 晨間早點 -->
+            <article class="meal-card morning">
+              <div class="meal-top">
+                <div class="meal-icon"><img src="maisy_web_assets/badge_cyril.png" alt="早餐" onerror="this.src='https://cdn.jsdelivr.net/gh/hfg-gmuend/openmoji@latest/color/svg/1F375.svg'"></div>
+                <div class="meal-info">
+                  <div class="meal-name">早餐・08:30</div>
+                   <div id="mealMorning" class="food-name">—</div>
+                </div>
+                <span class="meal-time">早上</span>
+              </div>
+             
+              <div class="food-hint">吃飽飽，元氣上課！🌞</div>
+              <div class="tag-row">
+                <span id="milkBadge" class="tag milk" style="display:none">🥛 今天有鮮奶</span>
+              </div>
+            </article>
+
+            <!-- 2. 午餐焦點（主角便當盒） -->
+            <article class="meal-card featured lunch">
+              <div class="meal-top">
+                <div class="meal-icon"><img src="maisy_web_assets/badge_charlie.png" alt="午餐" onerror="this.src='https://cdn.jsdelivr.net/gh/hfg-gmuend/openmoji@latest/color/svg/1F371.svg'"></div>
+                <div class="meal-info">
+    
+                  <div class="meal-name">午餐・11:40</div>
+                  <div id="mealMainDish" class="main-dish">—</div><div class="main-caption"><i class="fa-solid fa-utensils"></i> 今日主菜</div>
+                </div>
+                <div class="fruit-box">
+                  <img id="mealFruitImg" src="https://cdn.jsdelivr.net/gh/hfg-gmuend/openmoji@latest/color/svg/1F34E.svg" width="30%" alt="水果">
+                  <div class="fruit-label">餐後水果</div>
+                  <div id="mealFruit" class="fruit-name">—</div>
+                </div>
+                <span class="meal-time">中午</span>
+                
+              </div>
+
+              <div class="tag-row">
+                <span id="lunchSpecialTag" class="tag special" style="display:none"></span>
+              </div>
+
+              <button class="details-toggle" type="button" id="lunchDetailsToggle">＋ 一起看看午餐全部菜色</button>
+              <div id="lunchDetails" class="details">
+                <div id="lunchPills"></div>
+                <div class="lunch-foot">
+                  <span id="vegCertText"><i class="fa-solid fa-leaf"></i> 今日蔬菜認證</span>
+                  <span id="lunchKcalText">-- kcal</span>
+                </div>
+              </div>
+            </article>
+
+            <!-- 3. 下午點心 -->
+            <article class="meal-card snack">
+              <div class="meal-top">
+                <div class="meal-icon"><img src="maisy_web_assets/badge_tallulah.png" alt="點心" onerror="this.src='https://cdn.jsdelivr.net/gh/hfg-gmuend/openmoji@latest/color/svg/1F370.svg'"></div>
+                <div class="meal-info">
+                  <div class="meal-label">下午點心・14:30</div>
+                  <div class="meal-name">甜蜜午後點心</div>
+                </div>
+                <span class="meal-time">下午</span>
+              </div>
+              <div id="mealAfternoon" class="food-name">—</div>
+              <div id="afternoonNote" class="food-hint">下午也有小驚喜！✨</div>
+            </article>
+          </div>
+
+          <!-- 放假狀態顯示 -->
+          <div id="holidayBanner" class="holiday hidden">
+            <div class="emoji">🎈</div>
+            <h2 id="holidayTitle">放假一日</h2>
+            <p>今天幼兒園不用到校，好好休息、玩耍，明天再一起吃美味餐點喔！</p>
+          </div>
+        </section>
+      </div>
+
+      <!-- 右側欄：月曆與統計面板 -->
+      <div class="col-side">
+        <!-- 看看整個月 -->
+        <section class="calendar-card">
+          <div class="calendar-head">
             <div>
-              <div class="meal-label">午餐・11:40</div>
-              <div class="meal-name">今天的主角是…</div>
+              <div class="calendar-title"><span class="book-mark"><i class="fa-regular fa-calendar"></i></span> 看看整個月</div>
+              <div class="calendar-hint">想知道明天、下週吃什麼，點選立即查</div>
             </div>
-            <span class="meal-time">中午</span>
+            <div id="calendarTitle" class="section-sub"></div>
           </div>
+          <div class="calendar-week">
+            <span class="weekend">日</span><span>一</span><span>二</span><span>三</span><span>四</span><span>五</span><span class="weekend">六</span>
+          </div>
+          <div id="miniCalendarGrid" class="grid grid-cols-7"></div>
+        </section>
 
-          <div class="lunch-main">
+        <!-- 本月餐點小發現 -->
+        <section class="stats-card">
+          <button id="btnToggleStats" class="accordion-btn" type="button">
             <div>
-              <div class="main-caption">🍗 今日主菜</div>
-              <div id="mealMainDish" class="main-dish">—</div>
-              <div id="mealStaple" class="food-hint">搭配香香主食</div>
+              <strong>本月餐點小發現</strong>
+              <small>想多看一點，點開瞧瞧</small>
             </div>
-            <div class="fruit-box">
-              <img id="mealFruitImg" src="https://cdn.jsdelivr.net/gh/hfg-gmuend/openmoji@latest/color/svg/1F34E.svg" alt="水果">
-              <div class="fruit-label">餐後水果</div>
-              <div id="mealFruit" class="fruit-name">—</div>
-            </div>
-          </div>
-
-          <div class="tag-row">
-            <span id="lunchSpecialTag" class="tag special" style="display:none"></span>
-          </div>
-
-          <button class="details-toggle" type="button" id="lunchDetailsToggle">＋ 偷偷看看午餐全部內容</button>
-          <div id="lunchDetails" class="details">
-            <div id="lunchPills"></div>
-            <div class="lunch-foot">
-              <span id="vegCertText">🌿 今日蔬菜</span>
-              <span id="lunchKcalText">-- kcal</span>
+            <i class="fa-solid fa-chevron-down text-slate-400"></i>
+          </button>
+          <div id="statsContent" class="accordion-content">
+            <div class="stats-grid">
+              <div class="stat"><div class="emoji">🥛</div><div class="label">每週鮮奶日</div><div id="statMilk" class="value">-- 天</div></div>
+              <div class="stat"><div class="emoji">🍉</div><div class="label">午餐附鮮果</div><div id="statFruit" class="value">-- 天</div></div>
+              <div class="stat"><div class="emoji">🍲</div><div class="label">暖胃粥麵湯</div><div id="statSoup" class="value">-- 次</div></div>
+              <div class="stat"><div class="emoji">🥬</div><div class="label">履歷時蔬</div><div class="value">100%</div></div>
             </div>
           </div>
-        </article>
+        </section>
 
-        <article class="meal-card snack">
-          <div class="meal-top">
-            <div class="meal-icon">🍪</div>
-            <div>
-              <div class="meal-label">下午點心・14:30</div>
-              <div class="meal-name">甜蜜午後點心</div>
-            </div>
-            <span class="meal-time">下午</span>
+        <!-- 營養與食材分析（Excel動態加載） -->
+        <section id="nutritionAccordion" class="stats-card hidden">
+          <button id="btnToggleNutrition" class="accordion-btn" type="button">
+            <div><strong>🌿 營養與食材分析</strong><small>給大人看的詳細食育資訊</small></div>
+            <i class="fa-solid fa-chevron-down text-slate-400"></i>
+          </button>
+          <div id="nutritionContent" class="accordion-content">
+            <div id="nutritionBody" class="grid grid-cols-1 gap-3"></div>
           </div>
-          <div id="mealAfternoon" class="food-name">—</div>
-          <div id="afternoonNote" class="food-hint">下午也有小驚喜！✨</div>
-        </article>
+        </section>
       </div>
-
-      <div id="holidayBanner" class="holiday hidden">
-        <div class="emoji">🎈</div>
-        <h2 id="holidayTitle">放假一日</h2>
-        <p>今天幼兒園不用到校，好好休息、玩耍，明天再一起吃美味餐點喔！</p>
-      </div>
-    </section>
-
-    <section class="section">
-      <div class="calendar-card">
-        <div class="calendar-head">
-          <div>
-            <div class="calendar-title">🗓️ 看看整個月</div>
-            <div class="calendar-hint">想知道明天、下週吃什麼，再來這裡找</div>
-          </div>
-          <div id="calendarTitle" class="section-sub"></div>
-        </div>
-        <div class="calendar-week">
-          <span>日</span><span>一</span><span>二</span><span>三</span><span>四</span><span>五</span><span>六</span>
-        </div>
-        <div id="miniCalendarGrid" class="grid grid-cols-7"></div>
-      </div>
-    </section>
-
-    <section class="section">
-      <div class="stats-card">
-        <button id="btnToggleStats" class="accordion-btn" type="button">
-          <div>
-            <strong>✨ 本月餐點小發現</strong>
-            <small>想多看一點，再點開就好</small>
-          </div>
-          <i class="fa-solid fa-chevron-down"></i>
-        </button>
-        <div id="statsContent" class="accordion-content">
-          <div class="stats-grid">
-            <div class="stat"><div class="emoji">🥛</div><div class="label">每週鮮奶日</div><div id="statMilk" class="value">-- 天</div></div>
-            <div class="stat"><div class="emoji">🍉</div><div class="label">午餐附鮮果</div><div id="statFruit" class="value">-- 天</div></div>
-            <div class="stat"><div class="emoji">🍲</div><div class="label">暖胃粥麵湯</div><div id="statSoup" class="value">-- 次</div></div>
-            <div class="stat"><div class="emoji">🥬</div><div class="label">履歷時蔬</div><div class="value">100%</div></div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section id="nutritionAccordion" class="section hidden">
-      <div class="stats-card">
-        <button id="btnToggleNutrition" class="accordion-btn" type="button">
-          <div><strong>🌿 營養與食材分析</strong><small>給大人看的詳細資料</small></div>
-          <i class="fa-solid fa-chevron-down"></i>
-        </button>
-        <div id="nutritionContent" class="accordion-content">
-          <div id="nutritionBody" class="grid grid-cols-1 sm:grid-cols-2 gap-3"></div>
-        </div>
-      </div>
-    </section>
+    </div>
   </main>
 
   <footer>
+    <span class="footer-mascot"><img src="maisy_web_assets/badge_maisy.png" alt="" onerror="this.style.display='none'"></span>
     臺北市大安區龍安國小附設幼兒園 餐飲彙整表<br>
-    <a href="https://www.laes.tp.edu.tw/nss/p/k1" target="_blank">幼兒園公佈欄</a> ・ created by Millie Tan - 2026
+    <a href="https://www.laes.tp.edu.tw/nss/p/k1" target="_blank" rel="noopener noreferrer">幼兒園公佈欄</a> ｜ created by Millie Tan - 2026
   </footer>
 </div>
-  <script>
-    // --- 初始預設資料庫 (防呆備援) ---
-    let KINDERGARTEN_MENU = {
-      "2026-08-31": {"rawDate": "8/31", "day": "一", "morning": "蜂蜜麥片 + 鮮奶", "fruit": "香蕉", "lunch": {"staple": "糙米飯", "main": "沙嗲燒肉", "side": "雞肉筑前煮", "veg": "有機空心菜", "soup": "鮮筍雞湯", "kcal": 784, "cert": "產銷履歷/有機時蔬 80g"}, "afternoon": "香菇瘦肉粥", "note": "", "isHoliday": false},
-      "2026-09-01": {"rawDate": "9/1", "day": "二", "morning": "白菜蛋花湯餃", "fruit": "西瓜", "lunch": {"staple": "胚芽飯", "main": "茄汁雞丁", "side": "香菇肉燥", "veg": "有機白莧菜", "soup": "羅宋湯", "kcal": 722, "cert": "產銷履歷/有機時蔬 80g"}, "afternoon": "豆沙包", "note": "", "isHoliday": false},
-      "2026-09-02": {"rawDate": "9/2", "day": "三", "morning": "香菇貢丸細粉", "fruit": "奇異果", "lunch": {"staple": "義式肉醬麵", "main": "唐揚炸雞X3", "side": "地瓜薯條X4", "veg": "青菜", "soup": "蔬菜蛋花湯", "kcal": 715, "cert": "產銷履歷/有機時蔬 80g"}, "afternoon": "麥茶 + 水煮蛋", "note": "每週三有機蔬菜", "isHoliday": false},
-      "2026-09-03": {"rawDate": "9/3", "day": "四", "morning": "全麥饅頭 + 鮮奶", "fruit": "芭樂", "lunch": {"staple": "燕麥飯", "main": "筍干滷肉", "side": "香烤翅腿X1", "veg": "有機黑葉白菜", "soup": "地瓜芋頭湯", "kcal": 731, "cert": "產銷履歷/有機時蔬 80g"}, "afternoon": "綠豆薏仁湯", "note": "", "isHoliday": false},
-      "2026-09-04": {"rawDate": "9/4", "day": "五", "morning": "清粥小菜", "fruit": "鳳梨", "lunch": {"staple": "五穀飯", "main": "糖醋里肌", "side": "銀芽肉絲", "veg": "青菜", "soup": "關東煮", "kcal": 756, "cert": "產銷履歷/有機時蔬 80g"}, "afternoon": "紅豆麵包", "note": "蔬食日", "isHoliday": false},
-      "2026-09-07": {"rawDate": "9/7", "day": "一", "morning": "生日蛋糕 + 鮮奶", "fruit": "香蕉", "lunch": {"staple": "胚芽飯", "main": "洋釀翅腿X2", "side": "回鍋肉片", "veg": "有機荷葉白菜", "soup": "肉骨茶湯", "kcal": 732, "cert": "產銷履歷/有機時蔬 80g"}, "afternoon": "地瓜湯", "note": "慶生會", "isHoliday": false},
-      "2026-09-08": {"rawDate": "9/8", "day": "二", "morning": "肉包", "fruit": "葡萄", "lunch": {"staple": "糙米飯", "main": "金喜肉排", "side": "干片肉絲", "veg": "有機小松菜", "soup": "玉米濃湯", "kcal": 716, "cert": "產銷履歷/有機時蔬 80g"}, "afternoon": "肉燥麵", "note": "", "isHoliday": false},
-      "2026-09-09": {"rawDate": "9/9", "day": "三", "morning": "芝麻包", "fruit": "火龍果", "lunch": {"staple": "白飯", "main": "避風塘燒雞", "side": "碎瓜仔肉", "veg": "青菜", "soup": "竹筍排骨湯", "kcal": 649, "cert": "產銷履歷/有機時蔬 80g"}, "afternoon": "蘿蔔糕湯", "note": "每週三有機蔬菜", "isHoliday": false},
-      "2026-09-10": {"rawDate": "9/10", "day": "四", "morning": "銅鑼燒 + 鮮奶", "fruit": "芭樂", "lunch": {"staple": "海苔香鬆飯", "main": "醬爆肉絲", "side": "柴魚蒸蛋", "veg": "有機空心菜", "soup": "柴魚味噌湯", "kcal": 681, "cert": "產銷履歷/有機時蔬 80g"}, "afternoon": "檸檬愛玉", "note": "", "isHoliday": false},
-      "2026-09-11": {"rawDate": "9/11", "day": "五", "morning": "雞茸南瓜粥", "fruit": "蘋果", "lunch": {"staple": "紅藜飯", "main": "蘿蔔燉肉", "side": "玉米雞蓉", "veg": "青菜", "soup": "南瓜濃湯", "kcal": 700, "cert": "產銷履歷/有機時蔬 80g"}, "afternoon": "優格", "note": "", "isHoliday": false},
-      "2026-09-14": {"rawDate": "9/14", "day": "一", "morning": "什錦果麥 + 鮮奶", "fruit": "香蕉", "lunch": {"staple": "酢醬麵", "main": "洋蔥豬排X1", "side": "洋芋雞丁", "veg": "有機小白菜", "soup": "冬瓜排骨湯", "kcal": 673, "cert": "產銷履歷/有機時蔬 80g"}, "afternoon": "蛋花雞絲麵", "note": "", "isHoliday": false},
-      "2026-09-15": {"rawDate": "9/15", "day": "二", "morning": "起酥蛋糕", "fruit": "西瓜", "lunch": {"staple": "胚芽飯", "main": "佛蒙特咖哩", "side": "京醬甜不辣", "veg": "有機白莧菜", "soup": "帶芽蛋花湯", "kcal": 694, "cert": "產銷履歷/有機時蔬 80g"}, "afternoon": "味噌魚片粥", "note": "", "isHoliday": false},
-      "2026-09-16": {"rawDate": "9/16", "day": "三", "morning": "雜糧饅頭 + 鮮奶", "fruit": "芭樂", "lunch": {"staple": "白飯", "main": "醬燒雞塊", "side": "鮮筍肉絲", "veg": "有機味美菜", "soup": "酸辣湯", "kcal": 687, "cert": "產銷履歷/有機時蔬 80g"}, "afternoon": "山藥排骨湯", "note": "每週三有機蔬菜", "isHoliday": false},
-      "2026-09-17": {"rawDate": "9/17", "day": "四", "morning": "鮮蔥麵包", "fruit": "奇異果", "lunch": {"staple": "五穀飯", "main": "奶油雞丁", "side": "香菇肉燥", "veg": "青菜", "soup": "蘿蔔湯", "kcal": 667, "cert": "產銷履歷/有機時蔬 80g"}, "afternoon": "魚片豆腐味噌湯", "note": "", "isHoliday": false},
-      "2026-09-18": {"rawDate": "9/18", "day": "五", "morning": "翡翠鹹粥", "fruit": "鳳梨", "lunch": {"staple": "糙米飯", "main": "腰果雞丁", "side": "洋蔥炒蛋", "veg": "有機木耳白莧菜", "soup": "白菜肉絲湯", "kcal": 730, "cert": "產銷履歷/有機時蔬 80g"}, "afternoon": "布丁", "note": "", "isHoliday": false},
-      "2026-09-21": {"rawDate": "9/21", "day": "一", "morning": "水果麥片 + 鮮奶", "fruit": "香蕉", "lunch": {"staple": "地瓜飯", "main": "西式燉肉", "side": "海苔豆腐", "veg": "有機空心菜", "soup": "香菇雞湯", "kcal": 764, "cert": "產銷履歷/有機時蔬 80g"}, "afternoon": "水煮玉米", "note": "", "isHoliday": false},
-      "2026-09-22": {"rawDate": "9/22", "day": "二", "morning": "地瓜麵包", "fruit": "鳳梨", "lunch": {"staple": "燕麥飯", "main": "嫩雞親子丼", "side": "吐魠魚條", "veg": "青菜", "soup": "綠豆麥片湯", "kcal": 700, "cert": "產銷履歷/有機時蔬 80g"}, "afternoon": "絲瓜麵線", "note": "", "isHoliday": false},
-      "2026-09-23": {"rawDate": "9/23", "day": "三", "morning": "果醬吐司", "fruit": "奇異果", "lunch": {"staple": "香菇油飯", "main": "豆干燒雞", "side": "蛋酥白菜", "veg": "有機黑葉白菜", "soup": "蘑菇濃湯", "kcal": 727, "cert": "產銷履歷/有機時蔬 80g"}, "afternoon": "青菜餛飩湯", "note": "每週三有機蔬菜", "isHoliday": false},
-      "2026-09-24": {"rawDate": "9/24", "day": "四", "morning": "菠菜銀魚滑蛋粥", "fruit": "芭樂", "lunch": {"staple": "白飯", "main": "三杯雞", "side": "番茄炒蛋", "veg": "有機白莧菜", "soup": "竹筍排骨湯", "kcal": 687, "cert": "產銷履歷/有機時蔬 80g"}, "afternoon": "小月餅 + 鮮奶", "note": "", "isHoliday": false},
-      "2026-09-25": {"rawDate": "9/25", "day": "五", "morning": "", "fruit": "", "lunch": null, "afternoon": "", "note": "中秋節放假", "isHoliday": true},
-      "2026-09-28": {"rawDate": "9/28", "day": "一", "morning": "", "fruit": "", "lunch": null, "afternoon": "", "note": "教師節放假", "isHoliday": true},
-      "2026-09-29": {"rawDate": "9/29", "day": "二", "morning": "營養麥片 + 鮮奶", "fruit": "香蕉", "lunch": {"staple": "五穀飯", "main": "蘿蔔燒肉", "side": "肉燥滷蛋", "veg": "青菜", "soup": "味噌蛋花湯", "kcal": 722, "cert": "產銷履歷/有機時蔬 80g"}, "afternoon": "蓮藕排骨湯", "note": "", "isHoliday": false},
-      "2026-09-30": {"rawDate": "9/30", "day": "三", "morning": "養生饅頭 + 豆漿", "fruit": "葡萄", "lunch": {"staple": "芝麻飯", "main": "糖醋魚丁", "side": "醬爆肉絲", "veg": "青菜", "soup": "玉米排骨湯", "kcal": 730, "cert": "產銷履歷/有機時蔬 80g"}, "afternoon": "高麗蘿蔔豆腐湯", "note": "每週三有機蔬菜", "isHoliday": false}
-    };
 
-    function getFruitOpenMoji(fruitName) {
-      if (!fruitName) return "https://cdn.jsdelivr.net/gh/hfg-gmuend/openmoji@latest/color/svg/1F34E.svg";
-      if (fruitName.includes("西瓜")) return "https://cdn.jsdelivr.net/gh/hfg-gmuend/openmoji@latest/color/svg/1F349.svg";
-      if (fruitName.includes("香蕉")) return "https://cdn.jsdelivr.net/gh/hfg-gmuend/openmoji@latest/color/svg/1F34C.svg";
-      if (fruitName.includes("芭樂") || fruitName.includes("瓜")) return "https://cdn.jsdelivr.net/gh/hfg-gmuend/openmoji@latest/color/svg/1F348.svg";
-      if (fruitName.includes("鳳梨")) return "https://cdn.jsdelivr.net/gh/hfg-gmuend/openmoji@latest/color/svg/1F34D.svg";
-      if (fruitName.includes("奇異果")) return "https://cdn.jsdelivr.net/gh/hfg-gmuend/openmoji@latest/color/svg/1F95D.svg";
-      if (fruitName.includes("葡萄")) return "https://cdn.jsdelivr.net/gh/hfg-gmuend/openmoji@latest/color/svg/1F347.svg";
-      if (fruitName.includes("蘋果")) return "https://cdn.jsdelivr.net/gh/hfg-gmuend/openmoji@latest/color/svg/1F34E.svg";
-      if (fruitName.includes("火龍果") || fruitName.includes("莓")) return "https://cdn.jsdelivr.net/gh/hfg-gmuend/openmoji@latest/color/svg/1F353.svg";
-      return "https://cdn.jsdelivr.net/gh/hfg-gmuend/openmoji@latest/color/svg/1F34E.svg";
+<script>
+  // --- 初始預設資料庫 ---
+  let KINDERGARTEN_MENU = {
+    "2026-08-31": {"rawDate": "8/31", "day": "一", "morning": "蜂蜜麥片 + 鮮奶", "fruit": "香蕉", "lunch": {"staple": "糙米飯", "main": "沙嗲燒肉", "side": "雞肉筑前煮", "veg": "有機空心菜", "soup": "鮮筍雞湯", "kcal": 784, "cert": "產銷履歷/有機時蔬 80g"}, "afternoon": "香菇瘦肉粥", "note": "", "isHoliday": false},
+    "2026-09-01": {"rawDate": "9/1", "day": "二", "morning": "白菜蛋花湯餃", "fruit": "西瓜", "lunch": {"staple": "胚芽飯", "main": "茄汁雞丁", "side": "香菇肉燥", "veg": "有機白莧菜", "soup": "羅宋湯", "kcal": 722, "cert": "產銷履歷/有機時蔬 80g"}, "afternoon": "豆沙包", "note": "", "isHoliday": false},
+    "2026-09-02": {"rawDate": "9/2", "day": "三", "morning": "香菇貢丸細粉", "fruit": "奇異果", "lunch": {"staple": "義式肉醬麵", "main": "唐揚炸雞X3", "side": "地瓜薯條X4", "veg": "青菜", "soup": "蔬菜蛋花湯", "kcal": 715, "cert": "產銷履歷/有機時蔬 80g"}, "afternoon": "麥茶 + 水煮蛋", "note": "每週三有機蔬菜", "isHoliday": false},
+    "2026-09-03": {"rawDate": "9/3", "day": "四", "morning": "全麥饅頭 + 鮮奶", "fruit": "芭樂", "lunch": {"staple": "燕麥飯", "main": "筍干滷肉", "side": "香烤翅腿X1", "veg": "有機黑葉白菜", "soup": "地瓜芋頭湯", "kcal": 731, "cert": "產銷履歷/有機時蔬 80g"}, "afternoon": "綠豆薏仁湯", "note": "", "isHoliday": false},
+    "2026-09-04": {"rawDate": "9/4", "day": "五", "morning": "清粥小菜", "fruit": "鳳梨", "lunch": {"staple": "五穀飯", "main": "糖醋里肌", "side": "銀芽肉絲", "veg": "青菜", "soup": "關東煮", "kcal": 756, "cert": "產銷履歷/有機時蔬 80g"}, "afternoon": "紅豆麵包", "note": "蔬食日", "isHoliday": false},
+    "2026-09-07": {"rawDate": "9/7", "day": "一", "morning": "生日蛋糕 + 鮮奶", "fruit": "香蕉", "lunch": {"staple": "胚芽飯", "main": "洋釀翅腿X2", "side": "回鍋肉片", "veg": "有機荷葉白菜", "soup": "肉骨茶湯", "kcal": 732, "cert": "產銷履歷/有機時蔬 80g"}, "afternoon": "地瓜湯", "note": "慶生會", "isHoliday": false},
+    "2026-09-08": {"rawDate": "9/8", "day": "二", "morning": "肉包", "fruit": "葡萄", "lunch": {"staple": "糙米飯", "main": "金喜肉排", "side": "干片肉絲", "veg": "有機小松菜", "soup": "玉米濃湯", "kcal": 716, "cert": "產銷履歷/有機時蔬 80g"}, "afternoon": "肉燥麵", "note": "", "isHoliday": false},
+    "2026-09-09": {"rawDate": "9/9", "day": "三", "morning": "芝麻包", "fruit": "火龍果", "lunch": {"staple": "白飯", "main": "避風塘燒雞", "side": "碎瓜仔肉", "veg": "青菜", "soup": "竹筍排骨湯", "kcal": 649, "cert": "產銷履歷/有機時蔬 80g"}, "afternoon": "蘿蔔糕湯", "note": "每週三有機蔬菜", "isHoliday": false},
+    "2026-09-10": {"rawDate": "9/10", "day": "四", "morning": "銅鑼燒 + 鮮奶", "fruit": "芭樂", "lunch": {"staple": "海苔香鬆飯", "main": "醬爆肉絲", "side": "柴魚蒸蛋", "veg": "有機空心菜", "soup": "柴魚味噌湯", "kcal": 681, "cert": "產銷履歷/有機時蔬 80g"}, "afternoon": "檸檬愛玉", "note": "", "isHoliday": false},
+    "2026-09-11": {"rawDate": "9/11", "day": "五", "morning": "雞茸南瓜粥", "fruit": "蘋果", "lunch": {"staple": "紅藜飯", "main": "蘿蔔燉肉", "side": "玉米雞蓉", "veg": "青菜", "soup": "南瓜濃湯", "kcal": 700, "cert": "產銷履歷/有機時蔬 80g"}, "afternoon": "優格", "note": "", "isHoliday": false},
+    "2026-09-14": {"rawDate": "9/14", "day": "一", "morning": "什錦果麥 + 鮮奶", "fruit": "香蕉", "lunch": {"staple": "酢醬麵", "main": "洋蔥豬排X1", "side": "洋芋雞丁", "veg": "有機小白菜", "soup": "冬瓜排骨湯", "kcal": 673, "cert": "產銷履歷/有機時蔬 80g"}, "afternoon": "蛋花雞絲麵", "note": "", "isHoliday": false},
+    "2026-09-15": {"rawDate": "9/15", "day": "二", "morning": "起酥蛋糕", "fruit": "西瓜", "lunch": {"staple": "胚芽飯", "main": "佛蒙特咖哩", "side": "京醬甜不辣", "veg": "有機白莧菜", "soup": "帶芽蛋花湯", "kcal": 694, "cert": "產銷履歷/有機時蔬 80g"}, "afternoon": "味噌魚片粥", "note": "", "isHoliday": false},
+    "2026-09-16": {"rawDate": "9/16", "day": "三", "morning": "雜糧饅頭 + 鮮奶", "fruit": "芭樂", "lunch": {"staple": "白飯", "main": "醬燒雞塊", "side": "鮮筍肉絲", "veg": "有機味美菜", "soup": "酸辣湯", "kcal": 687, "cert": "產銷履歷/有機時蔬 80g"}, "afternoon": "山藥排骨湯", "note": "每週三有機蔬菜", "isHoliday": false},
+    "2026-09-17": {"rawDate": "9/17", "day": "四", "morning": "鮮蔥麵包", "fruit": "奇異果", "lunch": {"staple": "五穀飯", "main": "奶油雞丁", "side": "香菇肉燥", "veg": "青菜", "soup": "蘿蔔湯", "kcal": 667, "cert": "產銷履歷/有機時蔬 80g"}, "afternoon": "魚片豆腐味噌湯", "note": "", "isHoliday": false},
+    "2026-09-18": {"rawDate": "9/18", "day": "五", "morning": "翡翠鹹粥", "fruit": "鳳梨", "lunch": {"staple": "糙米飯", "main": "腰果雞丁", "side": "洋蔥炒蛋", "veg": "有機木耳白莧菜", "soup": "白菜肉絲湯", "kcal": 730, "cert": "產銷履歷/有機時蔬 80g"}, "afternoon": "布丁", "note": "", "isHoliday": false},
+    "2026-09-21": {"rawDate": "9/21", "day": "一", "morning": "水果麥片 + 鮮奶", "fruit": "香蕉", "lunch": {"staple": "地瓜飯", "main": "西式燉肉", "side": "海苔豆腐", "veg": "有機空心菜", "soup": "香菇雞湯", "kcal": 764, "cert": "產銷履歷/有機時蔬 80g"}, "afternoon": "水煮玉米", "note": "", "isHoliday": false},
+    "2026-09-22": {"rawDate": "9/22", "day": "二", "morning": "地瓜麵包", "fruit": "鳳梨", "lunch": {"staple": "燕麥飯", "main": "嫩雞親子丼", "side": "吐魠魚條", "veg": "青菜", "soup": "綠豆麥片湯", "kcal": 700, "cert": "產銷履歷/有機時蔬 80g"}, "afternoon": "絲瓜麵線", "note": "", "isHoliday": false},
+    "2026-09-23": {"rawDate": "9/23", "day": "三", "morning": "果醬吐司", "fruit": "奇異果", "lunch": {"staple": "香菇油飯", "main": "豆干燒雞", "side": "蛋酥白菜", "veg": "有機黑葉白菜", "soup": "蘑菇濃湯", "kcal": 727, "cert": "產銷履歷/有機時蔬 80g"}, "afternoon": "青菜餛飩湯", "note": "每週三有機蔬菜", "isHoliday": false},
+    "2026-09-24": {"rawDate": "9/24", "day": "四", "morning": "菠菜銀魚滑蛋粥", "fruit": "芭樂", "lunch": {"staple": "白飯", "main": "三杯雞", "side": "番茄炒蛋", "veg": "有機白莧菜", "soup": "竹筍排骨湯", "kcal": 687, "cert": "產銷履歷/有機時蔬 80g"}, "afternoon": "小月餅 + 鮮奶", "note": "", "isHoliday": false},
+    "2026-09-25": {"rawDate": "9/25", "day": "五", "morning": "", "fruit": "", "lunch": null, "afternoon": "", "note": "中秋節放假", "isHoliday": true},
+    "2026-09-28": {"rawDate": "9/28", "day": "一", "morning": "", "fruit": "", "lunch": null, "afternoon": "", "note": "教師節放假", "isHoliday": true},
+    "2026-09-29": {"rawDate": "9/29", "day": "二", "morning": "營養麥片 + 鮮奶", "fruit": "香蕉", "lunch": {"staple": "五穀飯", "main": "蘿蔔燒肉", "side": "肉燥滷蛋", "veg": "青菜", "soup": "味噌蛋花湯", "kcal": 722, "cert": "產銷履歷/有機時蔬 80g"}, "afternoon": "蓮藕排骨湯", "note": "", "isHoliday": false},
+    "2026-09-30": {"rawDate": "9/30", "day": "三", "morning": "養生饅頭 + 豆漿", "fruit": "葡萄", "lunch": {"staple": "芝麻飯", "main": "糖醋魚丁", "side": "醬爆肉絲", "veg": "青菜", "soup": "玉米排骨湯", "kcal": 730, "cert": "產銷履歷/有機時蔬 80g"}, "afternoon": "高麗蘿蔔豆腐湯", "note": "每週三有機蔬菜", "isHoliday": false}
+  };
+
+  function getFruitOpenMoji(fruitName) {
+    if (!fruitName) return "https://cdn.jsdelivr.net/gh/hfg-gmuend/openmoji@latest/color/svg/1F34E.svg";
+    if (fruitName.includes("西瓜")) return "https://cdn.jsdelivr.net/gh/hfg-gmuend/openmoji@latest/color/svg/1F349.svg";
+    if (fruitName.includes("香蕉")) return "https://cdn.jsdelivr.net/gh/hfg-gmuend/openmoji@latest/color/svg/1F34C.svg";
+    if (fruitName.includes("芭樂") || fruitName.includes("瓜")) return "https://cdn.jsdelivr.net/gh/hfg-gmuend/openmoji@latest/color/svg/1F348.svg";
+    if (fruitName.includes("鳳梨")) return "https://cdn.jsdelivr.net/gh/hfg-gmuend/openmoji@latest/color/svg/1F34D.svg";
+    if (fruitName.includes("奇異果")) return "https://cdn.jsdelivr.net/gh/hfg-gmuend/openmoji@latest/color/svg/1F95D.svg";
+    if (fruitName.includes("葡萄")) return "https://cdn.jsdelivr.net/gh/hfg-gmuend/openmoji@latest/color/svg/1F347.svg";
+    if (fruitName.includes("蘋果")) return "https://cdn.jsdelivr.net/gh/hfg-gmuend/openmoji@latest/color/svg/1F34E.svg";
+    if (fruitName.includes("火龍果") || fruitName.includes("莓")) return "https://cdn.jsdelivr.net/gh/hfg-gmuend/openmoji@latest/color/svg/1F353.svg";
+    return "https://cdn.jsdelivr.net/gh/hfg-gmuend/openmoji@latest/color/svg/1F34E.svg";
+  }
+
+  // 數值四捨五入到第 1 位
+  function roundToOneDec(val) {
+    if (!val && val !== 0) return '';
+    let strVal = String(val).trim();
+    let isPercent = strVal.endsWith('%');
+    let numStr = isPercent ? strVal.slice(0, -1) : strVal;
+    if (!isNaN(parseFloat(numStr)) && numStr.includes('.')) {
+      let num = parseFloat(numStr);
+      let rounded = Math.round(num * 10) / 10;
+      return isPercent ? `${rounded}%` : `${rounded}`;
     }
+    return strVal;
+  }
 
-    // --- 數值四捨五入小幫手 ---
-    function roundToOneDec(val) {
-      if (!val && val !== 0) return '';
-      let strVal = String(val).trim();
-      let isPercent = strVal.endsWith('%');
-      let numStr = isPercent ? strVal.slice(0, -1) : strVal;
-      
-      if (!isNaN(parseFloat(numStr)) && numStr.includes('.')) {
-          let num = parseFloat(numStr);
-          let rounded = Math.round(num * 10) / 10;
-          return isPercent ? `${rounded}%` : `${rounded}`;
-      }
-      return strVal;
+  // 手風琴點擊交互
+  document.getElementById('btnToggleStats').addEventListener('click', function() {
+    document.getElementById('statsContent').classList.toggle('open');
+    this.querySelector('i').classList.toggle('fa-chevron-up');
+    this.querySelector('i').classList.toggle('fa-chevron-down');
+  });
+
+  document.getElementById('btnToggleNutrition').addEventListener('click', function() {
+    document.getElementById('nutritionContent').classList.toggle('open');
+    this.querySelector('i').classList.toggle('fa-chevron-up');
+    this.querySelector('i').classList.toggle('fa-chevron-down');
+  });
+
+  document.getElementById('lunchDetailsToggle').addEventListener('click', function() {
+    const box = document.getElementById('lunchDetails');
+    const open = box.classList.toggle('open');
+    this.textContent = open ? '－ 收起午餐全部菜色' : '＋ 一起看看午餐全部菜色';
+  });
+
+  function getActiveMonthInfo() {
+    const keys = Object.keys(KINDERGARTEN_MENU);
+    if (keys.length === 0) {
+      const d = new Date();
+      return { y: d.getFullYear(), m: d.getMonth() };
     }
-
-    // --- Accordion 展開收合邏輯 ---
-    document.getElementById('btnToggleStats').addEventListener('click', function() {
-      document.getElementById('statsContent').classList.toggle('open');
-      this.querySelector('i').classList.toggle('fa-chevron-up');
-      this.querySelector('i').classList.toggle('fa-chevron-down');
+    const monthCounts = {};
+    keys.forEach(k => {
+      const ym = k.substring(0, 7);
+      monthCounts[ym] = (monthCounts[ym] || 0) + 1;
     });
+    let maxYm = Object.keys(monthCounts).reduce((a, b) => monthCounts[a] > monthCounts[b] ? a : b);
+    const parts = maxYm.split('-');
+    return { y: parseInt(parts[0], 10), m: parseInt(parts[1], 10) - 1 };
+  }
 
-    document.getElementById('btnToggleNutrition').addEventListener('click', function() {
-      document.getElementById('nutritionContent').classList.toggle('open');
-      this.querySelector('i').classList.toggle('fa-chevron-up');
-      this.querySelector('i').classList.toggle('fa-chevron-down');
-    });
+  const now = new Date();
+  const systemY = now.getFullYear();
+  const systemM = String(now.getMonth() + 1).padStart(2, '0');
+  const SYSTEM_TODAY = `${systemY}-${systemM}-${String(now.getDate()).padStart(2, '0')}`;
+  
+  let currentDate = SYSTEM_TODAY;
+  const datePicker = document.getElementById('datePicker');
+  datePicker.value = currentDate;
 
-    document.getElementById('lunchDetailsToggle').addEventListener('click', function() {
-      const box = document.getElementById('lunchDetails');
-      const open = box.classList.toggle('open');
-      this.textContent = open ? '－ 收起午餐全部內容' : '＋ 偷偷看看午餐全部內容';
-    });
-
-    // 取得資料庫中主要的年月 (作為預設月曆)
-    function getActiveMonthInfo() {
-      const keys = Object.keys(KINDERGARTEN_MENU);
-      if (keys.length === 0) {
-        const d = new Date();
-        return { y: d.getFullYear(), m: d.getMonth() };
-      }
-      const monthCounts = {};
-      keys.forEach(k => {
-        const ym = k.substring(0, 7);
-        monthCounts[ym] = (monthCounts[ym] || 0) + 1;
-      });
-      let maxYm = Object.keys(monthCounts).reduce((a, b) => monthCounts[a] > monthCounts[b] ? a : b);
-      const parts = maxYm.split('-');
-      return { y: parseInt(parts[0], 10), m: parseInt(parts[1], 10) - 1 };
-    }
-
-    const now = new Date();
-    const systemY = now.getFullYear();
-    const systemM = String(now.getMonth() + 1).padStart(2, '0');
-    const SYSTEM_TODAY = `${systemY}-${systemM}-${String(now.getDate()).padStart(2, '0')}`;
-    
-    let currentDate = SYSTEM_TODAY;
-    const datePicker = document.getElementById('datePicker');
-    datePicker.value = currentDate;
-
-    // 自動加載本機 /data/ 中的 Excel
-    window.addEventListener('DOMContentLoaded', async () => {
-      const rocY = systemY - 1911;
-      const autoPath = `./data/${rocY}學年度餐點整合明細-${systemY}${systemM}.xlsx`;
-      try {
-        const res = await fetch(autoPath);
-        if (res.ok) {
-          const ab = await res.arrayBuffer();
-          parseExcelData(new Uint8Array(ab));
-        } else {
-          initUI();
-        }
-      } catch (e) {
-        console.warn("自動載入失敗:", e);
-        if (window.location.protocol === 'file:') {
-          showToast("💡 提示：本機點開網頁無法自動讀取資料夾 (瀏覽器安全限制)，請使用「手動匯入」按鈕！");
-        }
-        initUI(); // 本機跨源限制等例外，直接啟動
-      }
-    });
-
-    function initUI() {
-      if (!KINDERGARTEN_MENU[currentDate] && Object.keys(KINDERGARTEN_MENU).length > 0) {
-        currentDate = Object.keys(KINDERGARTEN_MENU).sort().pop();
-        datePicker.value = currentDate;
-      }
-      updateView();
-    }
-
-    // --- 月曆繪製 (精準定位星期與跨月顯示) ---
-    function renderMiniCalendar() {
-      const { y, m } = getActiveMonthInfo();
-      const rocYear = y - 1911;
-
-      document.getElementById('headerSubtitle').textContent = `${rocYear}學年度 幼兒園餐飲表`;
-      document.getElementById('calendarTitle').textContent = `${rocYear}年 ${m + 1}月 餐點行事曆`;
-
-      const grid = document.getElementById('miniCalendarGrid');
-      grid.innerHTML = '';
-
-      const firstDay = new Date(y, m, 1).getDay(); // 本月 1 號星期幾
-      const totalDays = new Date(y, m + 1, 0).getDate();
-      const prevTotalDays = new Date(y, m, 0).getDate();
-
-      // 繪製【上個月跨月】尾端 (若為週一到週五則顯示小字)
-      for (let i = firstDay - 1; i >= 0; i--) {
-        const d = prevTotalDays - i;
-        appendCalendarBtn(grid, y, m - 1, d, true);
-      }
-
-      // 繪製【本月】
-      for (let d = 1; d <= totalDays; d++) {
-        appendCalendarBtn(grid, y, m, d, false);
-      }
-
-      // 繪製【下個月跨月】開頭，填滿最後一排
-      const currentCells = firstDay + totalDays;
-      const remainCells = (7 - (currentCells % 7)) % 7;
-      for (let d = 1; d <= remainCells; d++) {
-        appendCalendarBtn(grid, y, m + 1, d, true);
-      }
-
-      updateStatsCounters();
-    }
-
-    function appendCalendarBtn(grid, yy, mm, dd, isOtherMonth) {
-      const dt = new Date(yy, mm, dd);
-      const y = dt.getFullYear();
-      const m = dt.getMonth();
-      const d = dt.getDate();
-      const dateStr = `${y}-${String(m + 1).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
-      
-      const dayOfWeek = dt.getDay();
-      const isWeekend = (dayOfWeek === 0 || dayOfWeek === 6);
-      const isSelected = (dateStr === currentDate);
-      const isSystemDay = (dateStr === SYSTEM_TODAY);
-      const data = KINDERGARTEN_MENU[dateStr];
-
-      const btn = document.createElement('button');
-      btn.textContent = d;
-      btn.className = "cal-btn ";
-
-      if (isOtherMonth) {
-        if (isWeekend || !data) {
-          btn.className += "opacity-0 cursor-default pointer-events-none ";
-        } else {
-          btn.className += "text-slate-400 bg-slate-50 border border-slate-200/40 text-[11px] hover:bg-apricot-50 ";
-          if(isSelected) btn.className += "calendar-active ";
-        }
+  // 自動嘗試讀取 /data/ 資料夾下的 Excel
+  window.addEventListener('DOMContentLoaded', async () => {
+    const rocY = systemY - 1911;
+    const autoPath = `./data/${rocY}學年度餐點整合明細-${systemY}${systemM}.xlsx`;
+    try {
+      const res = await fetch(autoPath);
+      if (res.ok) {
+        const ab = await res.arrayBuffer();
+        parseExcelData(new Uint8Array(ab));
       } else {
-        if (isSelected) {
-          btn.className += "calendar-active ";
-        } else if (isSystemDay) {
-          btn.className += "calendar-today ";
-        } else if (isWeekend) {
-          btn.className += "text-slate-300 bg-slate-50/50 cursor-not-allowed ";
-        } else {
-          btn.className += "text-cream-dark hover:bg-apricot-100 bg-white border border-apricot-200/50 ";
-        }
-      }
-
-      if (data && !isWeekend && data.note && data.note.includes("特餐")) {
-        const dot = document.createElement('span');
-        dot.className = 'month-dot';
-        btn.appendChild(dot);
-      }
-
-      if (!isWeekend && (data || !isOtherMonth)) {
-        btn.addEventListener('click', () => {
-          currentDate = dateStr;
-          datePicker.value = dateStr;
-          updateView();
-        });
-      }
-      grid.appendChild(btn);
-    }
-
-    // --- 統計指標更新 ---
-    function updateStatsCounters() {
-      let milkCount = 0, fruitCount = 0, soupCount = 0;
-      Object.keys(KINDERGARTEN_MENU).forEach(k => {
-        const mObj = KINDERGARTEN_MENU[k];
-        const { y, m } = getActiveMonthInfo();
-        const targetPrefix = `${y}-${String(m + 1).padStart(2, '0')}`;
-        if (k.startsWith(targetPrefix) && !mObj.isHoliday) {
-          if (mObj.morning && mObj.morning.includes('鮮奶')) milkCount++;
-          if (mObj.fruit) fruitCount++;
-          if (mObj.afternoon && (mObj.afternoon.includes('粥') || mObj.afternoon.includes('麵') || mObj.afternoon.includes('湯') || mObj.afternoon.includes('粉'))) soupCount++;
-        }
-      });
-      document.getElementById('statMilk').textContent = `${milkCount} 天`;
-      document.getElementById('statFruit').textContent = `${fruitCount} 天`;
-      document.getElementById('statSoup').textContent = `${soupCount} 次`;
-    }
-
-    // --- 畫面更新 ---
-    function updateView() {
-      const parts = currentDate.split('-');
-      document.getElementById('bannerDate').textContent = `${parts[0]} 年 ${parseInt(parts[1],10)} 月 ${parseInt(parts[2],10)} 日`;
-      
-      const isToday = (currentDate === SYSTEM_TODAY);
-      document.getElementById('todayBadge').style.display = isToday ? 'inline-block' : 'none';
-
-      const data = KINDERGARTEN_MENU[currentDate];
-      const mealsBox = document.getElementById('mealsContainer');
-      const holidayBox = document.getElementById('holidayBanner');
-      const specialTag = document.getElementById('tagSpecial');
-
-      if (!data || data.isHoliday) {
-        mealsBox.classList.add('hidden');
-        holidayBox.classList.remove('hidden');
-        document.getElementById('bannerWeekday').textContent = data ? `（${data.day}）` : '（假）';
-        document.getElementById('holidayTitle').textContent = data && data.note ? data.note : "美好連假放假一日";
-        specialTag.style.display = 'none';
-      } else {
-        mealsBox.classList.remove('hidden');
-        holidayBox.classList.add('hidden');
-        document.getElementById('bannerWeekday').textContent = `（星期${data.day}）`;
-
-        if (data.note) {
-          specialTag.textContent = data.note;
-          specialTag.style.display = 'inline-block';
-        } else {
-          specialTag.style.display = 'none';
-        }
-
-        document.getElementById('mealMorning').textContent = data.morning || "美味晨間點心";
-        document.getElementById('mealMainDish').textContent = (data.lunch && data.lunch.main) ? data.lunch.main : "今日美味主菜";
-        document.getElementById('mealStaple').textContent = (data.lunch && data.lunch.staple) ? `搭配 ${data.lunch.staple}` : "今天也要吃飽飽";
-        const lunchSpecial = document.getElementById('lunchSpecialTag');
-        if (lunchSpecial) {
-          if (data.note) {
-            lunchSpecial.textContent = `✨ ${data.note}`;
-            lunchSpecial.style.display = 'inline-flex';
-          } else {
-            lunchSpecial.style.display = 'none';
-          }
-        }
-
-        document.getElementById('milkBadge').style.display = (data.morning && data.morning.includes('鮮奶')) ? 'block' : 'none';
-
-        const pills = document.getElementById('lunchPills');
-        pills.innerHTML = '';
-        if (data.lunch) {
-          const items = [
-            { icon: '🍚', label: '主食', val: data.lunch.staple },
-            { icon: '🍗', label: '主菜', val: data.lunch.main },
-            { icon: '🥗', label: '副菜', val: data.lunch.side },
-            { icon: '🥬', label: '時蔬', val: data.lunch.veg },
-            { icon: '🍲', label: '湯品', val: data.lunch.soup }
-          ];
-
-          items.forEach(it => {
-            const el = document.createElement('div');
-            el.className = "bg-white p-2 sm:p-2.5 rounded-xl border border-apricot-200 text-center shadow-xs";
-            el.innerHTML = `<div class="text-xl sm:text-2xl">${it.icon}</div><div class="text-[11px] text-slate-400 font-bold mt-0.5">${it.label}</div><div class="text-sm sm:text-base font-black text-cream-dark truncate mt-0.5">${it.val}</div>`;
-            pills.appendChild(el);
-          });
-          document.getElementById('vegCertText').innerHTML = `<i class="fa-solid fa-leaf text-mint"></i> ${data.lunch.cert}`;
-          document.getElementById('lunchKcalText').textContent = `${data.lunch.kcal} kcal`;
-        }
-
-        document.getElementById('mealFruit').textContent = data.fruit || "當季新鮮水果";
-        document.getElementById('mealFruitImg').src = getFruitOpenMoji(data.fruit);
-
-        document.getElementById('mealAfternoon').textContent = data.afternoon || "午後點心";
-        document.getElementById('afternoonNote').textContent = (data.note && data.note.includes('蔬食')) ? "🌱 今日為幼兒園蔬食日，多吃蔬菜元氣滿滿！" : "新鮮食材手作・適量少糖健康低負擔";
-      }
-      renderMiniCalendar();
-    }
-
-    // --- Excel 解析引擎模組 ---
-    document.getElementById('excelFileInput').addEventListener('change', function(e) {
-      const file = e.target.files[0];
-      if (!file) return;
-      const reader = new FileReader();
-      reader.onload = function(evt) {
-        try {
-          parseExcelData(new Uint8Array(evt.target.result));
-          showToast(`資料已成功從 Excel 匯入並更新！`);
-        } catch(err) {
-          alert("Excel 解析失敗，請確認檔案格式是否正確。");
-        }
-      };
-      reader.readAsArrayBuffer(file);
-    });
-
-    function parseExcelData(uint8Array) {
-      const workbook = XLSX.read(uint8Array, { type: 'array' });
-
-      // 解析營養頁籤 (全面美化並加入四捨五入邏輯)
-      const nutSheetName = workbook.SheetNames.find(n => n.includes("營養"));
-      if (nutSheetName) {
-        const nutRows = XLSX.utils.sheet_to_json(workbook.Sheets[nutSheetName], { header: 1 });
-        let nutHtml = '';
-        let currentCard = '';
-        let currentSectionTitle = '';
-        nutRows.forEach(row => {
-          if(!row || row.length===0) return;
-          const c0 = String(row[0]||'').trim();
-          let c1 = roundToOneDec(row[1]);
-          let c2 = roundToOneDec(row[2]);
-          
-          if (c0.includes('大數據與營養分析') || c0.includes('本分析整合')) return;
-          
-          if(c0 && !c1 && !c2 && c0.length > 2) {
-            if(currentCard) nutHtml += currentCard + '</div></div>';
-            currentSectionTitle = c0;
-            currentCard = `<div class="bg-gradient-to-br from-mint/10 to-mint/5 rounded-2xl p-4 border border-mint/20 shadow-sm"><h4 class="font-black text-emerald-800 text-sm sm:text-base border-b-2 border-mint/30 pb-2 mb-3 flex items-center gap-2"><i class="fa-solid fa-leaf text-mint"></i>${c0}</h4><div class="space-y-2.5">`;
-          } else if(c0 && (c1 || c2) && currentCard) {
-            if (c0 === '水果名稱') return;
-            
-            let displayC2 = c2;
-            if (currentSectionTitle.includes('水果')) {
-              displayC2 = ''; // 水果區單純顯示次數
-            }
-            
-            let valHtml = `<span class="text-emerald-950 font-black text-right bg-white px-2.5 py-1 rounded-lg border border-mint/20 shadow-xs">${c1}`;
-            if (displayC2) {
-              valHtml += ` <span class="text-[10px] sm:text-xs text-slate-500 font-medium ml-1.5 opacity-90 border-l border-slate-200 pl-1.5">${displayC2}</span>`;
-            }
-            valHtml += `</span>`;
-            
-            currentCard += `<div class="flex justify-between items-center text-xs sm:text-sm border-b border-mint/10 pb-2"><span class="text-slate-700 font-bold">${c0}</span>${valHtml}</div>`;
-          }
-        });
-        if(currentCard) nutHtml += currentCard + '</div></div>';
-        
-        if (nutHtml) {
-          const nutBody = document.getElementById('nutritionBody');
-          nutBody.innerHTML = nutHtml;
-          document.getElementById('nutritionAccordion').classList.remove('hidden');
-        }
-      }
-
-      // 解析主餐點
-      let targetSheetName = workbook.SheetNames.find(n => n.includes("全日") || n.includes("總表")) || workbook.SheetNames[0];
-      const rawRows = XLSX.utils.sheet_to_json(workbook.Sheets[targetSheetName], { header: 1 });
-
-      const certMap = {};
-      const detailSheetName = workbook.SheetNames.find(n => n.includes("國小午餐") || n.includes("午餐明細"));
-      if (detailSheetName) {
-        const dRows = XLSX.utils.sheet_to_json(workbook.Sheets[detailSheetName], { header: 1 });
-        let dCol = 0, certCol = -1;
-        for (let r=0; r<Math.min(dRows.length, 10); r++) {
-          const rw = dRows[r] || [];
-          for (let c=0; c<rw.length; c++) {
-            if (String(rw[c]||'').includes("日期")) dCol = c;
-            if (String(rw[c]||'').includes("蔬菜認證")) certCol = c;
-          }
-          if (certCol !== -1) break;
-        }
-        if(certCol !== -1) {
-          dRows.forEach((rw, i) => {
-            if (i < 3) return;
-            const ds = String(rw[dCol]||'').trim(), cs = String(rw[certCol]||'').trim();
-            if(ds && cs && cs !== 'None') certMap[ds] = cs;
-          });
-        }
-      }
-
-      let hRow = -1; const cmap = {};
-      for (let r=0; r<Math.min(rawRows.length, 12); r++) {
-        const rowStr = (rawRows[r] || []).map(v => String(v||'')).join('|');
-        if (rowStr.includes("日期") && (rowStr.includes("主食") || rowStr.includes("早點"))) {
-          hRow = r;
-          rawRows[r].forEach((v, c) => {
-            const val = String(v||'').trim();
-            if (val.includes("日期")) cmap.date = c; else if (val.includes("星期")) cmap.day = c;
-            else if (val.includes("早點")) cmap.morning = c; else if (val.includes("主食")) cmap.staple = c;
-            else if (val.includes("主菜")) cmap.main = c; else if (val.includes("副菜")) cmap.side = c;
-            else if (val.includes("時蔬") || val.includes("青菜")) cmap.veg = c;
-            else if (val.includes("湯品")) cmap.soup = c; else if (val.includes("熱量")) cmap.kcal = c;
-            else if (val.includes("水果")) cmap.fruit = c; else if (val.includes("午點")) cmap.afternoon = c;
-            else if (val.includes("備註") || val.includes("提醒")) cmap.note = c;
-          }); break;
-        }
-      }
-
-      if (hRow !== -1) {
-        KINDERGARTEN_MENU = {};
-        for (let r = hRow + 1; r < rawRows.length; r++) {
-          const row = rawRows[r];
-          if (!row || row[cmap.date] == null) continue;
-          let rd = String(row[cmap.date]).trim();
-          if (!rd || rd==='None' || rd==='-') continue;
-          
-          let iso = rd;
-          if (rd.includes("/")) {
-            const p = rd.split("/");
-            iso = p.length === 2 ? `${now.getFullYear()}-${p[0].padStart(2,'0')}-${p[1].padStart(2,'0')}` : `${p[0].length===3?parseInt(p[0])+1911:p[0]}-${p[1].padStart(2,'0')}-${p[2].padStart(2,'0')}`;
-          }
-          
-          const g = (c) => (c !== undefined && row[c] != null && row[c] !== 'None') ? String(row[c]).trim() : "";
-          const st = g(cmap.staple), mn = g(cmap.main), nt = g(cmap.note), vg = g(cmap.veg), rKc = g(cmap.kcal);
-          const isHol = (st === '-' || mn === '-' || nt.includes('放假') || mn.includes('放假'));
-          
-          KINDERGARTEN_MENU[iso] = {
-            rawDate: rd, day: g(cmap.day), morning: isHol?"":g(cmap.morning), fruit: isHol?"":g(cmap.fruit),
-            lunch: isHol ? null : { staple: st, main: mn, side: g(cmap.side), veg: vg, soup: g(cmap.soup), kcal: rKc&&!isNaN(parseFloat(rKc))?Math.round(parseFloat(rKc)):0, cert: certMap[rd] || (vg.includes("有機")?"有機蔬菜 80g":"產銷履歷/有機時蔬 80g") },
-            afternoon: isHol?"":g(cmap.afternoon), note: nt, isHoliday: isHol
-          };
-        }
         initUI();
       }
+    } catch (e) {
+      if (window.location.protocol === 'file:') {
+        showToast("💡 提示：本機直接點開因安全性無法讀取資料夾，請使用「匯入」按鈕！");
+      }
+      initUI();
+    }
+  });
+
+  function initUI() {
+    if (!KINDERGARTEN_MENU[currentDate] && Object.keys(KINDERGARTEN_MENU).length > 0) {
+      currentDate = Object.keys(KINDERGARTEN_MENU).sort().pop();
+      datePicker.value = currentDate;
+    }
+    updateView();
+  }
+
+  // 繪製整月行事曆
+  function renderMiniCalendar() {
+    const { y, m } = getActiveMonthInfo();
+    const rocYear = y - 1911;
+
+    document.getElementById('headerSubtitle').textContent = `${rocYear}學年度 幼兒園餐飲表`;
+    document.getElementById('calendarTitle').textContent = `${rocYear}年 ${m + 1}月 餐點行事曆`;
+
+    const grid = document.getElementById('miniCalendarGrid');
+    grid.innerHTML = '';
+
+    const firstDay = new Date(y, m, 1).getDay();
+    const totalDays = new Date(y, m + 1, 0).getDate();
+    const prevTotalDays = new Date(y, m, 0).getDate();
+
+    // 上個月跨月補齊
+    for (let i = firstDay - 1; i >= 0; i--) {
+      const d = prevTotalDays - i;
+      appendCalendarBtn(grid, y, m - 1, d, true);
     }
 
-    function showToast(msg) {
-      document.getElementById('toastMsg').textContent = msg;
-      const t = document.getElementById('toast');
-      t.classList.remove('opacity-0', 'pointer-events-none');
-      setTimeout(() => t.classList.add('opacity-0', 'pointer-events-none'), 3500);
+    // 本月日期
+    for (let d = 1; d <= totalDays; d++) {
+      appendCalendarBtn(grid, y, m, d, false);
     }
 
-    // --- 日期控制事件 ---
-    datePicker.addEventListener('change', e => { if(e.target.value) { currentDate = e.target.value; updateView(); } });
-    document.getElementById('btnToday').addEventListener('click', () => { currentDate = SYSTEM_TODAY; datePicker.value = SYSTEM_TODAY; updateView(); });
-    document.getElementById('btnPrevDay').addEventListener('click', () => { const d = new Date(currentDate); d.setDate(d.getDate() - 1); currentDate = d.toISOString().split('T')[0]; datePicker.value = currentDate; updateView(); });
-    document.getElementById('btnNextDay').addEventListener('click', () => { const d = new Date(currentDate); d.setDate(d.getDate() + 1); currentDate = d.toISOString().split('T')[0]; datePicker.value = currentDate; updateView(); });
+    // 下個月跨月補齊排滿 7 欄
+    const currentCells = firstDay + totalDays;
+    const remainCells = (7 - (currentCells % 7)) % 7;
+    for (let d = 1; d <= remainCells; d++) {
+      appendCalendarBtn(grid, y, m + 1, d, true);
+    }
 
-  </script>
+    updateStatsCounters();
+  }
+
+  function appendCalendarBtn(grid, yy, mm, dd, isOtherMonth) {
+    const dt = new Date(yy, mm, dd);
+    const y = dt.getFullYear();
+    const m = dt.getMonth();
+    const d = dt.getDate();
+    const dateStr = `${y}-${String(m + 1).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
+    
+    const dayOfWeek = dt.getDay();
+    const isWeekend = (dayOfWeek === 0 || dayOfWeek === 6);
+    const isSelected = (dateStr === currentDate);
+    const isSystemDay = (dateStr === SYSTEM_TODAY);
+    const data = KINDERGARTEN_MENU[dateStr];
+
+    const btn = document.createElement('button');
+    btn.textContent = d;
+    btn.className = "cal-btn ";
+
+    if (isOtherMonth) {
+      if (isWeekend || !data) {
+        btn.className += "opacity-0 cursor-default pointer-events-none ";
+      } else {
+        btn.className += "text-slate-400 bg-slate-50 border-slate-200 text-xs ";
+        if (isSelected) btn.className += "calendar-active ";
+      }
+    } else {
+      if (isSelected) {
+        btn.className += "calendar-active ";
+      } else if (isSystemDay) {
+        btn.className += "calendar-today ";
+      } else if (isWeekend) {
+        btn.className += "text-slate-300 bg-slate-50/50 cursor-not-allowed ";
+      }
+    }
+
+    if (data && !isWeekend && data.note && data.note.includes("特餐")) {
+      const dot = document.createElement('span');
+      dot.className = 'month-dot';
+      btn.appendChild(dot);
+    }
+
+    if (!isWeekend && (data || !isOtherMonth)) {
+      btn.addEventListener('click', () => {
+        currentDate = dateStr;
+        datePicker.value = dateStr;
+        updateView();
+      });
+    }
+    grid.appendChild(btn);
+  }
+
+  function updateStatsCounters() {
+    let milkCount = 0, fruitCount = 0, soupCount = 0;
+    Object.keys(KINDERGARTEN_MENU).forEach(k => {
+      const mObj = KINDERGARTEN_MENU[k];
+      const { y, m } = getActiveMonthInfo();
+      const targetPrefix = `${y}-${String(m + 1).padStart(2, '0')}`;
+      if (k.startsWith(targetPrefix) && !mObj.isHoliday) {
+        if (mObj.morning && mObj.morning.includes('鮮奶')) milkCount++;
+        if (mObj.fruit) fruitCount++;
+        if (mObj.afternoon && (mObj.afternoon.includes('粥') || mObj.afternoon.includes('麵') || mObj.afternoon.includes('湯') || mObj.afternoon.includes('粉'))) soupCount++;
+      }
+    });
+    document.getElementById('statMilk').textContent = `${milkCount} 天`;
+    document.getElementById('statFruit').textContent = `${fruitCount} 天`;
+    document.getElementById('statSoup').textContent = `${soupCount} 次`;
+  }
+
+  const MAISY_CHARACTERS = {
+    '一': ['Maisy', 'maisy_web_assets/mascot_maisy.png'],
+    '二': ['Charley', 'maisy_web_assets/mascot_charley.png'],
+    '三': ['Tallulah', 'maisy_web_assets/mascot_tallulah.png'],
+    '四': ['Eddie', 'maisy_web_assets/mascot_eddie.png'],
+    '五': ['Cyril', 'maisy_web_assets/mascot_cyril.png']
+  };
+
+  function updateHeroCharacter(day) {
+    const img = document.getElementById('heroCharacter');
+    if (!img) return;
+    const info = MAISY_CHARACTERS[day] || MAISY_CHARACTERS['一'];
+    img.src = info[1];
+    img.alt = info[0];
+  }
+
+  // 畫面主更新
+  function updateView() {
+    const parts = currentDate.split('-');
+    document.getElementById('bannerDate').textContent = `${parts[0]} 年 ${parseInt(parts[1], 10)} 月 ${parseInt(parts[2], 10)} 日`;
+    
+    const isToday = (currentDate === SYSTEM_TODAY);
+    document.getElementById('todayBadge').style.display = isToday ? 'inline-block' : 'none';
+
+    const data = KINDERGARTEN_MENU[currentDate];
+    updateHeroCharacter(data && data.day ? data.day : "一");
+    const mealsBox = document.getElementById('mealsContainer');
+    const holidayBox = document.getElementById('holidayBanner');
+    const specialTag = document.getElementById('tagSpecial');
+
+    if (!data || data.isHoliday) {
+      mealsBox.classList.add('hidden');
+      holidayBox.classList.remove('hidden');
+      document.getElementById('bannerWeekday').textContent = data ? `（${data.day}）` : '（假）';
+      document.getElementById('holidayTitle').textContent = data && data.note ? data.note : "美好連假放假一日";
+      specialTag.style.display = 'none';
+    } else {
+      mealsBox.classList.remove('hidden');
+      holidayBox.classList.add('hidden');
+      document.getElementById('bannerWeekday').textContent = `（星期${data.day}）`;
+
+      if (data.note) {
+        specialTag.textContent = data.note;
+        specialTag.style.display = 'inline-flex';
+      } else {
+        specialTag.style.display = 'none';
+      }
+
+      document.getElementById('mealMorning').textContent = data.morning || "美味晨間點心";
+      document.getElementById('mealMainDish').textContent = (data.lunch && data.lunch.main) ? data.lunch.main : "今日美味主菜";
+      document.getElementById('mealStaple').textContent = (data.lunch && data.lunch.staple) ? `搭配 ${data.lunch.staple}` : "今天也要吃飽飽";
+      
+      const lunchSpecial = document.getElementById('lunchSpecialTag');
+      if (lunchSpecial) {
+        if (data.note) {
+          lunchSpecial.textContent = `✨ ${data.note}`;
+          lunchSpecial.style.display = 'inline-flex';
+        } else {
+          lunchSpecial.style.display = 'none';
+        }
+      }
+
+      document.getElementById('milkBadge').style.display = (data.morning && data.morning.includes('鮮奶')) ? 'inline-flex' : 'none';
+
+      const pills = document.getElementById('lunchPills');
+      pills.innerHTML = '';
+      if (data.lunch) {
+        const items = [
+          { icon: '🍚', label: '主食', val: data.lunch.staple },
+          { icon: '🍗', label: '主菜', val: data.lunch.main },
+          { icon: '🥗', label: '副菜', val: data.lunch.side },
+          { icon: '🥬', label: '時蔬', val: data.lunch.veg },
+          { icon: '🍲', label: '湯品', val: data.lunch.soup }
+        ];
+
+        items.forEach(it => {
+          const el = document.createElement('div');
+          el.innerHTML = `<div>${it.icon}</div><div>${it.label}</div><div>${it.val}</div>`;
+          pills.appendChild(el);
+        });
+        document.getElementById('vegCertText').innerHTML = `<i class="fa-solid fa-leaf"></i> ${data.lunch.cert}`;
+        document.getElementById('lunchKcalText').textContent = `${data.lunch.kcal} kcal`;
+      }
+
+      document.getElementById('mealFruit').textContent = data.fruit || "當季新鮮水果";
+      document.getElementById('mealFruitImg').src = getFruitOpenMoji(data.fruit);
+
+      document.getElementById('mealAfternoon').textContent = data.afternoon || "午後點心";
+      document.getElementById('afternoonNote').textContent = (data.note && data.note.includes('蔬食')) ? "🌱 今日為幼兒園蔬食日，多吃蔬菜元氣滿滿！" : "新鮮食材手作・適量少糖健康低負擔";
+    }
+    renderMiniCalendar();
+  }
+
+  // --- Excel 解析引擎 ---
+  document.getElementById('excelFileInput').addEventListener('change', function(e) {
+    const file = e.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = function(evt) {
+      try {
+        parseExcelData(new Uint8Array(evt.target.result));
+        showToast(`資料已成功從 Excel 匯入並更新！`);
+      } catch(err) {
+        alert("Excel 解析失敗，請確認檔案格式是否正確。");
+      }
+    };
+    reader.readAsArrayBuffer(file);
+  });
+
+  function parseExcelData(uint8Array) {
+    const workbook = XLSX.read(uint8Array, { type: 'array' });
+
+    // 1. 營養分析頁籤
+    const nutSheetName = workbook.SheetNames.find(n => n.includes("營養"));
+    if (nutSheetName) {
+      const nutRows = XLSX.utils.sheet_to_json(workbook.Sheets[nutSheetName], { header: 1 });
+      let nutHtml = '';
+      let currentCard = '';
+      let currentSectionTitle = '';
+      nutRows.forEach(row => {
+        if (!row || row.length === 0) return;
+        const c0 = String(row[0] || '').trim();
+        let c1 = roundToOneDec(row[1]);
+        let c2 = roundToOneDec(row[2]);
+        
+        if (c0.includes('大數據與營養分析') || c0.includes('本分析整合')) return;
+        
+        if (c0 && !c1 && !c2 && c0.length > 2) {
+          if (currentCard) nutHtml += currentCard + '</div></div>';
+          currentSectionTitle = c0;
+          currentCard = `<div class="bg-amber-50/50 rounded-2xl p-4 border border-amber-200/60 shadow-xs"><h4 class="font-black text-amber-900 text-sm border-b border-amber-200 pb-2 mb-3 flex items-center gap-2"><i class="fa-solid fa-leaf text-mint"></i>${c0}</h4><div class="space-y-2">`;
+        } else if (c0 && (c1 || c2) && currentCard) {
+          if (c0 === '水果名稱') return;
+          let displayC2 = currentSectionTitle.includes('水果') ? '' : c2;
+          let valHtml = `<span class="text-slate-800 font-black bg-white px-2.5 py-1 rounded-lg border border-amber-200 text-xs">${c1}`;
+          if (displayC2) {
+            valHtml += ` <span class="text-[11px] text-slate-500 font-medium ml-1.5 border-l border-slate-200 pl-1.5">${displayC2}</span>`;
+          }
+          valHtml += `</span>`;
+          currentCard += `<div class="flex justify-between items-center text-xs border-b border-amber-100 pb-1.5"><span class="text-slate-600 font-bold">${c0}</span>${valHtml}</div>`;
+        }
+      });
+      if (currentCard) nutHtml += currentCard + '</div></div>';
+      
+      if (nutHtml) {
+        document.getElementById('nutritionBody').innerHTML = nutHtml;
+        document.getElementById('nutritionAccordion').classList.remove('hidden');
+      }
+    }
+
+    // 2. 餐點明細主頁籤
+    let targetSheetName = workbook.SheetNames.find(n => n.includes("全日") || n.includes("總表")) || workbook.SheetNames[0];
+    const rawRows = XLSX.utils.sheet_to_json(workbook.Sheets[targetSheetName], { header: 1 });
+
+    const certMap = {};
+    const detailSheetName = workbook.SheetNames.find(n => n.includes("國小午餐") || n.includes("午餐明細"));
+    if (detailSheetName) {
+      const dRows = XLSX.utils.sheet_to_json(workbook.Sheets[detailSheetName], { header: 1 });
+      let dCol = 0, certCol = -1;
+      for (let r = 0; r < Math.min(dRows.length, 10); r++) {
+        const rw = dRows[r] || [];
+        for (let c = 0; c < rw.length; c++) {
+          if (String(rw[c] || '').includes("日期")) dCol = c;
+          if (String(rw[c] || '').includes("蔬菜認證")) certCol = c;
+        }
+        if (certCol !== -1) break;
+      }
+      if (certCol !== -1) {
+        dRows.forEach((rw, i) => {
+          if (i < 3) return;
+          const ds = String(rw[dCol] || '').trim(), cs = String(rw[certCol] || '').trim();
+          if (ds && cs && cs !== 'None') certMap[ds] = cs;
+        });
+      }
+    }
+
+    let hRow = -1;
+    const cmap = {};
+    for (let r = 0; r < Math.min(rawRows.length, 12); r++) {
+      const rowStr = (rawRows[r] || []).map(v => String(v || '')).join('|');
+      if (rowStr.includes("日期") && (rowStr.includes("主食") || rowStr.includes("早點"))) {
+        hRow = r;
+        rawRows[r].forEach((v, c) => {
+          const val = String(v || '').trim();
+          if (val.includes("日期")) cmap.date = c; else if (val.includes("星期")) cmap.day = c;
+          else if (val.includes("早點")) cmap.morning = c; else if (val.includes("主食")) cmap.staple = c;
+          else if (val.includes("主菜")) cmap.main = c; else if (val.includes("副菜")) cmap.side = c;
+          else if (val.includes("時蔬") || val.includes("青菜")) cmap.veg = c;
+          else if (val.includes("湯品")) cmap.soup = c; else if (val.includes("熱量")) cmap.kcal = c;
+          else if (val.includes("水果")) cmap.fruit = c; else if (val.includes("午點")) cmap.afternoon = c;
+          else if (val.includes("備註") || val.includes("提醒")) cmap.note = c;
+        });
+        break;
+      }
+    }
+
+    if (hRow !== -1) {
+      KINDERGARTEN_MENU = {};
+      for (let r = hRow + 1; r < rawRows.length; r++) {
+        const row = rawRows[r];
+        if (!row || row[cmap.date] == null) continue;
+        let rd = String(row[cmap.date]).trim();
+        if (!rd || rd === 'None' || rd === '-') continue;
+        
+        let iso = rd;
+        if (rd.includes("/")) {
+          const p = rd.split("/");
+          iso = p.length === 2 ? `${now.getFullYear()}-${p[0].padStart(2, '0')}-${p[1].padStart(2, '0')}` : `${p[0].length === 3 ? parseInt(p[0]) + 1911 : p[0]}-${p[1].padStart(2, '0')}-${p[2].padStart(2, '0')}`;
+        }
+        
+        const g = (c) => (c !== undefined && row[c] != null && row[c] !== 'None') ? String(row[c]).trim() : "";
+        const st = g(cmap.staple), mn = g(cmap.main), nt = g(cmap.note), vg = g(cmap.veg), rKc = g(cmap.kcal);
+        const isHol = (st === '-' || mn === '-' || nt.includes('放假') || mn.includes('放假'));
+        
+        KINDERGARTEN_MENU[iso] = {
+          rawDate: rd, day: g(cmap.day), morning: isHol ? "" : g(cmap.morning), fruit: isHol ? "" : g(cmap.fruit),
+          lunch: isHol ? null : { staple: st, main: mn, side: g(cmap.side), veg: vg, soup: g(cmap.soup), kcal: rKc && !isNaN(parseFloat(rKc)) ? Math.round(parseFloat(rKc)) : 0, cert: certMap[rd] || (vg.includes("有機") ? "有機蔬菜 80g" : "產銷履歷/有機時蔬 80g") },
+          afternoon: isHol ? "" : g(cmap.afternoon), note: nt, isHoliday: isHol
+        };
+      }
+      initUI();
+    }
+  }
+
+  function showToast(msg) {
+    document.getElementById('toastMsg').textContent = msg;
+    const t = document.getElementById('toast');
+    t.classList.remove('opacity-0', 'pointer-events-none');
+    setTimeout(() => t.classList.add('opacity-0', 'pointer-events-none'), 3500);
+  }
+
+  // 日期導航按鈕監聽
+  datePicker.addEventListener('change', e => { if (e.target.value) { currentDate = e.target.value; updateView(); } });
+  document.getElementById('btnToday').addEventListener('click', () => { currentDate = SYSTEM_TODAY; datePicker.value = SYSTEM_TODAY; updateView(); });
+  document.getElementById('btnPrevDay').addEventListener('click', () => { const d = new Date(currentDate); d.setDate(d.getDate() - 1); currentDate = d.toISOString().split('T')[0]; datePicker.value = currentDate; updateView(); });
+  document.getElementById('btnNextDay').addEventListener('click', () => { const d = new Date(currentDate); d.setDate(d.getDate() + 1); currentDate = d.toISOString().split('T')[0]; datePicker.value = currentDate; updateView(); });
+</script>
 </body>
 </html>
