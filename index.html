@@ -3,16 +3,16 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>龍安附幼・美味餐點彙整表</title>
+  <title>龍安附幼・寶貝美味餐點彙整表</title>
 
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- SheetJS CDN (Excel 解析引擎) -->
   <script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
-  <!-- Google Fonts: Zen Maru Gothic, Noto Sans TC & Caveat -->
+  <!-- Google Fonts: 導入 Nunito 數字專用字體 -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=Zen+Maru+Gothic:wght@500;700;900&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;800;900&family=Noto+Sans+TC:wght@400;500;700;900&family=Zen+Maru+Gothic:wght@500;700;900&display=swap" rel="stylesheet">
   <!-- FontAwesome Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   
@@ -66,754 +66,172 @@
       min-height: 100vh;
     }
 
-    /* 主外框容器：寬敞大氣 */
-    .app {
-      width: 100%;
-      max-width: 1260px;
-      margin: 0 auto;
-      padding-bottom: 48px;
+    /* 數字專用粗體 */
+    .num-font {
+      font-family: 'Nunito', 'Zen Maru Gothic', 'Noto Sans TC', sans-serif !important;
     }
+
+    .app { width: 100%; max-width: 1260px; margin: 0 auto; padding-bottom: 48px; }
 
     /* ---------- 頂部導航列 ---------- */
     .topbar {
-      position: sticky;
-      top: 0;
-      z-index: 40;
-      background: rgba(255, 253, 249, 0.94);
-      backdrop-filter: blur(14px);
-      border-bottom: 2px dashed #EADBC8;
-      box-shadow: 0 4px 18px rgba(85, 65, 45, 0.04);
+      position: sticky; top: 0; z-index: 40;
+      background: rgba(255, 253, 249, 0.94); backdrop-filter: blur(14px);
+      border-bottom: 2px dashed #EADBC8; box-shadow: 0 4px 18px rgba(85, 65, 45, 0.04);
     }
     .topbar-inner {
-      max-width: 1260px;
-      margin: 0 auto;
-      min-height: 64px;
-      padding: 10px 20px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
+      max-width: 1260px; margin: 0 auto; min-height: 64px; padding: 10px 20px;
+      display: flex; align-items: center; justify-content: space-between; gap: 12px;
     }
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      min-width: 0;
-    }
+    .brand { display: flex; align-items: center; gap: 12px; min-width: 0; }
     .brand-icon {
-      width: 44px;
-      height: 44px;
-      min-width: 44px;
-      border-radius: 50%;
-      background: #FFEAA8;
-      border: 2px solid #F0CA62;
-      display: grid;
-      place-items: center;
-      overflow: hidden;
+      width: 44px; height: 44px; min-width: 44px; border-radius: 50%; background: #FFEAA8;
+      border: 2px solid #F0CA62; display: grid; place-items: center; overflow: hidden;
       box-shadow: 2px 2px 0 rgba(100, 75, 45, 0.08);
     }
-    .brand-icon img {
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-    }
+    .brand-icon img { width: 100%; height: 100%; object-fit: contain; }
     .brand-title {
-      font-size: 17px;
-      font-weight: 900;
-      color: #3C322B;
-      line-height: 1.2;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
+      font-size: 17px; font-weight: 900; color: #3C322B; line-height: 1.2;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
     }
-    .brand-sub {
-      font-size: 11px;
-      color: #9C7E66;
-      font-weight: 700;
-      margin-top: 2px;
-    }
-    .top-actions {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      flex-shrink: 0;
-    }
+    .brand-sub { font-size: 11px; color: #9C7E66; font-weight: 700; margin-top: 2px; }
+    .top-actions { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
     .top-actions a, .top-actions label, .top-actions button {
-      border: 2px solid #EADBC8;
-      background: #FFFDF9;
-      color: #725D4C;
-      border-radius: 14px;
-      padding: 8px 13px;
-      font-size: 12px;
-      font-weight: 900;
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      box-shadow: 2px 2px 0 rgba(90, 65, 40, 0.06);
-      transition: all 0.18s ease;
+      border: 2px solid #EADBC8; background: #FFFDF9; color: #725D4C; border-radius: 14px;
+      padding: 8px 13px; font-size: 12px; font-weight: 900; cursor: pointer; display: inline-flex;
+      align-items: center; gap: 6px; box-shadow: 2px 2px 0 rgba(90, 65, 40, 0.06); transition: all 0.18s ease;
     }
-    .top-actions a:hover, .top-actions label:hover, .top-actions button:hover {
-      background: #FFF4D6;
-      transform: translateY(-1px);
-    }
+    .top-actions a:hover, .top-actions label:hover, .top-actions button:hover { background: #FFF4D6; transform: translateY(-1px); }
 
     /* ---------- 今日橫幅（Hero Banner） ---------- */
     .hero {
-      margin: 18px 20px 24px;
-      padding: 26px 30px;
-      border-radius: 28px;
-      border: 2.5px solid #504237;
+      margin: 18px 20px 24px; padding: 26px 30px; border-radius: 28px; border: 2.5px solid #504237;
       background: #F8D36A url('maisy_web_assets/bg_yellow_morning.png') right center/auto 100% no-repeat;
       box-shadow: 5px 6px 0 rgba(70, 55, 40, 0.1), 0 16px 32px rgba(80, 60, 40, 0.06);
-      position: relative;
-      overflow: hidden;
+      position: relative; overflow: hidden;
     }
     .hero:before {
-      content: "";
-      position: absolute;
-      inset: 0;
+      content: ""; position: absolute; inset: 0;
       background: linear-gradient(90deg, rgba(255, 251, 242, 0.97) 0%, rgba(255, 251, 242, 0.88) 55%, rgba(255, 251, 242, 0.25) 85%);
       z-index: 0;
     }
-    .hero-body {
-      position: relative;
-      z-index: 2;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      gap: 16px;
-    }
-    @media(min-width: 768px) {
-      .hero-body {
-        flex-direction: row;
-        align-items: center;
-      }
-    }
-    .hero-content {
-      flex: 1;
-      min-width: 0;
-    }
-    .hero-mascot-box {
-      flex-shrink: 0;
-      display: flex;
-      justify-content: flex-end;
-      align-items: center;
-    }
-    .hero-mascot {
-      width: 140px;
-      height: 180px;
-      object-fit: contain;
-      filter: drop-shadow(4px 6px 0 rgba(50, 40, 30, 0.12));
-      transition: transform 0.25s ease;
-    }
-    @media(min-width: 1024px) {
-      .hero-mascot {
-        width: 165px;
-        height: 200px;
-      }
-    }
-    .hero-kicker {
-      font-size: 13px;
-      font-weight: 900;
-      letter-spacing: .06em;
-      color: #7A604D;
-      display: flex;
-      align-items: center;
-      gap: 7px;
-      flex-wrap: wrap;
-    }
-    .story-label {
-      padding: 3px 9px;
-      border-radius: 99px;
-      background: #E85C45;
-      color: white;
-      font-size: 9px;
-      letter-spacing: .08em;
-      font-weight: 900;
-    }
-    .hero-date {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: baseline;
-      gap: 10px;
-      margin-top: 6px;
-    }
-    .hero-date h1 {
-      margin: 0;
-      font-size: 32px;
-      line-height: 1.15;
-      font-weight: 900;
-      color: #3A3028;
-    }
-    .hero-date span {
-      font-size: 18px;
-      font-weight: 800;
-      color: #6C5543;
-    }
-    .badge-today {
-      background: #F7C94A;
-      color: #553E17;
-      padding: 3px 10px;
-      border-radius: 99px;
-      font-size: 12px;
-      font-weight: 900;
-      border: 1.5px solid #DCA72B;
-    }
+    .hero-body { position: relative; z-index: 2; display: flex; flex-direction: column; justify-content: space-between; gap: 16px; }
+    @media(min-width: 768px) { .hero-body { flex-direction: row; align-items: center; } }
+    .hero-content { flex: 1; min-width: 0; }
+    .hero-kicker { font-size: 13px; font-weight: 900; letter-spacing: .06em; color: #7A604D; display: flex; align-items: center; gap: 7px; flex-wrap: wrap; }
+    .story-label { padding: 3px 9px; border-radius: 99px; background: #E85C45; color: white; font-size: 9px; letter-spacing: .08em; font-weight: 900; }
+    .hero-date { display: flex; flex-wrap: wrap; align-items: baseline; gap: 10px; margin-top: 6px; }
+    .hero-date h1 { margin: 0; font-size: 32px; line-height: 1.15; font-weight: 900; color: #3A3028; }
+    .hero-date span { font-size: 18px; font-weight: 800; color: #6C5543; }
+    .badge-today { background: #F7C94A; color: #553E17; padding: 3px 10px; border-radius: 99px; font-size: 12px; font-weight: 900; border: 1.5px solid #DCA72B; }
     .hero-note {
-      display: inline-flex;
-      align-items: center;
-      gap: 7px;
-      font-size: 13px;
-      font-weight: 800;
-      color: #6C5340;
-      background: #FFF8E2;
-      border: 2px dashed #E8BD56;
-      border-radius: 16px;
-      padding: 8px 14px;
-      margin-top: 10px;
+      display: inline-flex; align-items: center; gap: 7px; font-size: 13px; font-weight: 800;
+      color: #6C5340; background: #FFF8E2; border: 2px dashed #E8BD56; border-radius: 16px; padding: 8px 14px; margin-top: 10px;
     }
-    .hero-note img {
-      width: 20px;
-      height: 20px;
-      object-fit: contain;
-    }
-    .hero-tools {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      margin-top: 14px;
-      flex-wrap: wrap;
-    }
+    .hero-note img { width: 20px; height: 20px; object-fit: contain; }
+    .hero-tools { display: flex; align-items: center; gap: 8px; margin-top: 14px; flex-wrap: wrap; }
     .hero-tools button, .hero-tools input {
-      border: 2px solid rgba(70, 60, 50, 0.18);
-      background: #FFFDF9;
-      color: #554436;
-      font-weight: 900;
-      font-size: 12px;
-      padding: 8px 14px;
-      border-radius: 14px;
-      box-shadow: 2px 2px 0 rgba(70, 50, 30, 0.06);
-      cursor: pointer;
-      transition: background .18s;
+      border: 2px solid rgba(70, 60, 50, 0.18); background: #FFFDF9; color: #554436; font-weight: 900;
+      font-size: 12px; padding: 8px 14px; border-radius: 14px; box-shadow: 2px 2px 0 rgba(70, 50, 30, 0.06); cursor: pointer; transition: background .18s;
     }
-    .hero-tools button:hover {
-      background: #FFF2C6;
-    }
-    .hero-tools input {
-      font-size: 12px;
-      max-width: 145px;
-    }
+    .hero-tools button:hover { background: #FFF2C6; }
+    .hero-tools input { font-size: 12px; max-width: 145px; font-family: 'Nunito', sans-serif; }
 
-    /* ---------- 主版面佈局（桌機雙欄寬鬆排版） ---------- */
-    .layout {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 24px;
-      padding: 0 20px;
-    }
-    @media(min-width: 1024px) {
-      .layout {
-        grid-template-columns: minmax(0, 1fr) 350px;
-        gap: 30px;
-        align-items: start;
-      }
-    }
-    .col-side {
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
-    }
-    @media(min-width: 1024px) {
-      .col-side {
-        position: sticky;
-        top: 84px;
-      }
-    }
+    /* ---------- 主版面佈局 ---------- */
+    .layout { display: grid; grid-template-columns: 1fr; gap: 24px; padding: 0 20px; }
+    @media(min-width: 1024px) { .layout { grid-template-columns: minmax(0, 1fr) 350px; gap: 30px; align-items: start; } }
+    .col-side { display: flex; flex-direction: column; gap: 20px; }
+    @media(min-width: 1024px) { .col-side { position: sticky; top: 84px; } }
 
-    /* ---------- 區塊標題 ---------- */
-    .section-head {
-      display: flex;
-      align-items: flex-end;
-      justify-content: space-between;
-      padding-bottom: 12px;
-    }
-    .section-title {
-      font-size: 21px;
-      font-weight: 900;
-      color: #3C3127;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-    .section-spark {
-      display: inline-grid;
-      place-items: center;
-      width: 28px;
-      height: 28px;
-      border-radius: 10px;
-      background: #F7CA50;
-      color: white;
-      font-size: 16px;
-      box-shadow: 2px 2px 0 rgba(90, 65, 35, 0.1);
-    }
-    .section-sub {
-      font-size: 12px;
-      color: #9A8674;
-      font-weight: 700;
-      margin-top: 3px;
-    }
-
-    /* ---------- 餐點卡片：全面舒展不擠壓 ---------- */
-    .meal-stack {
-      display: flex;
-      flex-direction: column;
-      gap: 18px;
-    }
+    /* ---------- 餐點卡片 ---------- */
+    .section-head { display: flex; align-items: flex-end; justify-content: space-between; padding-bottom: 12px; }
+    .section-title { font-size: 21px; font-weight: 900; color: #3C3127; display: flex; align-items: center; gap: 8px; }
+    .section-spark { display: inline-grid; place-items: center; width: 28px; height: 28px; border-radius: 10px; background: #F7CA50; color: white; font-size: 16px; box-shadow: 2px 2px 0 rgba(90, 65, 35, 0.1); }
+    .section-sub { font-size: 12px; color: #9A8674; font-weight: 700; margin-top: 3px; }
+    .meal-stack { display: flex; flex-direction: column; gap: 18px; }
     .meal-card {
-      background: #FFFFFF;
-      border: 2px solid #EADCC8;
-      border-radius: 24px;
-      padding: 22px 24px;
-      position: relative;
+      background: #FFFFFF; border: 2px solid #EADCC8; border-radius: 24px; padding: 22px 24px;
       box-shadow: 4px 5px 0 rgba(95, 70, 45, 0.06), 0 10px 22px rgba(95, 70, 45, 0.04);
-      transition: transform .2s ease, box-shadow .2s ease;
     }
-    .meal-card.featured {
-      background: linear-gradient(150deg, #FFFEFC 0%, #FFF8ED 100%);
-      border: 2.5px solid #F0C46B;
-      box-shadow: 5px 6px 0 rgba(220, 150, 50, 0.12), 0 12px 26px rgba(110, 75, 35, 0.07);
-    }
-    .meal-top {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-    }
-    .meal-icon {
-      width: 58px;
-      height: 58px;
-      min-width: 58px;
-      border-radius: 18px;
-      border: 2px solid #E6D7C3;
-      background: #FFF3D6;
-      display: grid;
-      place-items: center;
-      overflow: hidden;
-      padding: 4px;
-    }
+    .meal-card.featured { background: linear-gradient(150deg, #FFFEFC 0%, #FFF8ED 100%); border: 2.5px solid #F0C46B; box-shadow: 5px 6px 0 rgba(220, 150, 50, 0.12); }
+    .meal-top { display: flex; align-items: center; gap: 14px; }
+    .meal-icon { width: 58px; height: 58px; min-width: 58px; border-radius: 18px; border: 2px solid #E6D7C3; background: #FFF3D6; display: grid; place-items: center; padding: 4px; }
     .lunch .meal-icon { background: #E6F5DD !important; border-color: #CDE8C0; }
     .snack .meal-icon { background: #FFE9E5 !important; border-color: #F8D0C9; }
-    .meal-icon img {
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-    }
-    .meal-info {
-      flex: 1;
-      min-width: 0;
-    }
-    .meal-label {
-      font-size: 12px;
-      color: #9C836E;
-      font-weight: 800;
-    }
-    .meal-name {
-      font-size: 17px;
-      font-weight: 900;
-      color: #403429;
-      margin-top: 2px;
-    }
-    .meal-time {
-      font-size: 11px;
-      font-weight: 900;
-      color: #8C715C;
-      background: #FFFDF9;
-      border: 1.5px solid #EADCC8;
-      border-radius: 99px;
-      padding: 5px 11px;
-    }
-    .food-name {
-      font-size: 24px;
-      font-weight: 900;
-      line-height: 1.3;
-      margin: 14px 0 4px;
-      color: #382D25;
-      letter-spacing: .01em;
-    }
-    .food-hint {
-      font-size: 13px;
-      color: #937F6F;
-      font-weight: 700;
-    }
-    .tag-row {
-      display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
-      margin-top: 10px;
-    }
-    .tag {
-      display: inline-flex;
-      align-items: center;
-      gap: 5px;
-      border-radius: 99px;
-      padding: 6px 12px;
-      font-size: 12px;
-      font-weight: 900;
-    }
-    .tag.milk {
-      background: #E8F5FD;
-      color: #357B9E;
-      border: 1.5px solid #CDE6F7;
-    }
-    .tag.special {
-      background: #FFF1BD;
-      color: #8B6312;
-      border: 1.5px solid #F3DF88;
-    }
+    .meal-icon img { width: 100%; height: 100%; object-fit: contain; }
+    .meal-info { flex: 1; min-width: 0; }
+    .meal-label { font-size: 12px; color: #9C836E; font-weight: 800; }
+    .meal-name { font-size: 17px; font-weight: 900; color: #403429; margin-top: 2px; }
+    .meal-time { font-size: 11px; font-weight: 900; color: #8C715C; background: #FFFDF9; border: 1.5px solid #EADCC8; border-radius: 99px; padding: 5px 11px; }
+    .food-name { font-size: 24px; font-weight: 900; margin: 14px 0 4px; color: #382D25; }
+    .food-hint { font-size: 13px; color: #937F6F; font-weight: 700; }
+    .tag-row { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px; }
+    .tag { display: inline-flex; align-items: center; gap: 5px; border-radius: 99px; padding: 6px 12px; font-size: 12px; font-weight: 900; }
+    .tag.milk { background: #E8F5FD; color: #357B9E; border: 1.5px solid #CDE6F7; }
+    .tag.special { background: #FFF1BD; color: #8B6312; border: 1.5px solid #F3DF88; }
 
-    /* ---------- 午餐專屬亮點區域（便當盒風格） ---------- */
-    .lunch-main-box {
-      display: flex;
-      flex-direction: column;
-      gap: 14px;
-      margin-top: 16px;
-      padding: 18px 20px;
-      border-radius: 20px;
-      background: #FFFFFF;
-      border: 2px dashed #E5D3BA;
-    }
-    @media(min-width: 640px) {
-      .lunch-main-box {
-        flex-direction: row;
-        justify-content: space-between;
-        align-items: center;
-        gap: 20px;
-      }
-    }
-    .main-dish-wrap {
-      flex: 1;
-      min-width: 0;
-    }
-    .main-caption {
-      font-size: 12px;
-      color: #B27546;
-      font-weight: 900;
-      display: flex;
-      align-items: center;
-      gap: 5px;
-    }
-    .main-dish {
-      font-size: 27px;
-      line-height: 1.25;
-      font-weight: 900;
-      color: #362B22;
-      margin-top: 4px;
-    }
-    .fruit-box {
-      min-width: 110px;
-      text-align: center;
-      background: #FFF2F0;
-      border: 2px solid #F4D3CE;
-      border-radius: 18px;
-      padding: 12px 16px;
-      flex-shrink: 0;
-    }
-    .fruit-box img {
-      width: 44px;
-      height: 44px;
-      object-fit: contain;
-      margin: 0 auto;
-    }
-    .fruit-box .fruit-label {
-      font-size: 11px;
-      color: #B46E67;
-      font-weight: 900;
-      margin-top: 2px;
-    }
-    .fruit-box .fruit-name {
-      font-size: 15px;
-      font-weight: 900;
-      color: #723E3A;
-      margin-top: 2px;
-    }
+    /* 午餐明細格 (取消隱藏折疊，直接呈現) */
+    .lunch-main-box { display: flex; flex-direction: column; gap: 14px; margin-top: 16px; padding: 18px 20px; border-radius: 20px; background: #FFFFFF; border: 2px dashed #E5D3BA; }
+    @media(min-width: 640px) { .lunch-main-box { flex-direction: row; justify-content: space-between; align-items: center; gap: 20px; } }
+    .main-caption { font-size: 12px; color: #B27546; font-weight: 900; }
+    .main-dish { font-size: 27px; font-weight: 900; color: #362B22; margin-top: 4px; }
+    .fruit-box { min-width: 110px; text-align: center; background: #FFF2F0; border: 2px solid #F4D3CE; border-radius: 18px; padding: 12px 16px; flex-shrink: 0; }
+    .fruit-box img { width: 44px; height: 44px; object-fit: contain; margin: 0 auto; }
+    .fruit-box .fruit-label { font-size: 11px; color: #B46E67; font-weight: 900; margin-top: 2px; }
+    .fruit-box .fruit-name { font-size: 15px; font-weight: 900; color: #723E3A; margin-top: 2px; }
 
-    /* 午餐詳細內容展開按鈕與五行格 */
-    .details-toggle {
-      margin-top: 14px;
-      width: 100%;
-      border: 2px dashed #DEC8AE;
-      background: #FFFBF4;
-      color: #8A6445;
-      font-size: 13px;
-      font-weight: 900;
-      text-align: center;
-      padding: 9px 14px;
-      border-radius: 14px;
-      cursor: pointer;
-      transition: all 0.2s;
-    }
-    .details-toggle:hover {
-      background: #FFF3DD;
-      border-color: #D3B28C;
-    }
-    .details {
-      max-height: 0;
-      overflow: hidden;
-      opacity: 0;
-      transition: max-height .35s ease, opacity .25s ease;
-    }
-    .details.open {
-      max-height: 500px;
-      opacity: 1;
-      margin-top: 12px;
-    }
-    #lunchPills {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 10px;
-      margin-top: 6px;
-    }
-    @media(min-width: 600px) {
-      #lunchPills {
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-      }
-    }
-    @media(min-width: 1024px) {
-      #lunchPills {
-        grid-template-columns: repeat(5, minmax(0, 1fr));
-      }
-    }
-    #lunchPills > div {
-      background: #FFFDF9 !important;
-      border: 1.5px solid #EADBCA !important;
-      border-radius: 16px !important;
-      padding: 12px 10px !important;
-      text-align: center;
-      box-shadow: none !important;
-    }
-    #lunchPills > div > div:first-child { font-size: 24px !important; }
-    #lunchPills > div > div:nth-child(2) { font-size: 11px !important; color: #9E8876 !important; font-weight: 800 !important; margin-top: 2px; }
-    #lunchPills > div > div:last-child { font-size: 14px !important; font-weight: 900 !important; color: #3E3228 !important; margin-top: 4px; line-height: 1.25; }
+    #lunchDetails { margin-top: 16px; }
+    #lunchPills { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+    @media(min-width: 600px) { #lunchPills { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+    @media(min-width: 1024px) { #lunchPills { grid-template-columns: repeat(5, minmax(0, 1fr)); } }
+    #lunchPills > div { background: #FFFDF9; border: 1.5px solid #EADBCA; border-radius: 16px; padding: 12px 10px; text-align: center; }
+    
+    .lunch-foot { display: flex; justify-content: space-between; align-items: center; margin-top: 14px; padding-top: 12px; border-top: 2px dashed #EBDDCF; font-size: 12px; font-weight: 800; }
+    .lunch-foot span:first-child { color: #4C8F69; }
+    .lunch-foot span:last-child { color: #C36A42; background: #FFF2E8; padding: 3px 10px; border-radius: 99px; border: 1px solid #F5D3BE; }
 
-    .lunch-foot {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 10px;
-      margin-top: 14px;
-      padding-top: 12px;
-      border-top: 2px dashed #EBDDCF;
-      font-size: 12px;
-      color: #927D6C;
-      font-weight: 800;
-    }
-    .lunch-foot span:first-child {
-      color: #4C8F69;
-    }
-    .lunch-foot span:last-child {
-      font-size: 13px;
-      font-weight: 900;
-      color: #C36A42;
-      background: #FFF2E8;
-      padding: 3px 10px;
-      border-radius: 99px;
-      border: 1px solid #F5D3BE;
-    }
+    /* ---------- 右側：月曆與統計 ---------- */
+    .calendar-card, .stats-card { background: #FFFFFF; border: 2px solid #EADCC8; border-radius: 24px; box-shadow: 4px 5px 0 rgba(95, 70, 45, 0.06); overflow: hidden; }
+    .calendar-head { display: flex; justify-content: space-between; align-items: center; padding: 18px 20px 12px; }
+    .calendar-title { font-size: 17px; font-weight: 900; color: #3C3026; display: flex; align-items: center; gap: 6px; }
+    .book-mark { display: inline-grid; place-items: center; width: 28px; height: 28px; background: #6EB9DB; color: white; border-radius: 9px; font-size: 14px; }
+    .calendar-hint { font-size: 11px; color: #9E8978; font-weight: 700; margin-top: 2px; }
+    .calendar-week { display: grid; grid-template-columns: repeat(7, 1fr); text-align: center; padding: 4px 14px 8px; color: #A38E7D; font-size: 12px; font-weight: 900; }
+    .calendar-week .weekend { color: #C7ABA0; }
+    #miniCalendarGrid { padding: 4px 14px 18px; gap: 6px 4px !important; }
+    .cal-btn { width: 100%; height: 38px; max-width: 42px; margin: 0 auto; border-radius: 50%; border: 1.5px solid #EFE2D2; background: #FFFDF9; color: #55483D; font-size: 14px; font-family: "Nunito", "Zen Maru Gothic", sans-serif; cursor: pointer; display: grid; place-items: center; transition: all 0.15s; }
+    .cal-btn:hover { background: #FFF4D8; transform: scale(1.06); }
+    .calendar-active { background: #E95D45 !important; color: white !important; border-color: #3F362F !important; transform: scale(1.1) !important; box-shadow: 2px 3px 0 rgba(63, 54, 47, 0.2); }
+    .calendar-today { background: #FFF0A9 !important; border: 2px dashed #E5AE32 !important; color: #71551E !important; font-weight: 900; }
+    .month-dot { width: 6px; height: 6px; border-radius: 50%; background: #70B87B; position: absolute; bottom: 2px; left: 50%; transform: translateX(-50%); }
 
-    /* ---------- 右側欄：月曆卡片與統計小發現 ---------- */
-    .calendar-card, .stats-card {
-      background: #FFFFFF;
-      border: 2px solid #EADCC8;
-      border-radius: 24px;
-      box-shadow: 4px 5px 0 rgba(95, 70, 45, 0.06), 0 10px 22px rgba(95, 70, 45, 0.04);
-      overflow: hidden;
-    }
-    .calendar-head {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 18px 20px 12px;
-    }
-    .calendar-title {
-      font-size: 17px;
-      font-weight: 900;
-      color: #3C3026;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-    .book-mark {
-      display: inline-grid;
-      place-items: center;
-      width: 28px;
-      height: 28px;
-      background: #6EB9DB;
-      color: white;
-      border-radius: 9px;
-      font-size: 14px;
-    }
-    .calendar-hint {
-      font-size: 11px;
-      color: #9E8978;
-      font-weight: 700;
-      margin-top: 2px;
-    }
-    .calendar-week {
-      display: grid;
-      grid-template-columns: repeat(7, 1fr);
-      text-align: center;
-      padding: 4px 14px 8px;
-      color: #A38E7D;
-      font-size: 12px;
-      font-weight: 900;
-    }
-    .calendar-week .weekend {
-      color: #C7ABA0;
-    }
-    #miniCalendarGrid {
-      padding: 4px 14px 18px;
-      gap: 6px 4px !important;
-    }
-    .cal-btn {
-      width: 100%;
-      height: 38px;
-      max-width: 42px;
-      margin: 0 auto;
-      border-radius: 50%;
-      border: 1.5px solid #EFE2D2;
-      background: #FFFDF9;
-      color: #55483D;
-      font-size: 14px;
-      font-weight: 900;
-      position: relative;
-      font-family: "Caveat", "Zen Maru Gothic", sans-serif;
-      cursor: pointer;
-      display: grid;
-      place-items: center;
-      transition: all 0.15s ease;
-    }
-    .cal-btn:hover {
-      background: #FFF4D8;
-      border-color: #E2C98A;
-      transform: scale(1.06);
-    }
-    .calendar-active {
-      background: #E95D45 !important;
-      color: white !important;
-      border-color: #3F362F !important;
-      transform: scale(1.1) !important;
-      box-shadow: 2px 3px 0 rgba(63, 54, 47, 0.2);
-    }
-    .calendar-today {
-      background: #FFF0A9 !important;
-      border: 2px dashed #E5AE32 !important;
-      color: #71551E !important;
-      font-weight: 900;
-    }
-    .month-dot {
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-      background: #70B87B;
-      position: absolute;
-      bottom: 2px;
-      left: 50%;
-      transform: translateX(-50%);
-    }
-
-    /* 手風琴摺疊 */
-    .accordion-btn {
-      width: 100%;
-      border: 0;
-      background: #FFFDF9;
-      padding: 16px 20px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      color: var(--ink);
-      cursor: pointer;
-    }
-    .accordion-btn strong {
-      font-size: 15px;
-      font-weight: 900;
-      color: #3C3127;
-    }
-    .accordion-btn small {
-      display: block;
-      font-size: 11px;
-      color: #9C8572;
-      font-weight: 700;
-      margin-top: 2px;
-      text-align: left;
-    }
-    .accordion-content {
-      display: none;
-      padding: 0 16px 18px;
-    }
-    .accordion-content.open {
-      display: block;
-    }
-    .stats-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 10px;
-    }
-    .stat {
-      border: 2px dashed #EADBC8;
-      border-radius: 16px;
-      padding: 12px 8px;
-      text-align: center;
-      background: #FFFAF1;
-    }
+    /* 手風琴折疊動畫與樣式 */
+    .accordion-btn { width: 100%; border: 0; background: #FFFDF9; padding: 16px 20px; display: flex; justify-content: space-between; align-items: center; cursor: pointer; }
+    .accordion-btn strong { font-size: 15px; font-weight: 900; color: #3C3127; }
+    .accordion-btn small { display: block; font-size: 11px; color: #9C8572; font-weight: 700; margin-top: 2px; text-align: left; }
+    .collapsible-content { display: grid; grid-template-rows: 1fr; transition: grid-template-rows 0.35s ease-out, opacity 0.35s ease-out; opacity: 1; }
+    .collapsible-content.collapsed { grid-template-rows: 0fr; opacity: 0; }
+    .collapsible-inner { overflow: hidden; padding: 0 16px 18px; }
+    .toggle-icon { transition: transform 0.3s ease; }
+    .collapsed .toggle-icon { transform: rotate(180deg); }
+    
+    .stats-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+    .stat { border: 2px dashed #EADBC8; border-radius: 16px; padding: 12px 8px; text-align: center; background: #FFFAF1; }
     .stat .emoji { font-size: 24px; }
     .stat .label { font-size: 11px; color: #9A8473; font-weight: 800; margin-top: 2px; }
-    .stat .value { font-size: 19px; font-weight: 900; color: #C36A42; font-family: "Caveat", "Zen Maru Gothic", sans-serif; }
+    .stat .value { font-size: 19px; color: #C36A42; margin-top: 2px; }
 
     /* 防呆空狀態與放假 */
-    .holiday {
-      background: #FFFFFF;
-      border: 2px solid #EADCC8;
-      border-radius: 24px;
-      padding: 36px 20px;
-      text-align: center;
-      box-shadow: 4px 5px 0 rgba(95, 70, 45, 0.06);
-    }
-    .holiday .emoji { font-size: 58px; }
+    .holiday { background: #FFFFFF; border: 2px solid #EADCC8; border-radius: 24px; padding: 36px 20px; text-align: center; box-shadow: 4px 5px 0 rgba(95, 70, 45, 0.06); margin-top: 14px; }
+    .holiday .emoji { font-size: 58px; opacity: 0.8; }
     .holiday h2 { font-size: 24px; font-weight: 900; margin: 10px 0 6px; color: #3F342B; }
-    .holiday p { font-size: 13px; color: #937F6F; font-weight: 700; max-width: 460px; margin: 0 auto; }
+    .holiday p { font-size: 13px; color: #937F6F; font-weight: 700; max-width: 460px; margin: 0 auto; line-height: 1.6; }
 
-    footer {
-      padding: 36px 20px 0;
-      text-align: center;
-      color: #A69282;
-      font-size: 11px;
-      line-height: 1.8;
-    }
-    footer:before {
-      content: "";
-      display: block;
-      width: 100%;
-      height: 20px;
-      margin-bottom: 12px;
-      background: url('maisy_web_assets/decor_wave.png') center/100% 18px no-repeat;
-      opacity: .75;
-    }
-    footer a {
-      color: #B78457 !important;
-      font-weight: 800;
-    }
-    .footer-mascot {
-      display: inline-block;
-      width: 26px;
-      height: 26px;
-      vertical-align: middle;
-      margin-right: 5px;
-    }
-    .footer-mascot img {
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-    }
+    footer { padding: 36px 20px 0; text-align: center; color: #A69282; font-size: 11px; line-height: 1.8; }
+    footer:before { content: ""; display: block; width: 100%; height: 20px; margin-bottom: 12px; background: url('maisy_web_assets/decor_wave.png') center/100% 18px no-repeat; opacity: .75; }
+    footer a { color: #B78457 !important; font-weight: 800; }
+    .footer-mascot { display: inline-block; width: 26px; height: 26px; vertical-align: middle; margin-right: 5px; }
+    .footer-mascot img { width: 100%; height: 100%; object-fit: contain; }
 
     /* ---------- 手機版專屬微調 ---------- */
     @media(max-width: 699px) {
@@ -821,24 +239,14 @@
       .brand-icon { width: 38px; height: 38px; min-width: 38px; }
       .brand-title { font-size: 14px; }
       .brand-sub { font-size: 9px; }
-      .top-actions a, .top-actions label, .top-actions button {
-        padding: 7px 9px;
-        font-size: 11px;
-      }
+      .top-actions a, .top-actions label, .top-actions button { padding: 7px 9px; font-size: 11px; }
       .top-actions span { display: none; }
-      .hero {
-        margin: 12px 14px 18px;
-        padding: 20px 18px;
-      }
+      .hero { margin: 12px 14px 18px; padding: 20px 18px; }
       .hero-date h1 { font-size: 26px; }
-      .hero-date span { font-size: 14px; }
-      .hero-mascot { width: 110px; height: 145px; }
       .layout { padding: 0 14px; gap: 18px; }
       .meal-card { padding: 18px 16px; }
       .food-name { font-size: 21px; }
       .main-dish { font-size: 22px; }
-      .fruit-box { min-width: 86px; padding: 10px 8px; }
-      .fruit-box img { width: 36px; height: 36px; }
     }
   </style>
 </head>
@@ -883,7 +291,7 @@
             <span class="story-label">MAISY & FRIENDS</span>
           </div>
           <div class="hero-date">
-            <h1 id="bannerDate">等待讀取資料...</h1>
+            <h1 id="bannerDate" class="num-font">等待讀取資料...</h1>
             <span id="bannerWeekday"></span>
             <span id="todayBadge" class="badge-today hidden">今天</span>
           </div>
@@ -895,7 +303,7 @@
           <div class="hero-tools">
             <button id="btnPrevDay"><i class="fa-solid fa-chevron-left mr-1"></i>前一天</button>
             <button id="btnNextDay">後一天<i class="fa-solid fa-chevron-right ml-1"></i></button>
-            <input type="date" id="datePicker" aria-label="選擇日期">
+            <input type="date" id="datePicker" aria-label="選擇日期" class="num-font">
           </div>
         </div>
       </div>
@@ -908,9 +316,9 @@
         
         <!-- 空狀態防呆提示卡 -->
         <div id="emptyStateBanner" class="holiday">
-          <div class="emoji text-slate-400" style="opacity: 0.5;">📂</div>
+          <div class="emoji text-slate-400 opacity-60">📂</div>
           <h2 class="text-cream-dark">無法直接讀取，請匯入資料</h2>
-          <p>基於瀏覽器安全性限制或檔案不存在，請點擊上方「手動匯入」按鈕，選擇您的 Excel 餐點表進行載入。</p>
+          <p>基於瀏覽器安全性限制或尚未上傳當月檔案，請點擊上方「手動匯入」按鈕，選擇您的 Excel 餐點表進行載入。</p>
         </div>
 
         <section id="todaySection" class="hidden">
@@ -930,7 +338,7 @@
                   <div class="meal-name">早餐・08:30</div>
                    <div id="mealMorning" class="food-name">—</div>
                 </div>
-                <span class="meal-time">早上</span>
+                <span class="meal-time num-font">早上</span>
               </div>
               <div class="food-hint">吃飽飽，元氣出發！🌞</div>
               <div class="tag-row">
@@ -944,26 +352,27 @@
                 <div class="meal-icon"><img src="maisy_web_assets/badge_charlie.png" alt="午餐" onerror="this.src='https://cdn.jsdelivr.net/gh/hfg-gmuend/openmoji@latest/color/svg/1F371.svg'"></div>
                 <div class="meal-info">
                   <div class="meal-name">午餐・11:40</div>
-                  <div id="mealMainDish" class="main-dish">—</div><div class="main-caption"><i class="fa-solid fa-utensils"></i> 今日主菜</div>
+                  <div id="mealMainDish" class="main-dish num-font">—</div>
+                  <div class="main-caption"><i class="fa-solid fa-utensils"></i> 今日主菜</div>
                 </div>
                 <div class="fruit-box">
-                  <img id="mealFruitImg" src="https://cdn.jsdelivr.net/gh/hfg-gmuend/openmoji@latest/color/svg/1F34E.svg" width="30%" alt="水果">
+                  <img id="mealFruitImg" src="https://cdn.jsdelivr.net/gh/hfg-gmuend/openmoji@latest/color/svg/1F34E.svg" alt="水果">
                   <div class="fruit-label">餐後水果</div>
                   <div id="mealFruit" class="fruit-name">—</div>
                 </div>
-                <span class="meal-time">中午</span>
+                <span class="meal-time num-font">中午</span>
               </div>
 
               <div class="tag-row">
                 <span id="lunchSpecialTag" class="tag special" style="display:none"></span>
               </div>
 
-              <button class="details-toggle" type="button" id="lunchDetailsToggle">＋ 一起看看午餐全部菜色</button>
-              <div id="lunchDetails" class="details">
+              <!-- 午餐明細直接展開，不再隱藏 -->
+              <div id="lunchDetails" class="mt-5">
                 <div id="lunchPills"></div>
                 <div class="lunch-foot">
                   <span id="vegCertText"><i class="fa-solid fa-leaf"></i> 今日蔬菜認證</span>
-                  <span id="lunchKcalText">-- kcal</span>
+                  <span id="lunchKcalText" class="num-font">-- kcal</span>
                 </div>
               </div>
             </article>
@@ -976,18 +385,18 @@
                   <div class="meal-label">下午點心・14:30</div>
                   <div class="meal-name">甜蜜午後點心</div>
                 </div>
-                <span class="meal-time">下午</span>
+                <span class="meal-time num-font">下午</span>
               </div>
               <div id="mealAfternoon" class="food-name">—</div>
               <div id="afternoonNote" class="food-hint">下午也有小驚喜！✨</div>
             </article>
           </div>
 
-          <!-- 放假狀態顯示 -->
+          <!-- 放假狀態顯示 (讀取 M 欄位放假理由) -->
           <div id="holidayBanner" class="holiday hidden mt-4">
             <div class="emoji">🎈</div>
             <h2 id="holidayTitle">放假休息</h2>
-            <p>今天幼兒園不用到校，好好休息、玩耍，明天再一起吃美味餐點喔！</p>
+            <p id="holidayDesc">今天幼兒園不用到校，好好休息、玩耍，明天再一起吃美味餐點喔！</p>
           </div>
         </section>
       </div>
@@ -1010,20 +419,22 @@
         </section>
 
         <!-- 本月餐點小發現 -->
-        <section class="stats-card hidden" id="statsCardBlock">
+        <section class="stats-card hidden" id="statsSection">
           <button id="btnToggleStats" class="accordion-btn" type="button">
             <div>
               <strong>本月餐點小發現</strong>
               <small>想多看一點，點開瞧瞧</small>
             </div>
-            <i class="fa-solid fa-chevron-down text-slate-400"></i>
+            <i class="fa-solid fa-chevron-down text-slate-400 toggle-icon"></i>
           </button>
-          <div id="statsContent" class="accordion-content">
-            <div class="stats-grid">
-              <div class="stat"><div class="emoji">🥛</div><div class="label">每週鮮奶日</div><div id="statMilk" class="value">-- 天</div></div>
-              <div class="stat"><div class="emoji">🍉</div><div class="label">午餐附鮮果</div><div id="statFruit" class="value">-- 天</div></div>
-              <div class="stat"><div class="emoji">🍲</div><div class="label">暖胃粥麵湯</div><div id="statSoup" class="value">-- 次</div></div>
-              <div class="stat"><div class="emoji">🥬</div><div class="label">履歷時蔬</div><div class="value">100%</div></div>
+          <div id="statsContent" class="collapsible-content collapsed">
+            <div class="collapsible-inner">
+              <div class="stats-grid">
+                <div class="stat"><div class="emoji">🥛</div><div class="label">每週鮮奶日</div><div id="statMilk" class="value num-font">-- 天</div></div>
+                <div class="stat"><div class="emoji">🍉</div><div class="label">午餐附鮮果</div><div id="statFruit" class="value num-font">-- 天</div></div>
+                <div class="stat"><div class="emoji">🍲</div><div class="label">暖胃粥麵湯</div><div id="statSoup" class="value num-font">-- 次</div></div>
+                <div class="stat"><div class="emoji">🥬</div><div class="label">履歷時蔬</div><div class="value num-font">100%</div></div>
+              </div>
             </div>
           </div>
         </section>
@@ -1032,10 +443,12 @@
         <section id="nutritionAccordion" class="stats-card hidden">
           <button id="btnToggleNutrition" class="accordion-btn" type="button">
             <div><strong>🌿 營養與食材分析</strong><small>給大人看的詳細食育資訊</small></div>
-            <i class="fa-solid fa-chevron-down text-slate-400"></i>
+            <i class="fa-solid fa-chevron-down text-slate-400 toggle-icon"></i>
           </button>
-          <div id="nutritionContent" class="accordion-content">
-            <div id="nutritionBody" class="grid grid-cols-1 gap-3"></div>
+          <div id="nutritionContent" class="collapsible-content collapsed">
+            <div class="collapsible-inner">
+              <div id="nutritionBody" class="grid grid-cols-1 gap-3"></div>
+            </div>
           </div>
         </section>
       </div>
@@ -1050,7 +463,7 @@
 </div>
 
 <script>
-  // --- 1. 完全清空預設資料庫 (防呆測試用) ---
+  // --- 1. 完全清空預設假資料，實現真實空狀態防呆 ---
   let KINDERGARTEN_MENU = {};
 
   // 表情符號配對
@@ -1067,7 +480,7 @@
     return "https://cdn.jsdelivr.net/gh/hfg-gmuend/openmoji@latest/color/svg/1F34E.svg";
   }
 
-  // --- 2. 核心修正：Excel 日期格式與序列號統一轉換引擎 ---
+  // --- 2. 強大無比的日期轉換引擎 (防呆：Excel 原生日期的各種格式) ---
   function standardizeDate(dStr) {
     if (!dStr) return null;
     let str = String(dStr).trim();
@@ -1102,44 +515,20 @@
     let isPercent = strVal.endsWith('%');
     let numStr = isPercent ? strVal.slice(0, -1) : strVal;
     if (!isNaN(parseFloat(numStr)) && numStr.includes('.')) {
-        let num = parseFloat(numStr);
-        let rounded = Math.round(num * 10) / 10;
-        return isPercent ? `${rounded}%` : `${rounded}`;
+      let num = parseFloat(numStr);
+      let rounded = Math.round(num * 10) / 10;
+      return isPercent ? `${rounded}%` : `${rounded}`;
     }
     return strVal;
   }
 
-  // --- 手風琴收合邏輯 ---
+  // --- 手風琴點擊交互 ---
   document.getElementById('btnToggleStats').addEventListener('click', function() {
-    const content = document.getElementById('statsContent');
-    if (content.style.display === 'block') {
-        content.style.display = 'none';
-        this.querySelector('i').classList.remove('fa-chevron-up');
-        this.querySelector('i').classList.add('fa-chevron-down');
-    } else {
-        content.style.display = 'block';
-        this.querySelector('i').classList.remove('fa-chevron-down');
-        this.querySelector('i').classList.add('fa-chevron-up');
-    }
+    document.getElementById('statsContent').classList.toggle('collapsed');
   });
 
   document.getElementById('btnToggleNutrition').addEventListener('click', function() {
-    const content = document.getElementById('nutritionContent');
-    if (content.style.display === 'block') {
-        content.style.display = 'none';
-        this.querySelector('i').classList.remove('fa-chevron-up');
-        this.querySelector('i').classList.add('fa-chevron-down');
-    } else {
-        content.style.display = 'block';
-        this.querySelector('i').classList.remove('fa-chevron-down');
-        this.querySelector('i').classList.add('fa-chevron-up');
-    }
-  });
-
-  document.getElementById('lunchDetailsToggle').addEventListener('click', function() {
-    const box = document.getElementById('lunchDetails');
-    const open = box.classList.toggle('open');
-    this.textContent = open ? '－ 收起午餐全部菜色' : '＋ 一起看看午餐全部菜色';
+    document.getElementById('nutritionContent').classList.toggle('collapsed');
   });
 
   function getActiveMonthInfo() {
@@ -1167,20 +556,32 @@
   const datePicker = document.getElementById('datePicker');
   datePicker.value = currentDate;
 
-  // --- 自動載入資料 ---
+  // 自動嘗試讀取 /data/ 資料夾下的 Excel (嘗試 _2.xlsx 或 .xlsx)
   window.addEventListener('DOMContentLoaded', async () => {
     const rocY = systemY - 1911;
-    const autoPath = encodeURI(`./data/${rocY}學年度餐點整合明細-${systemY}${systemM}.xlsx`);
-    try {
-      const res = await fetch(autoPath);
-      if (res.ok) {
-        const ab = await res.arrayBuffer();
-        parseExcelData(new Uint8Array(ab));
-      } else {
-        initUI(); // 檔案不存在，進入空狀態防呆
+    const pathsToTry = [
+      encodeURI(`./data/${rocY}學年度餐點整合明細-${systemY}${systemM}_2.xlsx`),
+      encodeURI(`./data/${rocY}學年度餐點整合明細-${systemY}${systemM}.xlsx`)
+    ];
+    
+    let fetched = false;
+    for (const p of pathsToTry) {
+      try {
+        const res = await fetch(p);
+        if (res.ok) {
+          const ab = await res.arrayBuffer();
+          parseExcelData(new Uint8Array(ab));
+          fetched = true;
+          break;
+        }
+      } catch (e) { }
+    }
+    
+    if (!fetched) {
+      if (window.location.protocol === 'file:') {
+        console.warn("本機模式限制：無法自動讀取資料夾。");
       }
-    } catch (e) {
-      initUI(); // fetch 失敗，進入空狀態防呆
+      initUI(); // 進入空狀態
     }
   });
 
@@ -1192,13 +593,13 @@
     updateView();
   }
 
-  // --- 繪製整月行事曆 ---
+  // 繪製整月行事曆
   function renderMiniCalendar() {
     const { y, m } = getActiveMonthInfo();
     const rocYear = y - 1911;
 
     document.getElementById('headerSubtitle').textContent = `${rocYear}學年度 幼兒園餐飲表`;
-    document.getElementById('calendarTitle').textContent = `${rocYear}年 ${m + 1}月 餐點行事曆`;
+    document.getElementById('calendarTitle').textContent = `${rocYear}年 ${m + 1}月`;
 
     const grid = document.getElementById('miniCalendarGrid');
     grid.innerHTML = '';
@@ -1207,14 +608,17 @@
     const totalDays = new Date(y, m + 1, 0).getDate();
     const prevTotalDays = new Date(y, m, 0).getDate();
 
+    // 上個月跨月補齊 (保留文字格以維持排版)
     for (let i = firstDay - 1; i >= 0; i--) {
       appendCalendarBtn(grid, y, m - 1, prevTotalDays - i, true);
     }
 
+    // 本月日期
     for (let d = 1; d <= totalDays; d++) {
       appendCalendarBtn(grid, y, m, d, false);
     }
 
+    // 下個月跨月補齊排滿 7 欄
     const currentCells = firstDay + totalDays;
     const remainCells = (7 - (currentCells % 7)) % 7;
     for (let d = 1; d <= remainCells; d++) {
@@ -1239,7 +643,7 @@
 
     const btn = document.createElement('button');
     btn.textContent = d;
-    btn.className = "cal-btn ";
+    btn.className = "cal-btn num-font ";
 
     if (isOtherMonth) {
       if (isWeekend || !data) {
@@ -1297,27 +701,27 @@
     document.getElementById('statSoup').textContent = `${soupCount} 次`;
   }
 
-  // --- 畫面主更新 ---
+  // 畫面主更新
   function updateView() {
     const emptyStateBanner = document.getElementById('emptyStateBanner');
     const todaySection = document.getElementById('todaySection');
-    const statsCardBlock = document.getElementById('statsCardBlock');
+    const statsSection = document.getElementById('statsSection');
     const nutritionAccordion = document.getElementById('nutritionAccordion');
 
     // 防呆處理：無任何資料時，隱藏所有圖表與卡片，只留下月曆與防呆橫幅
     if (Object.keys(KINDERGARTEN_MENU).length === 0) {
       emptyStateBanner.classList.remove('hidden');
       todaySection.classList.add('hidden');
-      if(statsCardBlock) statsCardBlock.classList.add('hidden');
+      if(statsSection) statsSection.classList.add('hidden');
       if(nutritionAccordion) nutritionAccordion.classList.add('hidden');
-      document.getElementById('bannerDate').textContent = '等待讀取資料...';
+      document.getElementById('bannerDate').textContent = '等待匯入資料...';
       document.getElementById('bannerWeekday').textContent = '';
       renderMiniCalendar();
       return;
     } else {
       emptyStateBanner.classList.add('hidden');
       todaySection.classList.remove('hidden');
-      if(statsCardBlock) statsCardBlock.classList.remove('hidden');
+      if(statsSection) statsSection.classList.remove('hidden');
       if(nutritionAccordion) nutritionAccordion.classList.remove('hidden');
     }
 
@@ -1337,7 +741,7 @@
       holidayBox.classList.remove('hidden');
       document.getElementById('bannerWeekday').textContent = data ? `（${data.day}）` : '（假）';
       
-      // 讀取 M 欄位放假原因
+      // 讀取 M 欄位作為放假原因
       let reason = "放假休息";
       if (data && data.holidayReason) {
           reason = data.holidayReason;
@@ -1387,7 +791,8 @@
 
         items.forEach(it => {
           const el = document.createElement('div');
-          el.innerHTML = `<div>${it.icon}</div><div>${it.label}</div><div>${it.val}</div>`;
+          // 完全保留 index_2.html 裡的樣式
+          el.innerHTML = `<div style="font-size: 24px;">${it.icon}</div><div style="font-size: 11px; color: #9E8876; font-weight: 800; margin-top: 2px;">${it.label}</div><div style="font-size: 14px; font-weight: 900; color: #3E3228; margin-top: 4px;">${it.val}</div>`;
           pills.appendChild(el);
         });
         document.getElementById('vegCertText').innerHTML = `<i class="fa-solid fa-leaf"></i> ${data.lunch.cert}`;
@@ -1404,7 +809,7 @@
     renderMiniCalendar();
   }
 
-  // --- Excel 解析 ---
+  // --- Excel 解析引擎 ---
   document.getElementById('excelFileInput').addEventListener('change', function(e) {
     const file = e.target.files[0];
     if (!file) return;
@@ -1423,7 +828,7 @@
   function parseExcelData(uint8Array) {
     const workbook = XLSX.read(uint8Array, { type: 'array' });
 
-    // 1. 營養分析頁籤
+    // 1. 營養分析頁籤 (美化：數字與說明折行分開)
     const nutSheetName = workbook.SheetNames.find(n => n.includes("營養"));
     if (nutSheetName) {
       const nutRows = XLSX.utils.sheet_to_json(workbook.Sheets[nutSheetName], { header: 1 });
@@ -1441,25 +846,32 @@
         if (c0 && !c1 && !c2 && c0.length > 2) {
           if (currentCard) nutHtml += currentCard + '</div></div>';
           currentSectionTitle = c0;
-          currentCard = `<div class="stat" style="text-align:left; border: 2px dashed #EADBC8; padding: 16px; background: #FFFAF1; border-radius: 16px;">
-             <h4 style="font-weight: 900; color: #3C3127; border-bottom: 2px dashed #EADBC8; padding-bottom: 8px; margin-bottom: 12px;"><i class="fa-solid fa-leaf text-mint"></i> ${c0}</h4>
-             <div style="display:flex; flex-direction:column; gap:8px;">`;
+          currentCard = `
+            <div class="stat" style="text-align:left; border: 2px dashed #EADBC8; padding: 16px; background: #FFFAF1; border-radius: 16px;">
+               <h4 style="font-weight: 900; color: #3C3127; border-bottom: 2px dashed #EADBC8; padding-bottom: 8px; margin-bottom: 12px; display:flex; align-items:center; gap:8px;">
+                 <i class="fa-solid fa-leaf text-[#78B896]"></i> ${c0}
+               </h4>
+               <div style="display:flex; flex-direction:column; gap:12px;">`;
         } else if (c0 && (c1 || c2) && currentCard) {
           if (c0 === '水果名稱') return;
           let displayC2 = currentSectionTitle.includes('水果') ? '' : c2;
-          let valHtml = `<span style="font-weight: 900; color: #C36A42; font-size: 15px; font-family: 'Caveat', 'Zen Maru Gothic', sans-serif;">${c1}`;
-          if (displayC2) {
-            valHtml += ` <span style="font-size:11px; color:#9A8473; font-weight:700; margin-left:6px; padding-left:6px; border-left: 1px solid #EADBC8;">${displayC2}</span>`;
-          }
-          valHtml += `</span>`;
-          currentCard += `<div style="display:flex; justify-content:space-between; align-items:center; font-size: 13px; border-bottom: 1px solid rgba(234, 219, 200, 0.5); padding-bottom: 6px;"><span style="color:#6E5C4E; font-weight:800;">${c0}</span>${valHtml}</div>`;
+          
+          currentCard += `
+            <div style="display:flex; flex-direction:column; gap:6px; border-bottom: 1px solid rgba(234, 219, 200, 0.5); padding-bottom: 8px;">
+              <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:16px;">
+                <span style="color:#6E5C4E; font-weight:800; font-size:13px;">${c0}</span>
+                ${c1 ? `<span class="num-font" style="font-weight: 900; color: #C36A42; font-size: 15px; background: white; padding: 2px 8px; border-radius: 6px; border: 1px solid #F5D3BE; box-shadow: 0 1px 2px rgba(0,0,0,0.05); flex-shrink:0;">${c1}</span>` : ''}
+              </div>
+              ${displayC2 ? `<div style="font-size:11px; color:#9A8473; font-weight:700; line-height:1.5; background: rgba(255,255,255,0.6); padding: 6px 8px; border-radius: 6px;">${displayC2}</div>` : ''}
+            </div>`;
         }
       });
       if (currentCard) nutHtml += currentCard + '</div></div>';
       
       if (nutHtml) {
         document.getElementById('nutritionBody').innerHTML = nutHtml;
-        document.getElementById('nutritionAccordion').classList.remove('hidden');
+        const nAcc = document.getElementById('nutritionAccordion');
+        if (nAcc) nAcc.classList.remove('hidden');
       }
     }
 
@@ -1495,16 +907,22 @@
     const cmap = {};
     for (let r = 0; r < Math.min(rawRows.length, 12); r++) {
       const rowStr = (rawRows[r] || []).map(v => String(v || '')).join('|');
-      if (rowStr.includes("日期") && (rowStr.includes("星期") || rowStr.includes("主食") || rowStr.includes("早點"))) {
+      // 嚴格綁定，防呆避免讀到第四行
+      if (rowStr.includes("日期") && rowStr.includes("主食") && rowStr.includes("主菜")) {
         hRow = r;
         rawRows[r].forEach((v, c) => {
           const val = String(v || '').trim();
-          if (val.includes("日期")) cmap.date = c; else if (val.includes("星期")) cmap.day = c;
-          else if (val.includes("早點")) cmap.morning = c; else if (val.includes("主食")) cmap.staple = c;
-          else if (val.includes("主菜")) cmap.main = c; else if (val.includes("副菜")) cmap.side = c;
-          else if (val.includes("時蔬") || val.includes("青菜")) cmap.veg = c;
-          else if (val.includes("湯品")) cmap.soup = c; else if (val.includes("熱量")) cmap.kcal = c;
-          else if (val.includes("水果")) cmap.fruit = c; else if (val.includes("午點")) cmap.afternoon = c;
+          if (val.includes("日期")) cmap.date = c; 
+          else if (val.includes("星期")) cmap.day = c;
+          else if (val.includes("早點") || val.includes("晨間")) cmap.morning = c; 
+          else if (val.includes("主食")) cmap.staple = c;
+          else if (val.includes("主菜")) cmap.main = c; 
+          else if (val.includes("副菜")) cmap.side = c;
+          else if (val.includes("時蔬") || val.includes("青菜") || val.includes("蔬菜")) cmap.veg = c;
+          else if (val.includes("湯品") || val.includes("湯")) cmap.soup = c; 
+          else if (val.includes("熱量") || val.includes("大卡")) cmap.kcal = c;
+          else if (val.includes("水果")) cmap.fruit = c; 
+          else if (val.includes("午點") || val.includes("午後") || val.includes("下午")) cmap.afternoon = c;
           else if (val.includes("備註") || val.includes("提醒")) cmap.note = c;
         });
         break;
