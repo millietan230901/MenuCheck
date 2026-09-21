@@ -170,7 +170,7 @@
     .tag.milk { background: #E8F5FD; color: #357B9E; border: 1.5px solid #CDE6F7; }
     .tag.special { background: #FFF1BD; color: #8B6312; border: 1.5px solid #F3DF88; }
 
-    /* 午餐明細格 (取消隱藏折疊，直接呈現) */
+    /* 午餐明細格 */
     .lunch-main-box { display: flex; flex-direction: column; gap: 14px; margin-top: 16px; padding: 18px 20px; border-radius: 20px; background: #FFFFFF; border: 2px dashed #E5D3BA; }
     @media(min-width: 640px) { .lunch-main-box { flex-direction: row; justify-content: space-between; align-items: center; gap: 20px; } }
     .main-caption { font-size: 12px; color: #B27546; font-weight: 900; }
@@ -180,12 +180,18 @@
     .fruit-box .fruit-label { font-size: 11px; color: #B46E67; font-weight: 900; margin-top: 2px; }
     .fruit-box .fruit-name { font-size: 15px; font-weight: 900; color: #723E3A; margin-top: 2px; }
 
-    #lunchDetails { margin-top: 16px; }
-    #lunchPills { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+    .details-toggle { margin-top: 14px; width: 100%; border: 2px dashed #DEC8AE; background: #FFFBF4; color: #8A6445; font-size: 13px; font-weight: 900; text-align: center; padding: 9px 14px; border-radius: 14px; cursor: pointer; transition: all 0.2s; }
+    .details-toggle:hover { background: #FFF3DD; border-color: #D3B28C; }
+    .details { max-height: 0; overflow: hidden; opacity: 0; transition: max-height .35s ease, opacity .25s ease; }
+    .details.open { max-height: 500px; opacity: 1; margin-top: 12px; }
+    #lunchPills { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; margin-top: 6px; }
     @media(min-width: 600px) { #lunchPills { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
     @media(min-width: 1024px) { #lunchPills { grid-template-columns: repeat(5, minmax(0, 1fr)); } }
     #lunchPills > div { background: #FFFDF9; border: 1.5px solid #EADBCA; border-radius: 16px; padding: 12px 10px; text-align: center; }
-    
+    #lunchPills > div > div:first-child { font-size: 24px; }
+    #lunchPills > div > div:nth-child(2) { font-size: 11px; color: #9E8876; font-weight: 800; margin-top: 2px; }
+    #lunchPills > div > div:last-child { font-size: 14px; font-weight: 900; color: #3E3228; margin-top: 4px; line-height: 1.25; }
+
     .lunch-foot { display: flex; justify-content: space-between; align-items: center; margin-top: 14px; padding-top: 12px; border-top: 2px dashed #EBDDCF; font-size: 12px; font-weight: 800; }
     .lunch-foot span:first-child { color: #4C8F69; }
     .lunch-foot span:last-child { color: #C36A42; background: #FFF2E8; padding: 3px 10px; border-radius: 99px; border: 1px solid #F5D3BE; }
@@ -199,31 +205,31 @@
     .calendar-week { display: grid; grid-template-columns: repeat(7, 1fr); text-align: center; padding: 4px 14px 8px; color: #A38E7D; font-size: 12px; font-weight: 900; }
     .calendar-week .weekend { color: #C7ABA0; }
     #miniCalendarGrid { padding: 4px 14px 18px; gap: 6px 4px !important; }
-    .cal-btn { width: 100%; height: 38px; max-width: 42px; margin: 0 auto; border-radius: 50%; border: 1.5px solid #EFE2D2; background: #FFFDF9; color: #55483D; font-size: 14px; font-family: "Nunito", "Zen Maru Gothic", sans-serif; cursor: pointer; display: grid; place-items: center; transition: all 0.15s; }
-    .cal-btn:hover { background: #FFF4D8; transform: scale(1.06); }
+    .cal-btn { width: 100%; height: 38px; max-width: 42px; margin: 0 auto; border-radius: 50%; border: 1.5px solid #EFE2D2; background: #FFFDF9; color: #55483D; font-size: 14px; font-weight: 900; font-family: "Nunito", "Zen Maru Gothic", sans-serif; cursor: pointer; display: grid; place-items: center; transition: all 0.15s; }
+    .cal-btn:hover { background: #FFF4D8; border-color: #E2C98A; transform: scale(1.06); }
     .calendar-active { background: #E95D45 !important; color: white !important; border-color: #3F362F !important; transform: scale(1.1) !important; box-shadow: 2px 3px 0 rgba(63, 54, 47, 0.2); }
     .calendar-today { background: #FFF0A9 !important; border: 2px dashed #E5AE32 !important; color: #71551E !important; font-weight: 900; }
     .month-dot { width: 6px; height: 6px; border-radius: 50%; background: #70B87B; position: absolute; bottom: 2px; left: 50%; transform: translateX(-50%); }
 
-    /* 手風琴折疊動畫與樣式 */
-    .accordion-btn { width: 100%; border: 0; background: #FFFDF9; padding: 16px 20px; display: flex; justify-content: space-between; align-items: center; cursor: pointer; }
+    /* 手風琴摺疊 */
+    .accordion-btn { width: 100%; border: 0; background: #FFFDF9; padding: 16px 20px; display: flex; justify-content: space-between; align-items: center; color: var(--ink); cursor: pointer; }
     .accordion-btn strong { font-size: 15px; font-weight: 900; color: #3C3127; }
     .accordion-btn small { display: block; font-size: 11px; color: #9C8572; font-weight: 700; margin-top: 2px; text-align: left; }
-    .collapsible-content { display: grid; grid-template-rows: 1fr; transition: grid-template-rows 0.35s ease-out, opacity 0.35s ease-out; opacity: 1; }
-    .collapsible-content.collapsed { grid-template-rows: 0fr; opacity: 0; }
-    .collapsible-inner { overflow: hidden; padding: 0 16px 18px; }
-    .toggle-icon { transition: transform 0.3s ease; }
-    .collapsed .toggle-icon { transform: rotate(180deg); }
-    
+    .accordion-content { display: none; padding: 0 16px 18px; }
+    .accordion-content.open { display: block; }
     .stats-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
-    .stat { border: 2px dashed #EADBC8; border-radius: 16px; padding: 12px 8px; text-align: center; background: #FFFAF1; }
+    
+    /* 統計小發現：數字與說明分開 */
+    .stat { border: 2px dashed #EADBC8; border-radius: 16px; padding: 12px 10px; background: #FFFAF1; display: flex; flex-direction: column; align-items: center; gap: 4px; }
+    .stat-top { display: flex; justify-content: space-between; align-items: center; width: 100%; }
     .stat .emoji { font-size: 24px; }
-    .stat .label { font-size: 11px; color: #9A8473; font-weight: 800; margin-top: 2px; }
-    .stat .value { font-size: 19px; color: #C36A42; margin-top: 2px; }
+    .stat .value { font-size: 18px; font-weight: 900; color: #C36A42; background: white; padding: 2px 8px; border-radius: 6px; border: 1px solid #F5D3BE; box-shadow: 0 1px 2px rgba(0,0,0,0.05); }
+    .stat .label { font-size: 12px; color: #6E5C4E; font-weight: 800; text-align: center; margin-top: 2px; }
+    .stat .desc { font-size: 10px; color: #9A8473; font-weight: 700; text-align: center; }
 
     /* 防呆空狀態與放假 */
-    .holiday { background: #FFFFFF; border: 2px solid #EADCC8; border-radius: 24px; padding: 36px 20px; text-align: center; box-shadow: 4px 5px 0 rgba(95, 70, 45, 0.06); margin-top: 14px; }
-    .holiday .emoji { font-size: 58px; opacity: 0.8; }
+    .holiday { background: #FFFFFF; border: 2px solid #EADCC8; border-radius: 24px; padding: 36px 20px; text-align: center; box-shadow: 4px 5px 0 rgba(95, 70, 45, 0.06); margin-bottom: 20px; }
+    .holiday .emoji { font-size: 58px; }
     .holiday h2 { font-size: 24px; font-weight: 900; margin: 10px 0 6px; color: #3F342B; }
     .holiday p { font-size: 13px; color: #937F6F; font-weight: 700; max-width: 460px; margin: 0 auto; line-height: 1.6; }
 
@@ -316,9 +322,16 @@
         
         <!-- 空狀態防呆提示卡 -->
         <div id="emptyStateBanner" class="holiday">
-          <div class="emoji text-slate-400 opacity-60">📂</div>
-          <h2 class="text-cream-dark">無法直接讀取，請匯入資料</h2>
-          <p>基於瀏覽器安全性限制或尚未上傳當月檔案，請點擊上方「手動匯入」按鈕，選擇您的 Excel 餐點表進行載入。</p>
+          <div class="emoji text-slate-300" style="opacity: 0.5;">📂</div>
+          <h2 class="text-cream-dark">無法直接讀取，請手動匯入</h2>
+          <p>基於瀏覽器安全性限制或尚未上傳檔案，請點擊上方「手動匯入」按鈕，選擇您的 Excel 餐點表進行載入。</p>
+        </div>
+
+        <!-- 假日/無供餐提示卡 -->
+        <div id="holidayBanner" class="holiday hidden">
+          <div class="emoji">🎈</div>
+          <h2 id="holidayTitle">放假休息</h2>
+          <p id="holidayDesc">今天幼兒園不用到校，好好陪伴寶貝休息放鬆喔！</p>
         </div>
 
         <section id="todaySection" class="hidden">
@@ -356,7 +369,7 @@
                   <div class="main-caption"><i class="fa-solid fa-utensils"></i> 今日主菜</div>
                 </div>
                 <div class="fruit-box">
-                  <img id="mealFruitImg" src="https://cdn.jsdelivr.net/gh/hfg-gmuend/openmoji@latest/color/svg/1F34E.svg" alt="水果">
+                  <img id="mealFruitImg" src="https://cdn.jsdelivr.net/gh/hfg-gmuend/openmoji@latest/color/svg/1F34E.svg" width="30%" alt="水果">
                   <div class="fruit-label">餐後水果</div>
                   <div id="mealFruit" class="fruit-name">—</div>
                 </div>
@@ -367,8 +380,8 @@
                 <span id="lunchSpecialTag" class="tag special" style="display:none"></span>
               </div>
 
-              <!-- 午餐明細直接展開，不再隱藏 -->
-              <div id="lunchDetails" class="mt-5">
+              <button class="details-toggle" type="button" id="lunchDetailsToggle">＋ 一起看看午餐全部菜色</button>
+              <div id="lunchDetails" class="details">
                 <div id="lunchPills"></div>
                 <div class="lunch-foot">
                   <span id="vegCertText"><i class="fa-solid fa-leaf"></i> 今日蔬菜認證</span>
@@ -391,13 +404,6 @@
               <div id="afternoonNote" class="food-hint">下午也有小驚喜！✨</div>
             </article>
           </div>
-
-          <!-- 放假狀態顯示 (讀取 M 欄位放假理由) -->
-          <div id="holidayBanner" class="holiday hidden mt-4">
-            <div class="emoji">🎈</div>
-            <h2 id="holidayTitle">放假休息</h2>
-            <p id="holidayDesc">今天幼兒園不用到校，好好休息、玩耍，明天再一起吃美味餐點喔！</p>
-          </div>
         </section>
       </div>
 
@@ -418,7 +424,7 @@
           <div id="miniCalendarGrid" class="grid grid-cols-7"></div>
         </section>
 
-        <!-- 本月餐點小發現 -->
+        <!-- 本月餐點小發現 (全新數字與細項分離排版) -->
         <section class="stats-card hidden" id="statsSection">
           <button id="btnToggleStats" class="accordion-btn" type="button">
             <div>
@@ -427,13 +433,23 @@
             </div>
             <i class="fa-solid fa-chevron-down text-slate-400 toggle-icon"></i>
           </button>
-          <div id="statsContent" class="collapsible-content collapsed">
-            <div class="collapsible-inner">
-              <div class="stats-grid">
-                <div class="stat"><div class="emoji">🥛</div><div class="label">每週鮮奶日</div><div id="statMilk" class="value num-font">-- 天</div></div>
-                <div class="stat"><div class="emoji">🍉</div><div class="label">午餐附鮮果</div><div id="statFruit" class="value num-font">-- 天</div></div>
-                <div class="stat"><div class="emoji">🍲</div><div class="label">暖胃粥麵湯</div><div id="statSoup" class="value num-font">-- 次</div></div>
-                <div class="stat"><div class="emoji">🥬</div><div class="label">履歷時蔬</div><div class="value num-font">100%</div></div>
+          <div id="statsContent" class="accordion-content">
+            <div class="stats-grid">
+              <div class="stat">
+                <div class="stat-top"><div class="emoji">🥛</div><div id="statMilk" class="value num-font">-- 天</div></div>
+                <div class="label">每週鮮奶日</div><div class="desc">週一、四鈣質補充</div>
+              </div>
+              <div class="stat">
+                <div class="stat-top"><div class="emoji">🍉</div><div id="statFruit" class="value num-font">-- 天</div></div>
+                <div class="label">午餐附鮮果</div><div class="desc">餐後當季水果</div>
+              </div>
+              <div class="stat">
+                <div class="stat-top"><div class="emoji">🍲</div><div id="statSoup" class="value num-font">-- 次</div></div>
+                <div class="label">暖胃粥麵湯</div><div class="desc">易咀嚼好消化</div>
+              </div>
+              <div class="stat">
+                <div class="stat-top"><div class="emoji">🥬</div><div class="value num-font">100%</div></div>
+                <div class="label">履歷時蔬</div><div class="desc">產銷安全無毒</div>
               </div>
             </div>
           </div>
@@ -445,12 +461,11 @@
             <div><strong>🌿 營養與食材分析</strong><small>給大人看的詳細食育資訊</small></div>
             <i class="fa-solid fa-chevron-down text-slate-400 toggle-icon"></i>
           </button>
-          <div id="nutritionContent" class="collapsible-content collapsed">
-            <div class="collapsible-inner">
-              <div id="nutritionBody" class="grid grid-cols-1 gap-3"></div>
-            </div>
+          <div id="nutritionContent" class="accordion-content">
+            <div id="nutritionBody" class="grid grid-cols-1 gap-3"></div>
           </div>
         </section>
+
       </div>
     </div>
   </main>
@@ -458,12 +473,12 @@
   <footer>
     <span class="footer-mascot"><img src="maisy_web_assets/badge_maisy.png" alt="" onerror="this.style.display='none'"></span>
     臺北市大安區龍安國小附設幼兒園 餐飲彙整表<br>
-    <a href="https://www.laes.tp.edu.tw/nss/p/k1" target="_blank" rel="noopener noreferrer">幼兒園公佈欄</a> ｜ created by Millie Tan - 2026
+    <a href="https://www.laes.tp.edu.tw/nss/p/k1" target="_blank" rel="noopener noreferrer">幼兒園公佈欄網址：https://www.laes.tp.edu.tw/nss/p/k1</a> ｜ created by Millie Tan - 2026
   </footer>
 </div>
 
 <script>
-  // --- 1. 完全清空預設假資料，實現真實空狀態防呆 ---
+  // 100% 移除假資料
   let KINDERGARTEN_MENU = {};
 
   // 表情符號配對
@@ -480,28 +495,24 @@
     return "https://cdn.jsdelivr.net/gh/hfg-gmuend/openmoji@latest/color/svg/1F34E.svg";
   }
 
-  // --- 2. 強大無比的日期轉換引擎 (防呆：Excel 原生日期的各種格式) ---
+  // 強大的日期轉換引擎
   function standardizeDate(dStr) {
     if (!dStr) return null;
     let str = String(dStr).trim();
-    
-    // 如果讀到的是 Excel 原生序列號 (例如 45536)
     if (!isNaN(str) && Number(str) > 30000) {
        const excelEpoch = new Date(Date.UTC(1899, 11, 30));
        const parsedDate = new Date(excelEpoch.getTime() + Number(str) * 86400000);
        return `${parsedDate.getUTCFullYear()}-${String(parsedDate.getUTCMonth()+1).padStart(2,'0')}-${String(parsedDate.getUTCDate()).padStart(2,'0')}`;
     }
-    // 處理斜線 9/1 或 2026/09/01 或 115/09/01
     if (str.includes('/')) {
        const p = str.split('/');
        if (p.length === 2) return `${now.getFullYear()}-${p[0].padStart(2,'0')}-${p[1].padStart(2,'0')}`;
        if (p.length === 3) {
           let y = p[0];
-          if (y.length === 3) y = String(parseInt(y) + 1911); // 民國轉西元
+          if (y.length === 3) y = String(parseInt(y) + 1911); 
           return `${y}-${p[1].padStart(2,'0')}-${p[2].padStart(2,'0')}`;
        }
     }
-    // 處理橫槓 2026-09-01
     if (str.includes('-')) {
        const p = str.split('-');
        if (p.length === 3) return `${p[0]}-${p[1].padStart(2,'0')}-${p[2].padStart(2,'0')}`;
@@ -509,6 +520,7 @@
     return str;
   }
 
+  // 四捨五入
   function roundToOneDec(val) {
     if (!val && val !== 0) return '';
     let strVal = String(val).trim();
@@ -522,15 +534,26 @@
     return strVal;
   }
 
-  // --- 手風琴點擊交互 ---
+  // 手風琴邏輯
   document.getElementById('btnToggleStats').addEventListener('click', function() {
-    document.getElementById('statsContent').classList.toggle('collapsed');
+    document.getElementById('statsContent').classList.toggle('open');
+    this.querySelector('i').classList.toggle('fa-chevron-up');
+    this.querySelector('i').classList.toggle('fa-chevron-down');
   });
 
   document.getElementById('btnToggleNutrition').addEventListener('click', function() {
-    document.getElementById('nutritionContent').classList.toggle('collapsed');
+    document.getElementById('nutritionContent').classList.toggle('open');
+    this.querySelector('i').classList.toggle('fa-chevron-up');
+    this.querySelector('i').classList.toggle('fa-chevron-down');
   });
 
+  document.getElementById('lunchDetailsToggle').addEventListener('click', function() {
+    const box = document.getElementById('lunchDetails');
+    const open = box.classList.toggle('open');
+    this.textContent = open ? '－ 收起午餐全部菜色' : '＋ 一起看看午餐全部菜色';
+  });
+
+  // 取得目標月份
   function getActiveMonthInfo() {
     const keys = Object.keys(KINDERGARTEN_MENU);
     if (keys.length === 0) {
@@ -547,6 +570,7 @@
     return { y: parseInt(parts[0], 10), m: parseInt(parts[1], 10) - 1 };
   }
 
+  // 預設日期設定 (無論如何絕對鎖定系統日)
   const now = new Date();
   const systemY = now.getFullYear();
   const systemM = String(now.getMonth() + 1).padStart(2, '0');
@@ -556,10 +580,10 @@
   const datePicker = document.getElementById('datePicker');
   datePicker.value = currentDate;
 
-  // 自動嘗試讀取 /data/ 資料夾下的 Excel (嘗試 _2.xlsx 或 .xlsx)
   window.addEventListener('DOMContentLoaded', async () => {
     const rocY = systemY - 1911;
     const pathsToTry = [
+      encodeURI(`./data/${rocY}學年度餐點整合明細-${systemY}${systemM}_3.xlsx`),
       encodeURI(`./data/${rocY}學年度餐點整合明細-${systemY}${systemM}_2.xlsx`),
       encodeURI(`./data/${rocY}學年度餐點整合明細-${systemY}${systemM}.xlsx`)
     ];
@@ -581,19 +605,16 @@
       if (window.location.protocol === 'file:') {
         console.warn("本機模式限制：無法自動讀取資料夾。");
       }
-      initUI(); // 進入空狀態
+      initUI(); 
     }
   });
 
   function initUI() {
-    if (!KINDERGARTEN_MENU[currentDate] && Object.keys(KINDERGARTEN_MENU).length > 0) {
-      currentDate = Object.keys(KINDERGARTEN_MENU).sort().pop();
-      datePicker.value = currentDate;
-    }
+    // 若沒有任何資料被載入，依然維持 currentDate = SYSTEM_TODAY
     updateView();
   }
 
-  // 繪製整月行事曆
+  // 繪製日曆
   function renderMiniCalendar() {
     const { y, m } = getActiveMonthInfo();
     const rocYear = y - 1911;
@@ -608,17 +629,14 @@
     const totalDays = new Date(y, m + 1, 0).getDate();
     const prevTotalDays = new Date(y, m, 0).getDate();
 
-    // 上個月跨月補齊 (保留文字格以維持排版)
     for (let i = firstDay - 1; i >= 0; i--) {
       appendCalendarBtn(grid, y, m - 1, prevTotalDays - i, true);
     }
 
-    // 本月日期
     for (let d = 1; d <= totalDays; d++) {
       appendCalendarBtn(grid, y, m, d, false);
     }
 
-    // 下個月跨月補齊排滿 7 欄
     const currentCells = firstDay + totalDays;
     const remainCells = (7 - (currentCells % 7)) % 7;
     for (let d = 1; d <= remainCells; d++) {
@@ -645,20 +663,17 @@
     btn.textContent = d;
     btn.className = "cal-btn num-font ";
 
+    // 解鎖所有按鈕點擊，只差在外觀差異
     if (isOtherMonth) {
-      if (isWeekend || !data) {
-        btn.className += "opacity-0 cursor-default pointer-events-none ";
-      } else {
-        btn.className += "text-slate-400 bg-slate-50 border-slate-200 text-xs ";
-        if (isSelected) btn.className += "calendar-active ";
-      }
+      btn.className += "text-slate-400 bg-slate-50 border-slate-200 text-xs ";
+      if (isSelected) btn.className += "calendar-active ";
     } else {
       if (isSelected) {
         btn.className += "calendar-active ";
       } else if (isSystemDay) {
         btn.className += "calendar-today ";
       } else if (isWeekend) {
-        btn.className += "text-slate-300 bg-slate-50/50 cursor-not-allowed ";
+        btn.className += "text-slate-400 bg-slate-50/50 ";
       }
     }
 
@@ -668,13 +683,13 @@
       btn.appendChild(dot);
     }
 
-    if (!isWeekend && (data || !isOtherMonth)) {
-      btn.addEventListener('click', () => {
-        currentDate = dateStr;
-        datePicker.value = dateStr;
-        updateView();
-      });
-    }
+    // 每一天都可以按
+    btn.addEventListener('click', () => {
+      currentDate = dateStr;
+      datePicker.value = dateStr;
+      updateView();
+    });
+    
     grid.appendChild(btn);
   }
 
@@ -707,53 +722,54 @@
     const todaySection = document.getElementById('todaySection');
     const statsSection = document.getElementById('statsSection');
     const nutritionAccordion = document.getElementById('nutritionAccordion');
+    const holidayBanner = document.getElementById('holidayBanner');
 
-    // 防呆處理：無任何資料時，隱藏所有圖表與卡片，只留下月曆與防呆橫幅
+    // 防呆處理：無任何資料時
     if (Object.keys(KINDERGARTEN_MENU).length === 0) {
       emptyStateBanner.classList.remove('hidden');
       todaySection.classList.add('hidden');
+      holidayBanner.classList.add('hidden');
       if(statsSection) statsSection.classList.add('hidden');
       if(nutritionAccordion) nutritionAccordion.classList.add('hidden');
-      document.getElementById('bannerDate').textContent = '等待匯入資料...';
+      document.getElementById('bannerDate').textContent = '無排餐資料';
       document.getElementById('bannerWeekday').textContent = '';
       renderMiniCalendar();
       return;
     } else {
       emptyStateBanner.classList.add('hidden');
-      todaySection.classList.remove('hidden');
       if(statsSection) statsSection.classList.remove('hidden');
       if(nutritionAccordion) nutritionAccordion.classList.remove('hidden');
     }
 
     const parts = currentDate.split('-');
+    const dt = new Date(currentDate);
+    const dayNames = ['日', '一', '二', '三', '四', '五', '六'];
+    
     document.getElementById('bannerDate').textContent = `${parts[0]} 年 ${parseInt(parts[1], 10)} 月 ${parseInt(parts[2], 10)} 日`;
+    document.getElementById('bannerWeekday').textContent = `（星期${dayNames[dt.getDay()]}）`;
     
     const isToday = (currentDate === SYSTEM_TODAY);
     document.getElementById('todayBadge').style.display = isToday ? 'inline-block' : 'none';
 
     const data = KINDERGARTEN_MENU[currentDate];
     const mealsBox = document.getElementById('mealsContainer');
-    const holidayBox = document.getElementById('holidayBanner');
     const specialTag = document.getElementById('tagSpecial');
 
-    if (!data || data.isHoliday) {
+    // 若無資料或是放假 (包含週末)
+    if (!data || data.isHoliday || dt.getDay() === 0 || dt.getDay() === 6) {
       mealsBox.classList.add('hidden');
-      holidayBox.classList.remove('hidden');
-      document.getElementById('bannerWeekday').textContent = data ? `（${data.day}）` : '（假）';
+      holidayBanner.classList.remove('hidden');
       
-      // 讀取 M 欄位作為放假原因
       let reason = "放假休息";
-      if (data && data.holidayReason) {
-          reason = data.holidayReason;
-      } else if (data && data.note) {
-          reason = data.note;
-      }
+      if (dt.getDay() === 0 || dt.getDay() === 6) reason = "週末假期";
+      if (data && data.holidayReason) reason = data.holidayReason;
+      else if (data && data.note) reason = data.note;
+      
       document.getElementById('holidayTitle').textContent = reason;
       specialTag.style.display = 'none';
     } else {
       mealsBox.classList.remove('hidden');
-      holidayBox.classList.add('hidden');
-      document.getElementById('bannerWeekday').textContent = `（星期${data.day}）`;
+      holidayBanner.classList.add('hidden');
 
       if (data.note) {
         specialTag.textContent = data.note;
@@ -791,7 +807,6 @@
 
         items.forEach(it => {
           const el = document.createElement('div');
-          // 完全保留 index_2.html 裡的樣式
           el.innerHTML = `<div style="font-size: 24px;">${it.icon}</div><div style="font-size: 11px; color: #9E8876; font-weight: 800; margin-top: 2px;">${it.label}</div><div style="font-size: 14px; font-weight: 900; color: #3E3228; margin-top: 4px;">${it.val}</div>`;
           pills.appendChild(el);
         });
@@ -804,7 +819,7 @@
       if (fruitImgEl) fruitImgEl.src = getFruitOpenMoji(data.fruit);
 
       document.getElementById('mealAfternoon').textContent = data.afternoon || "午後點心";
-      document.getElementById('afternoonNote').textContent = (data.note && data.note.includes('蔬食')) ? "🌱 今日為幼兒園蔬食日，多吃蔬菜元氣滿滿！" : "下午也有小驚喜！✨";
+      document.getElementById('afternoonNote').textContent = (data.note && data.note.includes('蔬食')) ? "🌱 今日為幼兒園蔬食日，多吃蔬菜元氣滿滿！" : "新鮮食材手作・適量少糖健康低負擔";
     }
     renderMiniCalendar();
   }
@@ -828,7 +843,7 @@
   function parseExcelData(uint8Array) {
     const workbook = XLSX.read(uint8Array, { type: 'array' });
 
-    // 1. 營養分析頁籤 (美化：數字與說明折行分開)
+    // 1. 營養分析頁籤
     const nutSheetName = workbook.SheetNames.find(n => n.includes("營養"));
     if (nutSheetName) {
       const nutRows = XLSX.utils.sheet_to_json(workbook.Sheets[nutSheetName], { header: 1 });
@@ -846,24 +861,18 @@
         if (c0 && !c1 && !c2 && c0.length > 2) {
           if (currentCard) nutHtml += currentCard + '</div></div>';
           currentSectionTitle = c0;
-          currentCard = `
-            <div class="stat" style="text-align:left; border: 2px dashed #EADBC8; padding: 16px; background: #FFFAF1; border-radius: 16px;">
-               <h4 style="font-weight: 900; color: #3C3127; border-bottom: 2px dashed #EADBC8; padding-bottom: 8px; margin-bottom: 12px; display:flex; align-items:center; gap:8px;">
-                 <i class="fa-solid fa-leaf text-[#78B896]"></i> ${c0}
-               </h4>
-               <div style="display:flex; flex-direction:column; gap:12px;">`;
+          currentCard = `<div class="stat" style="text-align:left; border: 2px dashed #EADBC8; padding: 16px; background: #FFFAF1; border-radius: 16px;">
+             <h4 style="font-weight: 900; color: #3C3127; border-bottom: 2px dashed #EADBC8; padding-bottom: 8px; margin-bottom: 12px;"><i class="fa-solid fa-leaf text-mint"></i> ${c0}</h4>
+             <div style="display:flex; flex-direction:column; gap:8px;">`;
         } else if (c0 && (c1 || c2) && currentCard) {
           if (c0 === '水果名稱') return;
           let displayC2 = currentSectionTitle.includes('水果') ? '' : c2;
-          
-          currentCard += `
-            <div style="display:flex; flex-direction:column; gap:6px; border-bottom: 1px solid rgba(234, 219, 200, 0.5); padding-bottom: 8px;">
-              <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:16px;">
-                <span style="color:#6E5C4E; font-weight:800; font-size:13px;">${c0}</span>
-                ${c1 ? `<span class="num-font" style="font-weight: 900; color: #C36A42; font-size: 15px; background: white; padding: 2px 8px; border-radius: 6px; border: 1px solid #F5D3BE; box-shadow: 0 1px 2px rgba(0,0,0,0.05); flex-shrink:0;">${c1}</span>` : ''}
-              </div>
-              ${displayC2 ? `<div style="font-size:11px; color:#9A8473; font-weight:700; line-height:1.5; background: rgba(255,255,255,0.6); padding: 6px 8px; border-radius: 6px;">${displayC2}</div>` : ''}
-            </div>`;
+          let valHtml = `<span class="num-font" style="font-weight: 900; color: #C36A42; font-size: 15px; background: white; padding: 2px 8px; border-radius: 6px; border: 1px solid #F5D3BE; box-shadow: 0 1px 2px rgba(0,0,0,0.05);">${c1}`;
+          if (displayC2) {
+            valHtml += ` <span style="font-size:11px; color:#9A8473; font-weight:700; margin-left:6px; padding-left:6px; border-left: 1px solid #EADBC8;">${displayC2}</span>`;
+          }
+          valHtml += `</span>`;
+          currentCard += `<div style="display:flex; justify-content:space-between; align-items:flex-start; gap:16px; font-size: 13px; border-bottom: 1px solid rgba(234, 219, 200, 0.5); padding-bottom: 6px;"><span style="color:#6E5C4E; font-weight:800;">${c0}</span>${valHtml}</div>`;
         }
       });
       if (currentCard) nutHtml += currentCard + '</div></div>';
@@ -907,7 +916,7 @@
     const cmap = {};
     for (let r = 0; r < Math.min(rawRows.length, 12); r++) {
       const rowStr = (rawRows[r] || []).map(v => String(v || '')).join('|');
-      // 嚴格綁定，防呆避免讀到第四行
+      // 智慧模糊綁定，避免找不到早點與水果
       if (rowStr.includes("日期") && rowStr.includes("主食") && rowStr.includes("主菜")) {
         hRow = r;
         rawRows[r].forEach((v, c) => {
@@ -921,7 +930,7 @@
           else if (val.includes("時蔬") || val.includes("青菜") || val.includes("蔬菜")) cmap.veg = c;
           else if (val.includes("湯品") || val.includes("湯")) cmap.soup = c; 
           else if (val.includes("熱量") || val.includes("大卡")) cmap.kcal = c;
-          else if (val.includes("水果")) cmap.fruit = c; 
+          else if (val.includes("水果") || val.includes("鮮果")) cmap.fruit = c; 
           else if (val.includes("午點") || val.includes("午後") || val.includes("下午")) cmap.afternoon = c;
           else if (val.includes("備註") || val.includes("提醒")) cmap.note = c;
         });
@@ -943,7 +952,6 @@
         const g = (c) => (c !== undefined && row[c] != null && row[c] !== 'None') ? String(row[c]).trim() : "";
         const st = g(cmap.staple), mn = g(cmap.main), nt = g(cmap.note), vg = g(cmap.veg), rKc = g(cmap.kcal);
         
-        // 讀取 M 欄位 (index 12) 作為放假理由
         const colM_val = (row[12] !== undefined && row[12] != null && String(row[12]).trim() !== 'None') ? String(row[12]).trim() : "";
         const holidayReason = colM_val || nt;
 
@@ -958,11 +966,8 @@
       
       const sortedKeys = Object.keys(KINDERGARTEN_MENU).sort();
       if (sortedKeys.length > 0) {
-        if (KINDERGARTEN_MENU[SYSTEM_TODAY]) {
-           currentDate = SYSTEM_TODAY;
-        } else {
-           currentDate = sortedKeys[sortedKeys.length - 1];
-        }
+        // 更新後預設依舊鎖定今日，若今日無排單也沒關係，會顯示假日/空卡
+        currentDate = SYSTEM_TODAY;
         datePicker.value = currentDate;
       }
       initUI();
