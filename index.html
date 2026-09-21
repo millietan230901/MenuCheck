@@ -161,7 +161,7 @@
     .meal-icon img { width: 100%; height: 100%; object-fit: contain; }
     .meal-info { flex: 1; min-width: 0; }
     .meal-label { font-size: 12px; color: #9C836E; font-weight: 800; }
-    .meal-name { font-size: 17px; font-weight: 900; color: #403429; margin-top: 2px; }
+    .meal-name { font-size: 17px; font-weight: 900; color: #403429; margin-top: 2px; } /* 回歸原本的大字體 */
     .meal-time { font-size: 11px; font-weight: 900; color: #8C715C; background: #FFFDF9; border: 1.5px solid #EADCC8; border-radius: 99px; padding: 5px 11px; }
     .food-name { font-size: 24px; font-weight: 900; margin: 14px 0 4px; color: #382D25; }
     .food-hint { font-size: 13px; color: #937F6F; font-weight: 700; }
@@ -348,7 +348,7 @@
               <div class="meal-top">
                 <div class="meal-icon"><img src="maisy_web_assets/badge_cyril.png" alt="早餐" onerror="this.src='https://cdn.jsdelivr.net/gh/hfg-gmuend/openmoji@latest/color/svg/1F375.svg'"></div>
                 <div class="meal-info">
-                  <div class="meal-label">早餐・08:30</div>
+                  <div class="meal-name">早餐・08:30</div>
                    <div id="mealMorning" class="food-name">—</div>
                 </div>
                 <span class="meal-time num-font">早上</span>
@@ -364,12 +364,10 @@
               <div class="meal-top">
                 <div class="meal-icon"><img src="maisy_web_assets/badge_charlie.png" alt="午餐" onerror="this.src='https://cdn.jsdelivr.net/gh/hfg-gmuend/openmoji@latest/color/svg/1F371.svg'"></div>
                 <div class="meal-info">
-                  <div class="meal-label">午餐・11:40</div>
+                  <div class="meal-name">午餐・11:40</div>
                   <div id="mealMainDish" class="main-dish num-font">—</div>
                   
-                  <!-- 這是原本遺漏、導致程式崩潰的標籤： mealStaple -->
                   <div id="mealStaple" class="food-hint" style="margin-top:6px; color:#A36030; font-weight:800;">搭配香香主食</div>
-                  
                   <div class="main-caption" style="margin-top:8px;"><i class="fa-solid fa-utensils"></i> 今日主菜</div>
                 </div>
                 <div class="fruit-box">
@@ -399,8 +397,8 @@
               <div class="meal-top">
                 <div class="meal-icon"><img src="maisy_web_assets/badge_tallulah.png" alt="點心" onerror="this.src='https://cdn.jsdelivr.net/gh/hfg-gmuend/openmoji@latest/color/svg/1F370.svg'"></div>
                 <div class="meal-info">
-                  <div class="meal-label">下午點心・14:30</div>
-                  <div class="meal-name">甜蜜午後點心</div>
+                  <div class="meal-name">下午點心・14:30</div>
+                  <div class="meal-label">甜蜜午後點心</div>
                 </div>
                 <span class="meal-time num-font">下午</span>
               </div>
@@ -710,7 +708,7 @@
     document.getElementById('statSoup').textContent = `${soupCount} 次`;
   }
 
-  // 畫面主更新 (已修補 document.getElementById 防呆)
+  // 畫面主更新
   function updateView() {
     const emptyStateBanner = document.getElementById('emptyStateBanner');
     const todaySection = document.getElementById('todaySection');
@@ -731,6 +729,8 @@
       return;
     } else {
       emptyStateBanner.classList.add('hidden');
+      // ★ 最關鍵的一步：恢復顯示今日三餐的主區塊！ (先前遺漏了這行導致人間蒸發)
+      todaySection.classList.remove('hidden'); 
       if(statsSection) statsSection.classList.remove('hidden');
       if(nutritionAccordion) nutritionAccordion.classList.remove('hidden');
     }
@@ -750,7 +750,8 @@
     const specialTag = document.getElementById('tagSpecial');
 
     if (!data || data.isHoliday || dt.getDay() === 0 || dt.getDay() === 6) {
-      mealsBox.classList.add('hidden');
+      // 遇假日時，隱藏三餐明細，顯示放假提示卡
+      todaySection.classList.add('hidden');
       holidayBanner.classList.remove('hidden');
       
       let reason = "放假休息";
@@ -761,6 +762,8 @@
       document.getElementById('holidayTitle').textContent = reason;
       specialTag.style.display = 'none';
     } else {
+      // 正常供餐日時，開啟三餐明細
+      todaySection.classList.remove('hidden');
       mealsBox.classList.remove('hidden');
       holidayBanner.classList.add('hidden');
 
@@ -771,7 +774,6 @@
         specialTag.style.display = 'none';
       }
 
-      // 添加嚴格安全檢查，避免抓不到元素報錯
       if(document.getElementById('mealMorning')) document.getElementById('mealMorning').textContent = data.morning || "美味晨間點心";
       if(document.getElementById('mealMainDish')) document.getElementById('mealMainDish').textContent = (data.lunch && data.lunch.main) ? data.lunch.main : "今日美味主菜";
       if(document.getElementById('mealStaple')) document.getElementById('mealStaple').textContent = (data.lunch && data.lunch.staple) ? `搭配 ${data.lunch.staple}` : "今天也要吃飽飽";
@@ -921,7 +923,7 @@
     const cmap = {};
     for (let r = 0; r < Math.min(rawRows.length, 12); r++) {
       const rowStr = (rawRows[r] || []).map(v => String(v || '')).join('|');
-      // 改用更寬鬆的 OR 來鎖定含有「日期」以及任何「主食」或「早點」的表頭列
+      // 更寬鬆的 OR 邏輯來鎖定含有「日期」以及「主食」或「早點」的表頭列
       if (rowStr.includes("日期") && (rowStr.includes("主食") || rowStr.includes("早點"))) {
         hRow = r;
         rawRows[r].forEach((v, c) => {
@@ -937,7 +939,7 @@
           else if (val.includes("熱量") || val.includes("大卡")) cmap.kcal = c;
           else if (val.includes("水果") || val.includes("鮮果")) cmap.fruit = c; 
           else if (val.includes("午點") || val.includes("午後") || val.includes("下午")) cmap.afternoon = c;
-          else if (val.includes("備註") || val.includes("提醒")) cmap.note = c;
+          else if (val.includes("備註") || val.includes("提醒") || val.includes("特餐")) cmap.note = c;
         });
         break;
       }
