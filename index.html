@@ -71,7 +71,6 @@
       font-family: 'Nunito', 'Zen Maru Gothic', 'Noto Sans TC', sans-serif !important;
     }
 
-    /* 主外框容器：寬敞大氣 */
     .app { width: 100%; max-width: 1260px; margin: 0 auto; padding-bottom: 48px; }
 
     /* ---------- 頂部導航列 ---------- */
@@ -136,7 +135,7 @@
       font-size: 12px; padding: 8px 14px; border-radius: 14px; box-shadow: 2px 2px 0 rgba(70, 50, 30, 0.06); cursor: pointer; transition: background .18s;
     }
     .hero-tools button:hover { background: #FFF2C6; }
-    .hero-tools input { font-size: 12px; max-width: 145px; }
+    .hero-tools input { font-size: 12px; max-width: 145px; font-family: 'Nunito', sans-serif; }
 
     /* ---------- 主版面佈局 ---------- */
     .layout { display: grid; grid-template-columns: 1fr; gap: 24px; padding: 0 20px; }
@@ -191,7 +190,7 @@
     #lunchPills > div { background: #FFFDF9; border: 1.5px solid #EADBCA; border-radius: 16px; padding: 12px 10px; text-align: center; }
     #lunchPills > div > div:first-child { font-size: 24px; }
     #lunchPills > div > div:nth-child(2) { font-size: 11px; color: #9E8876; font-weight: 800; margin-top: 2px; }
-    #lunchPills > div > div:last-child { font-size: 14px; font-weight: 900; color: #3E3228; margin-top: 4px; }
+    #lunchPills > div > div:last-child { font-size: 14px; font-weight: 900; color: #3E3228; margin-top: 4px; line-height: 1.25; }
 
     .lunch-foot { display: flex; justify-content: space-between; align-items: center; margin-top: 14px; padding-top: 12px; border-top: 2px dashed #EBDDCF; font-size: 12px; font-weight: 800; }
     .lunch-foot span:first-child { color: #4C8F69; }
@@ -206,8 +205,8 @@
     .calendar-week { display: grid; grid-template-columns: repeat(7, 1fr); text-align: center; padding: 4px 14px 8px; color: #A38E7D; font-size: 12px; font-weight: 900; }
     .calendar-week .weekend { color: #C7ABA0; }
     #miniCalendarGrid { padding: 4px 14px 18px; gap: 6px 4px !important; }
-    .cal-btn { width: 100%; height: 38px; max-width: 42px; margin: 0 auto; border-radius: 50%; border: 1.5px solid #EFE2D2; background: #FFFDF9; color: #55483D; font-size: 14px; font-weight: 900; cursor: pointer; display: grid; place-items: center; transition: all 0.15s; }
-    .cal-btn:hover { background: #FFF4D8; transform: scale(1.06); }
+    .cal-btn { width: 100%; height: 38px; max-width: 42px; margin: 0 auto; border-radius: 50%; border: 1.5px solid #EFE2D2; background: #FFFDF9; color: #55483D; font-size: 14px; font-weight: 900; font-family: "Nunito", "Zen Maru Gothic", sans-serif; cursor: pointer; display: grid; place-items: center; transition: all 0.15s; }
+    .cal-btn:hover { background: #FFF4D8; border-color: #E2C98A; transform: scale(1.06); }
     .calendar-active { background: #E95D45 !important; color: white !important; border-color: #3F362F !important; transform: scale(1.1) !important; box-shadow: 2px 3px 0 rgba(63, 54, 47, 0.2); }
     .calendar-today { background: #FFF0A9 !important; border: 2px dashed #E5AE32 !important; color: #71551E !important; font-weight: 900; }
     .month-dot { width: 6px; height: 6px; border-radius: 50%; background: #70B87B; position: absolute; bottom: 2px; left: 50%; transform: translateX(-50%); }
@@ -218,8 +217,9 @@
     .accordion-btn small { display: block; font-size: 11px; color: #9C8572; font-weight: 700; margin-top: 2px; text-align: left; }
     .accordion-content { display: none; padding: 0 16px 18px; }
     .accordion-content.open { display: block; }
-    
     .stats-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+    
+    /* 統計小發現：數字與說明分開 */
     .stat { border: 2px dashed #EADBC8; border-radius: 16px; padding: 12px 10px; background: #FFFAF1; display: flex; flex-direction: column; align-items: center; gap: 4px; }
     .stat-top { display: flex; justify-content: space-between; align-items: center; width: 100%; }
     .stat .emoji { font-size: 24px; }
@@ -324,7 +324,7 @@
         <div id="emptyStateBanner" class="holiday">
           <div class="emoji text-slate-300" style="opacity: 0.5;">📂</div>
           <h2 class="text-cream-dark">無法直接讀取，請手動匯入</h2>
-          <p>基於瀏覽器安全性限制或尚未上傳檔案，請點擊上方「手動匯入」按鈕，選擇您的 Excel 餐點表進行載入。</p>
+          <p>請點擊上方「手動匯入」按鈕，選擇您的 Excel 餐點表進行載入。</p>
         </div>
 
         <!-- 假日/無供餐提示卡 -->
@@ -348,7 +348,7 @@
               <div class="meal-top">
                 <div class="meal-icon"><img src="maisy_web_assets/badge_cyril.png" alt="早餐" onerror="this.src='https://cdn.jsdelivr.net/gh/hfg-gmuend/openmoji@latest/color/svg/1F375.svg'"></div>
                 <div class="meal-info">
-                  <div class="meal-name">早餐・08:30</div>
+                  <div class="meal-label">早餐・08:30</div>
                    <div id="mealMorning" class="food-name">—</div>
                 </div>
                 <span class="meal-time num-font">早上</span>
@@ -364,9 +364,13 @@
               <div class="meal-top">
                 <div class="meal-icon"><img src="maisy_web_assets/badge_charlie.png" alt="午餐" onerror="this.src='https://cdn.jsdelivr.net/gh/hfg-gmuend/openmoji@latest/color/svg/1F371.svg'"></div>
                 <div class="meal-info">
-                  <div class="meal-name">午餐・11:40</div>
+                  <div class="meal-label">午餐・11:40</div>
                   <div id="mealMainDish" class="main-dish num-font">—</div>
-                  <div class="main-caption"><i class="fa-solid fa-utensils"></i> 今日主菜</div>
+                  
+                  <!-- 這是原本遺漏、導致程式崩潰的標籤： mealStaple -->
+                  <div id="mealStaple" class="food-hint" style="margin-top:6px; color:#A36030; font-weight:800;">搭配香香主食</div>
+                  
+                  <div class="main-caption" style="margin-top:8px;"><i class="fa-solid fa-utensils"></i> 今日主菜</div>
                 </div>
                 <div class="fruit-box">
                   <img id="mealFruitImg" src="https://cdn.jsdelivr.net/gh/hfg-gmuend/openmoji@latest/color/svg/1F34E.svg" width="30%" alt="水果">
@@ -431,7 +435,7 @@
               <strong>本月餐點小發現</strong>
               <small>想多看一點，點開瞧瞧</small>
             </div>
-            <i class="fa-solid fa-chevron-down text-slate-400"></i>
+            <i class="fa-solid fa-chevron-down text-slate-400 toggle-icon"></i>
           </button>
           <div id="statsContent" class="accordion-content">
             <div class="stats-grid">
@@ -459,7 +463,7 @@
         <section id="nutritionAccordion" class="stats-card hidden">
           <button id="btnToggleNutrition" class="accordion-btn" type="button">
             <div><strong>🌿 營養與食材分析</strong><small>給大人看的詳細食育資訊</small></div>
-            <i class="fa-solid fa-chevron-down text-slate-400"></i>
+            <i class="fa-solid fa-chevron-down text-slate-400 toggle-icon"></i>
           </button>
           <div id="nutritionContent" class="accordion-content">
             <div id="nutritionBody" class="grid grid-cols-1 gap-3"></div>
@@ -478,7 +482,6 @@
 </div>
 
 <script>
-  // 100% 移除假資料，完全依賴真實解析
   let KINDERGARTEN_MENU = {};
 
   // 表情符號配對
@@ -495,7 +498,7 @@
     return "https://cdn.jsdelivr.net/gh/hfg-gmuend/openmoji@latest/color/svg/1F34E.svg";
   }
 
-  // 強大無比的日期統一轉換引擎
+  // 強大的日期轉換引擎
   function standardizeDate(dStr) {
     if (!dStr) return null;
     let str = String(dStr).trim();
@@ -520,7 +523,6 @@
     return str;
   }
 
-  // 四捨五入
   function roundToOneDec(val) {
     if (!val && val !== 0) return '';
     let strVal = String(val).trim();
@@ -553,7 +555,6 @@
     this.textContent = open ? '－ 收起午餐全部菜色' : '＋ 一起看看午餐全部菜色';
   });
 
-  // 取得目標月份
   function getActiveMonthInfo() {
     const keys = Object.keys(KINDERGARTEN_MENU);
     if (keys.length === 0) {
@@ -570,7 +571,6 @@
     return { y: parseInt(parts[0], 10), m: parseInt(parts[1], 10) - 1 };
   }
 
-  // 預設日期設定 (永遠絕對鎖定系統日)
   const now = new Date();
   const systemY = now.getFullYear();
   const systemM = String(now.getMonth() + 1).padStart(2, '0');
@@ -602,17 +602,11 @@
     }
     
     if (!fetched) {
-      if (window.location.protocol === 'file:') {
-        console.warn("本機模式限制：無法自動讀取資料夾。");
-      }
       initUI(); 
     }
   });
 
   function initUI() {
-    // 開啟或重整時，強制顯示真實的系統日 (不管那天有沒有排菜或是週末)
-    currentDate = SYSTEM_TODAY;
-    datePicker.value = currentDate;
     updateView();
   }
 
@@ -665,9 +659,8 @@
     btn.textContent = d;
     btn.className = "cal-btn num-font ";
 
-    // 解鎖所有按鈕點擊，僅在外觀上呈現差異
     if (isOtherMonth) {
-      btn.className += "text-slate-400 bg-slate-50 border-slate-200 text-xs hover:bg-slate-100 ";
+      btn.className += "text-slate-400 bg-slate-50 border-slate-200 text-xs ";
       if (isSelected) btn.className += "calendar-active ";
     } else {
       if (isSelected) {
@@ -675,9 +668,7 @@
       } else if (isSystemDay) {
         btn.className += "calendar-today ";
       } else if (isWeekend) {
-        btn.className += "text-slate-400 bg-slate-50/50 hover:bg-slate-100 ";
-      } else {
-        btn.className += "hover:bg-amber-100/50 cursor-pointer ";
+        btn.className += "text-slate-400 bg-slate-50/50 ";
       }
     }
 
@@ -687,7 +678,6 @@
       btn.appendChild(dot);
     }
 
-    // ★ 每一天都可以按 ★
     btn.addEventListener('click', () => {
       currentDate = dateStr;
       datePicker.value = dateStr;
@@ -720,7 +710,7 @@
     document.getElementById('statSoup').textContent = `${soupCount} 次`;
   }
 
-  // 畫面主更新
+  // 畫面主更新 (已修補 document.getElementById 防呆)
   function updateView() {
     const emptyStateBanner = document.getElementById('emptyStateBanner');
     const todaySection = document.getElementById('todaySection');
@@ -759,7 +749,6 @@
     const mealsBox = document.getElementById('mealsContainer');
     const specialTag = document.getElementById('tagSpecial');
 
-    // 若無該日資料，或是系統判定放假 (包含週末)
     if (!data || data.isHoliday || dt.getDay() === 0 || dt.getDay() === 6) {
       mealsBox.classList.add('hidden');
       holidayBanner.classList.remove('hidden');
@@ -782,9 +771,10 @@
         specialTag.style.display = 'none';
       }
 
-      document.getElementById('mealMorning').textContent = data.morning || "美味晨間點心";
-      document.getElementById('mealMainDish').textContent = (data.lunch && data.lunch.main) ? data.lunch.main : "今日美味主菜";
-      document.getElementById('mealStaple').textContent = (data.lunch && data.lunch.staple) ? `搭配 ${data.lunch.staple}` : "今天也要吃飽飽";
+      // 添加嚴格安全檢查，避免抓不到元素報錯
+      if(document.getElementById('mealMorning')) document.getElementById('mealMorning').textContent = data.morning || "美味晨間點心";
+      if(document.getElementById('mealMainDish')) document.getElementById('mealMainDish').textContent = (data.lunch && data.lunch.main) ? data.lunch.main : "今日美味主菜";
+      if(document.getElementById('mealStaple')) document.getElementById('mealStaple').textContent = (data.lunch && data.lunch.staple) ? `搭配 ${data.lunch.staple}` : "今天也要吃飽飽";
       
       const lunchSpecial = document.getElementById('lunchSpecialTag');
       if (lunchSpecial) {
@@ -796,38 +786,36 @@
         }
       }
 
-      document.getElementById('milkBadge').style.display = (data.morning && data.morning.includes('鮮奶')) ? 'inline-flex' : 'none';
-
-      // 預設將午餐明細打開
-      document.getElementById('lunchDetails').classList.add('open');
-      document.getElementById('lunchDetailsToggle').textContent = '－ 收起午餐全部菜色';
+      if(document.getElementById('milkBadge')) document.getElementById('milkBadge').style.display = (data.morning && data.morning.includes('鮮奶')) ? 'inline-flex' : 'none';
 
       const pills = document.getElementById('lunchPills');
-      pills.innerHTML = '';
-      if (data.lunch) {
-        const items = [
-          { icon: '🍚', label: '主食', val: data.lunch.staple },
-          { icon: '🍗', label: '主菜', val: data.lunch.main },
-          { icon: '🥗', label: '副菜', val: data.lunch.side },
-          { icon: '🥬', label: '時蔬', val: data.lunch.veg },
-          { icon: '🍲', label: '湯品', val: data.lunch.soup }
-        ];
-
-        items.forEach(it => {
-          const el = document.createElement('div');
-          el.innerHTML = `<div style="font-size: 24px;">${it.icon}</div><div style="font-size: 11px; color: #9E8876; font-weight: 800; margin-top: 2px;">${it.label}</div><div style="font-size: 14px; font-weight: 900; color: #3E3228; margin-top: 4px;">${it.val}</div>`;
-          pills.appendChild(el);
-        });
-        document.getElementById('vegCertText').innerHTML = `<i class="fa-solid fa-leaf"></i> ${data.lunch.cert}`;
-        document.getElementById('lunchKcalText').textContent = `${data.lunch.kcal} kcal`;
+      if (pills) {
+          pills.innerHTML = '';
+          if (data.lunch) {
+            const items = [
+              { icon: '🍚', label: '主食', val: data.lunch.staple },
+              { icon: '🍗', label: '主菜', val: data.lunch.main },
+              { icon: '🥗', label: '副菜', val: data.lunch.side },
+              { icon: '🥬', label: '時蔬', val: data.lunch.veg },
+              { icon: '🍲', label: '湯品', val: data.lunch.soup }
+            ];
+    
+            items.forEach(it => {
+              const el = document.createElement('div');
+              el.innerHTML = `<div style="font-size: 24px;">${it.icon}</div><div style="font-size: 11px; color: #9E8876; font-weight: 800; margin-top: 2px;">${it.label}</div><div style="font-size: 14px; font-weight: 900; color: #3E3228; margin-top: 4px;">${it.val}</div>`;
+              pills.appendChild(el);
+            });
+            if(document.getElementById('vegCertText')) document.getElementById('vegCertText').innerHTML = `<i class="fa-solid fa-leaf"></i> ${data.lunch.cert}`;
+            if(document.getElementById('lunchKcalText')) document.getElementById('lunchKcalText').textContent = `${data.lunch.kcal} kcal`;
+          }
       }
 
-      document.getElementById('mealFruit').textContent = data.fruit || "當季新鮮水果";
+      if(document.getElementById('mealFruit')) document.getElementById('mealFruit').textContent = data.fruit || "當季新鮮水果";
       const fruitImgEl = document.getElementById('mealFruitImg');
       if (fruitImgEl) fruitImgEl.src = getFruitOpenMoji(data.fruit);
 
-      document.getElementById('mealAfternoon').textContent = data.afternoon || "午後點心";
-      document.getElementById('afternoonNote').textContent = (data.note && data.note.includes('蔬食')) ? "🌱 今日為幼兒園蔬食日，多吃蔬菜元氣滿滿！" : "新鮮食材手作・適量少糖健康低負擔";
+      if(document.getElementById('mealAfternoon')) document.getElementById('mealAfternoon').textContent = data.afternoon || "午後點心";
+      if(document.getElementById('afternoonNote')) document.getElementById('afternoonNote').textContent = (data.note && data.note.includes('蔬食')) ? "🌱 今日為幼兒園蔬食日，多吃蔬菜元氣滿滿！" : "新鮮食材手作・適量少糖健康低負擔";
     }
     renderMiniCalendar();
   }
@@ -842,7 +830,8 @@
         parseExcelData(new Uint8Array(evt.target.result));
         showToast(`資料已成功從 Excel 匯入並更新！`);
       } catch(err) {
-        alert("Excel 解析失敗，請確認檔案格式是否正確。");
+        console.error("Excel 解析過程中遭遇錯誤:", err);
+        alert("Excel 解析失敗，請確認檔案格式是否正確。\n技術細節: " + err.message);
       }
     };
     reader.readAsArrayBuffer(file);
@@ -873,7 +862,7 @@
              <h4 style="font-weight: 900; color: #3C3127; border-bottom: 2px dashed #EADBC8; padding-bottom: 8px; margin-bottom: 12px;"><i class="fa-solid fa-leaf text-mint"></i> ${c0}</h4>
              <div style="display:flex; flex-direction:column; gap:8px;">`;
         } else if (c0 && (c1 || c2) && currentCard) {
-          if (c0 === '水果名稱') return;
+          if (c0 === '水果名稱' || c0.includes('肉品類別')) return; // 防呆避開表頭
           let displayC2 = currentSectionTitle.includes('水果') ? '' : c2;
           let valHtml = `<span class="num-font" style="font-weight: 900; color: #C36A42; font-size: 15px; background: white; padding: 2px 8px; border-radius: 6px; border: 1px solid #F5D3BE; box-shadow: 0 1px 2px rgba(0,0,0,0.05);">${c1}`;
           if (displayC2) {
@@ -887,7 +876,8 @@
       
       if (nutHtml) {
         document.getElementById('nutritionBody').innerHTML = nutHtml;
-        document.getElementById('nutritionAccordion').classList.remove('hidden');
+        const nAcc = document.getElementById('nutritionAccordion');
+        if (nAcc) nAcc.classList.remove('hidden');
       }
     }
 
@@ -899,21 +889,29 @@
     const detailSheetName = workbook.SheetNames.find(n => n.includes("國小午餐") || n.includes("午餐明細"));
     if (detailSheetName) {
       const dRows = XLSX.utils.sheet_to_json(workbook.Sheets[detailSheetName], { header: 1 });
-      let dCol = 0, certCol = -1;
+      let dCol = -1, certCol = -1;
+      let headerRowIndex = -1;
+      
+      // 動態抓取對應欄位，避免舊版寫死行數
       for (let r = 0; r < Math.min(dRows.length, 10); r++) {
         const rw = dRows[r] || [];
         for (let c = 0; c < rw.length; c++) {
-          if (String(rw[c] || '').includes("日期")) dCol = c;
-          if (String(rw[c] || '').includes("蔬菜認證")) certCol = c;
+          const val = String(rw[c] || '').trim();
+          if (val === "日期" || val.includes("日期")) dCol = c;
+          if (val.includes("蔬菜認證")) certCol = c;
         }
-        if (certCol !== -1) break;
+        if (certCol !== -1 && dCol !== -1) {
+            headerRowIndex = r;
+            break;
+        }
       }
-      if (certCol !== -1) {
+      if (headerRowIndex !== -1) {
         dRows.forEach((rw, i) => {
-          if (i < 3) return;
+          if (i <= headerRowIndex) return;
           const ds = String(rw[dCol] || '').trim(), cs = String(rw[certCol] || '').trim();
           if (ds && cs && cs !== 'None') {
-              certMap[standardizeDate(ds)] = cs;
+              const isoDate = standardizeDate(ds);
+              if (isoDate) certMap[isoDate] = cs;
           }
         });
       }
@@ -921,34 +919,26 @@
 
     let hRow = -1;
     const cmap = {};
-    for (let r = 0; r < Math.min(rawRows.length, 15); r++) {
+    for (let r = 0; r < Math.min(rawRows.length, 12); r++) {
       const rowStr = (rawRows[r] || []).map(v => String(v || '')).join('|');
-      
-      // 智慧模糊綁定，避免欄位異動抓不到
-      if (rowStr.includes("日期") && (rowStr.includes("早點") || rowStr.includes("晨間") || rowStr.includes("主食") || rowStr.includes("主菜"))) {
+      // 改用更寬鬆的 OR 來鎖定含有「日期」以及任何「主食」或「早點」的表頭列
+      if (rowStr.includes("日期") && (rowStr.includes("主食") || rowStr.includes("早點"))) {
         hRow = r;
-        
-        // 為了避免合併儲存格導致找不到，合併上下列文字來判斷欄位
-        const numCols = Math.max(...rawRows.slice(Math.max(0, hRow - 1), hRow + 3).map(r => (r||[]).length));
-        for (let c = 0; c < numCols; c++) {
-          let colText = "";
-          for (let rowIdx = Math.max(0, hRow - 1); rowIdx <= hRow + 2; rowIdx++) {
-            if (rawRows[rowIdx] && rawRows[rowIdx][c]) colText += String(rawRows[rowIdx][c]).trim() + " ";
-          }
-          
-          if (colText.includes("日期")) cmap.date = c; 
-          else if (colText.includes("星期")) cmap.day = c;
-          else if (colText.includes("早點") || colText.includes("晨間")) cmap.morning = c; 
-          else if (colText.includes("主食")) cmap.staple = c;
-          else if (colText.includes("主菜")) cmap.main = c; 
-          else if (colText.includes("副菜")) cmap.side = c;
-          else if (colText.includes("時蔬") || colText.includes("青菜") || colText.includes("蔬菜")) cmap.veg = c;
-          else if (colText.includes("湯品") || colText.includes("附湯") || colText.includes("湯")) cmap.soup = c; 
-          else if (colText.includes("熱量") || colText.includes("大卡")) cmap.kcal = c;
-          else if (colText.includes("水果") || colText.includes("鮮果")) cmap.fruit = c; 
-          else if (colText.includes("午點") || colText.includes("午後") || colText.includes("下午")) cmap.afternoon = c;
-          else if (colText.includes("備註") || colText.includes("提醒")) cmap.note = c;
-        }
+        rawRows[r].forEach((v, c) => {
+          const val = String(v || '').trim();
+          if (val.includes("日期")) cmap.date = c; 
+          else if (val.includes("星期")) cmap.day = c;
+          else if (val.includes("早點") || val.includes("晨間")) cmap.morning = c; 
+          else if (val.includes("主食")) cmap.staple = c;
+          else if (val.includes("主菜")) cmap.main = c; 
+          else if (val.includes("副菜")) cmap.side = c;
+          else if (val.includes("時蔬") || val.includes("青菜") || val.includes("蔬菜")) cmap.veg = c;
+          else if (val.includes("湯品") || val.includes("湯")) cmap.soup = c; 
+          else if (val.includes("熱量") || val.includes("大卡")) cmap.kcal = c;
+          else if (val.includes("水果") || val.includes("鮮果")) cmap.fruit = c; 
+          else if (val.includes("午點") || val.includes("午後") || val.includes("下午")) cmap.afternoon = c;
+          else if (val.includes("備註") || val.includes("提醒")) cmap.note = c;
+        });
         break;
       }
     }
@@ -964,7 +954,7 @@
         let iso = standardizeDate(rd);
         if (!iso) continue;
         
-        const g = (c) => (c !== undefined && row[c] != null && String(row[c]).trim() !== 'None') ? String(row[c]).trim() : "";
+        const g = (c) => (c !== undefined && row[c] != null && row[c] !== 'None') ? String(row[c]).trim() : "";
         const st = g(cmap.staple), mn = g(cmap.main), nt = g(cmap.note), vg = g(cmap.veg), rKc = g(cmap.kcal);
         
         const colM_val = (row[12] !== undefined && row[12] != null && String(row[12]).trim() !== 'None') ? String(row[12]).trim() : "";
@@ -979,7 +969,18 @@
         };
       }
       
+      const sortedKeys = Object.keys(KINDERGARTEN_MENU).sort();
+      if (sortedKeys.length > 0) {
+        currentDate = SYSTEM_TODAY;
+        // 如果今天沒有餐點資料，則自動顯示最後一天的有效資料，避免打開是無資料畫面
+        if (!KINDERGARTEN_MENU[currentDate]) {
+            currentDate = sortedKeys[sortedKeys.length - 1];
+        }
+        datePicker.value = currentDate;
+      }
       initUI();
+    } else {
+      throw new Error("無法在 Excel 表中定位到欄位表頭 (找不到包含 日期 與 主食 的列)。");
     }
   }
 
